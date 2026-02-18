@@ -1,0 +1,9 @@
+@import './tokens.css';
+
+/* Additional rendering optimizations */
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+}

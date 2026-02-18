@@ -1,0 +1,45 @@
+.navbar {
+    display: flex;
+    position: sticky;
+    z-index: 1000;
+    top: 0;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: var(--padding-l) var(--padding-xl);
+    width: 100%;
+    background-color: transparent;
+    gap: var(--padding-xl);
+}
+
+.navbar-left,
+.navbar-center,
+.navbar-right {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.navbar-left {
+    gap: var(--padding-xxxl);
+}
+
+.navbar-right {
+    justify-content: flex-end;
+}
+
+.nav-item {
+    font-family: var(--font-primary);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-regular);
+    line-height: normal;
+    color: var(--black);
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: opacity var(--transition-fast);
+}
+
+.nav-item:hover {
+    opacity: 0.6;
+}

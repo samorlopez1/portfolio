@@ -1,0 +1,102 @@
+/* ===========================
+   DESIGN TOKENS
+   Centralized variables for easy global edits
+   =========================== */
+
+:root {
+    /* SPACING */
+    --padding-xs: .128em;
+    --padding-s: .272em;
+    --padding-m: .618em;
+    --padding-l: 1em;
+    --padding-xl: 1.618em;
+    --padding-xxl: 2.618em;
+    --padding-xxxl: 3.618em;
+
+    /* COLORS */
+    --black: #29292e;
+    --grey: rgba(41, 41, 46, 0.6);
+    --white: #ffffff;
+    --light-grey: #c5c5c5;
+
+    /* TYPOGRAPHY - Font Families */
+    --font-primary: 'Helvetica Neue', system-ui, sans-serif;
+    --font-serif: 'PP Editorial New', 'Times New Roman', serif;
+
+    /* TYPOGRAPHY - Font Sizes */
+    --text-xs: 12px;
+    --text-sm: 14px;
+    --text-base: 16px;
+    --text-lg: 28px;
+    --text-xl: 32px;
+    --text-2xl: 142px;
+
+    /* TYPOGRAPHY - Font Weights */
+    --weight-light: 200;
+    --weight-regular: 400;
+    --weight-medium: 500;
+
+    /* TYPOGRAPHY - Line Heights */
+    --line-tight: 1.15;
+    --line-normal: 1.4;
+    --line-loose: 1.5;
+
+    /* TYPOGRAPHY - Letter Spacing */
+    --letter-tight: -0.071px;
+    --letter-normal: 0;
+    --letter-xsmall: -0.016px;
+
+    /* SIZES */
+    --height-hero: 100vh;
+    --height-thumbnail: 400px;
+    --height-about-image: 420px;
+    --height-footer: 832px;
+    --width-about-text: 440px;
+    --width-about-image: 336px;
+    --width-skills: 640px;
+    --width-case-study: 601.15px;
+
+    /* TRANSITIONS */
+    --transition-fast: 0.3s ease;
+
+}
+
+/* Apply global font settings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-primary);
+    font-size: var(--text-base);
+    font-weight: var(--weight-regular);
+    line-height: var(--line-normal);
+    color: var(--black);
+    background-color: var(--white);
+}
+
+#root {
+    width: 100%;
+    min-height: 100vh;
+}
+
+a {
+    font-weight: var(--weight-regular);
+    color: inherit;
+    text-decoration: none;
+    transition: opacity var(--transition-fast);
+}
+
+a:hover {
+    opacity: 0.7;
+}
