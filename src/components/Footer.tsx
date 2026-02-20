@@ -1,4 +1,5 @@
 import './Footer.css';
+import { ThreeJsHero } from './ThreeJsHero';
 
 export function Footer() {
     return (
@@ -55,6 +56,9 @@ export function Footer() {
 
             {/* Footer Bottom */}
             <div className="footer-bottom" data-node-id="854:317">
+                <div className="footer-bottom-background" data-node-id="854:317">
+                    <ThreeJsHero />
+                </div>
                 <div className="footer-bottom-content" data-node-id="854:318">
                     <div className="footer-bottom-column" data-node-id="854:319">
                         <p className="footer-meta" data-node-id="854:320">

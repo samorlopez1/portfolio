@@ -3,17 +3,18 @@
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
-    padding: calc(2 * var(--padding-xxxl)) var(--padding-xl);
+    padding: calc(2 * var(--padding-xxxl)) var(--padding-page);
     box-sizing: border-box;
     background-color: var(--white);
     gap: calc(2 * var(--padding-xxxl));
+    scroll-margin-top: -64px;
 }
 
 .about-row {
     display: flex;
     align-items: flex-start;
     width: 100%;
-    gap: var(--padding-xl);
+    gap: var(--padding-page);
     justify-content: space-between;
 }
 

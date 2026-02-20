@@ -12,6 +12,8 @@
     --padding-xl: 1.618em;
     --padding-xxl: 2.618em;
     --padding-xxxl: 3.618em;
+    --padding-pixel: 40px;
+    --padding-page: 1em;
 
     /* COLORS */
     --black: #29292e;

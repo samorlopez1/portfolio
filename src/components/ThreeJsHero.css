@@ -1,0 +1,17 @@
+.threejs-hero {
+    width: 100%;
+    height: 190%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: auto;
+    transform: scale(1.05);
+    transform-origin: center;
+}
+
+/* Make the renderer fill its container */
+.threejs-hero canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+}

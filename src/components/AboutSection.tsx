@@ -2,12 +2,12 @@ import './AboutSection.css';
 
 export function AboutSection() {
     return (
-        <section className="about-section" data-node-id="865:122">
+        <section className="about-section" id="about">
             {/* First Row: About Text + Image */}
             <div className="about-row" data-node-id="865:123">
                 <div className="about-text-wrapper" data-node-id="865:124">
                     <p className="about-title" data-node-id="865:125">
-                        I see the big picture and sweat the details.
+                        Sees the big picture and sweat the details.
                     </p>
                     <div className="about-description" data-node-id="865:126">
                         <p>

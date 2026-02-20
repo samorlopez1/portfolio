@@ -1,5 +1,9 @@
 @import './tokens.css';
 
+html {
+  scroll-behavior: smooth;
+}
+
 /* Additional rendering optimizations */
 :root {
   font-synthesis: none;

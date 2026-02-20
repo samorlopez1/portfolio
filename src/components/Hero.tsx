@@ -1,15 +1,17 @@
 import './Hero.css';
 import './P5Background.css';
 import { P5Background } from './P5Background';
+import { ThreeJsHero } from './ThreeJsHero';
 
 export function Hero() {
     return (
-        <section className="hero" data-node-id="854:324">
+        <section className="hero" id="home">
             <div className="p5-background">
                 <div className="p5-background-overlay-top" />
                 <P5Background />
                 <div className="p5-background-overlay-bottom" />
             </div>
+
             <div className="hero-header" data-node-id="854:226">
                 <div className="hero-heading" data-node-id="854:227">
                     <p>Thrives in fast-paced environments,</p>

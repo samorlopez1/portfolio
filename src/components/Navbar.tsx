@@ -1,18 +1,46 @@
 import './Navbar.css';
+import React, { useEffect, useState } from "react";
 
 export function Navbar() {
+    const [showNavbar, setShowNavbar] = useState(true);
+
+    useEffect(() => {
+        let lastScrollY = window.scrollY;
+
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+            setShowNavbar(currentScrollY < lastScrollY);
+            lastScrollY = currentScrollY;
+        }
+
+        window.addEventListener("scroll", handleScroll);
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        }
+    }, []);
+
+    const scrollToTop = (e: React.MouseEvent) => {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
     return (
-        <nav className="navbar" data-node-id="854:323">
+        <nav className={`navbar ${!showNavbar ? 'navbar-hidden' : ''}`} data-node-id="854:323">
             <div className="navbar-left" data-node-id="854:217">
-                <p className="nav-item">HOME</p>
+                <a href="#" onClick={scrollToTop} className="nav-item">HOME</a>
+            </div>
+            <div className="navbar-center" data-node-id="854:221">
+                <div className="navbar-right">
+                    <a href="#work" className="nav-item">WORK</a>
+                </div>
+                <div className="navbar-left">
+                    <p className="nav-item">PLAY</p>
+                </div>
             </div>
             <div className="navbar-right" data-node-id="854:223">
-                <div className="navbar-left" data-node-id="854:219">
-                    <p className="nav-item">WORK</p>
-                    <p className="nav-item">ABOUT</p>
-                    <p className="nav-item">GALLERY</p>
-                </div>
-                <p className="nav-item">CONTACT</p>
+                <a href="#about" className="nav-item">ABOUT</a>
+                <a href="#resume" className="nav-item">RESUME</a>
             </div>
         </nav>
     );

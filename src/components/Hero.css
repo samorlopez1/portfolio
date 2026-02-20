@@ -9,7 +9,7 @@
     max-height: 1440px;
     margin: 0 auto;
     height: var(--height-hero);
-    padding: var(--padding-xxxl) var(--padding-xl) 40px;
+    padding: var(--padding-xxxl) var(--padding-page) 20px;
     box-sizing: border-box;
     background-color: transparent;
     container-type: size;
@@ -21,7 +21,7 @@
     font-size: var(--text-lg);
     gap: var(--padding-m);
     align-items: flex-start;
-    z-index: 2;
+    z-index: 1;
     position: relative;
 }
 
@@ -68,12 +68,13 @@
 
 .hero-name-wrapper {
     position: absolute;
-    bottom: 13vh;
+    bottom: 80px;
     left: 0;
     right: 0;
     width: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
     z-index: 2;
 }
 
