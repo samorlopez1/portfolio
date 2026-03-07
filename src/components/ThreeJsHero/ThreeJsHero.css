@@ -1,0 +1,32 @@
+.threejs-hero {
+    width: 100%;
+    height: 190%;
+    min-height: 80px;
+    position: absolute;
+    top: -90px;
+    left: 0;
+    pointer-events: auto;
+    transform: scale(1.11);
+    transform-origin: center;
+    padding: var(--padding-xl);
+    pointer-events: none;
+}
+
+/* Make the renderer fill its container */
+.threejs-hero canvas {
+    display: block;
+    width: 100% !important;
+    height: 120% !important;
+}
+
+@media (max-width: 1080px) {
+    .threejs-hero {
+        top: -40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .threejs-hero {
+        top: 0px;
+    }
+}

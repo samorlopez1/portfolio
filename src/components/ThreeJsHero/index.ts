@@ -1,0 +1,1 @@
+export { ThreeJsHero } from './ThreeJsHero'

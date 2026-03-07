@@ -1,7 +1,15 @@
 @import './tokens.css';
 
+@font-face {
+  font-family: 'PP Editorial New';
+  src: url('/fonts/PPEditorialNew-Ultralight.otf') format('opentype');
+  font-weight: 200;
+  font-display: swap;
+}
+
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
+  scrollbar-gutter: stable;
 }
 
 /* Additional rendering optimizations */

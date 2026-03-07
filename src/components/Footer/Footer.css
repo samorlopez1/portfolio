@@ -1,0 +1,215 @@
+.footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 1920px;
+    height: 100vh;
+    min-height: var(--height-footer);
+    padding: 80px var(--padding-page) var(--padding-page);
+    box-sizing: border-box;
+    background-color: white;
+    overflow: hidden;
+}
+
+.footer-bottom-background {
+    position: absolute;
+    bottom: 21vh;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 400px;
+    z-index: 2;
+}
+
+.footer-top {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: var(--padding-xxxl);
+    z-index: 100;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--padding-page);
+    width: 100%;
+    font-family: var(--font-primary);
+    font-size: var(--text-body);
+    font-weight: var(--weight-regular);
+    line-height: normal;
+    color: var(--black);
+}
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-m);
+    align-items: flex-start;
+    width: 100%;
+}
+
+.footer-column-right {
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-m);
+    align-items: flex-end;
+}
+
+.footer-row {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: var(--padding-page);
+}
+
+.footer-title {
+    font-family: var(--font-primary);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-regular);
+    line-height: var(--line-tight);
+    color: var(--black);
+    margin: 0;
+    padding-bottom: var(--padding-s);
+}
+
+.footer-subtitle {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: normal;
+    color: var(--grey, rgba(41, 41, 46, 0.6));
+    white-space: nowrap;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-subtitle-right {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: normal;
+    color: var(--grey, rgba(41, 41, 46, 0.6));
+    white-space: nowrap;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.footer-subtitle p,
+a {
+    margin: 0;
+    padding-bottom: var(--padding-s);
+}
+
+a:hover {
+    color: var(--black);
+}
+
+.footer-subtitle p:last-child {
+    margin-bottom: 0;
+}
+
+.footer-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    position: relative;
+}
+
+.footer-bottom-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    gap: var(--padding-page);
+}
+
+.footer-bottom-content>div {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+}
+
+
+.footer-bottom-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    align-items: flex-start;
+}
+
+.footer-meta {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: normal;
+    color: var(--grey, rgba(41, 41, 46, 0.6));
+    margin: 0;
+    padding: 0;
+}
+
+@media (max-width: 1080px) {
+    .footer {
+        padding: var(--padding-page);
+        padding-top: var(--padding-xxxl);
+    }
+
+    .footer-content {
+        padding-top: var(--padding-xxxl);
+        flex-wrap: wrap;
+        gap: var(--padding-m);
+    }
+
+    .footer-column {
+        width: 50%;
+    }
+
+    .footer-column-right {
+        width: 50%;
+        align-items: flex-start;
+    }
+
+    .footer-row {
+        flex-direction: column;
+        gap: var(--padding-xxxl);
+        justify-content: flex-start;
+    }
+
+    .footer-subtitle-right {
+        white-space: normal;
+        align-items: flex-start;
+    }
+
+    .footer-top {
+        gap: var(--padding-xxl);
+    }
+
+    .footer-bottom {
+        height: auto;
+        padding: var(--padding-xxxl) 0 0 0;
+    }
+
+    .footer-bottom-content {
+        gap: var(--padding-xxl);
+    }
+
+    .footer-title {
+        font-size: var(--text-m);
+    }
+
+    .footer-subtitle {
+        white-space: normal;
+    }
+}
