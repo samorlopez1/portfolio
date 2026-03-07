@@ -1,6 +1,5 @@
 import './Footer.css';
 import { ThreeJsHero } from '../ThreeJsHero';
-import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import resumePdf from '../../assets/Resume_Samuel_Lopez.pdf';
 

@@ -90,7 +90,7 @@ interface TextContentWithMetadataProps {
     metadata: MetadataItem[];
 }
 
-export const TextContentWithMetadata: React.FC<TextContentWithMetadataProps> = ({ caption, body, metadata }) => {
+export const TextContentWithMetadata: React.FC<TextContentWithMetadataProps> = ({ metadata }) => {
     return (
         <div className="text-content-with-metadata">
             <div className="metadata-grid">

@@ -1,8 +1,6 @@
-import { Navbar } from '../../components/Navbar';
 import { Hero } from '../../components/Hero';
 import { CaseStudies } from '../../components/CaseStudies';
 import { AboutSection } from '../../components/AboutSection';
-import { Footer } from '../../components/Footer';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import './Home.css';

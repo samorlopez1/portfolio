@@ -11,10 +11,6 @@ import {
 import eaThumbnail from '../../assets/ea.png';
 import eaPic from '../../assets/ea_pictures/ea.png';
 
-const images = import.meta.glob('../../assets/tiktok_pictures/*.{png,webp,json}', { eager: true });
-const imageUrls = Object.values(images).map((module: any) => (module as any).default || module);
-
-
 const sidebarLinks = [
     { id: 'context', label: 'OVERVIEW' },
     { id: 'challenge', label: 'WORKS' },
