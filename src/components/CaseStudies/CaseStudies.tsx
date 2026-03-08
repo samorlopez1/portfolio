@@ -112,7 +112,6 @@ export function CaseStudyWrapper({ thumbnail, caption, date, posterImage, route 
     const handleMouseLeave = () => {
         if (isMobile) return; // Disable hover on mobile
         setIsHovering(false);
-        setIsTextFlipped(false);
         if (videoRef.current) {
             videoRef.current.pause();
         }

@@ -426,4 +426,9 @@
         max-width: none;
         transform: translateY(-26px);
     }
+
+    .image-header {
+        font-size: var(--text-sm);
+    }
+
 }

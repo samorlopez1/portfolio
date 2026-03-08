@@ -71,7 +71,7 @@
     left: 6px;
     flex-direction: column;
     opacity: 0;
-    transition: opacity 0.2s ease-in-out;
+    transition: opacity 0.2s ease-in-out, top 0.2s ease-in-out, bottom 0.2s ease-in-out;
     pointer-events: none;
     transform: translateZ(0);
     backface-visibility: hidden;
