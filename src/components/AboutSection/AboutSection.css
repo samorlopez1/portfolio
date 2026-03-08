@@ -206,4 +206,12 @@
         width: 440px;
         max-width: 100%;
     }
+
+    .skills-image {
+        display: none;
+    }
+
+    .ul {
+        text-decoration: none;
+    }
 }
