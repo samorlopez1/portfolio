@@ -7,23 +7,23 @@ import "@/src/index.css";
 import "@/src/tokens.css";
 
 export const metadata: Metadata = {
-  title: "Portfolio",
-  description: "My Portfolio",
+    title: "Portfolio",
+    description: "My Portfolio",
 };
 
 export default function RootLayout({
-  children,
+    children,
 }: {
-  children: ReactNode;
+    children: ReactNode;
 }) {
-  return (
-    <html lang="en">
-      <body>
-        <ScrollToTop />
-        <Navbar />
-        {children}
-        <Footer />
-      </body>
-    </html>
-  );
+    return (
+        <html lang="en">
+            <body>
+                <ScrollToTop />
+                <Navbar />
+                {children}
+                <Footer />
+            </body>
+        </html>
+    );
 }
