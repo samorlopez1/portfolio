@@ -5,7 +5,6 @@ import Link from 'next/link';
 import './CaseStudies.css';
 import { caseStudiesData } from '../../data/caseStudies';
 import LottiePlayer from 'react-lottie-player';
-import tagCorner from '../../assets/tag-corner.svg';
 import type { StaticImageData } from 'next/image';
 
 interface CaseStudyProps {
@@ -19,7 +18,7 @@ export function CaseStudyWrapper({ thumbnail, caption, date, posterImage, route 
     const [isHovering, setIsHovering] = useState(false);
     const [isTextFlipped, setIsTextFlipped] = useState(false);
     const [isCentered, setIsCentered] = useState(false);
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
+    const [isMobile, setIsMobile] = useState(false);
     const wrapperRef = useRef<HTMLDivElement | null>(null);
     const visibilityRef = useRef<HTMLDivElement | null>(null);
     const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -29,6 +28,9 @@ export function CaseStudyWrapper({ thumbnail, caption, date, posterImage, route 
         const handleResize = () => {
             setIsMobile(window.innerWidth <= 480);
         };
+
+        // Set initial value on mount
+        handleResize();
 
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
@@ -128,9 +130,7 @@ export function CaseStudyWrapper({ thumbnail, caption, date, posterImage, route 
         >
             <div className="case-study-thumbnail" data-node-id="854:232">
                 {thumbnail ? (
-                    typeof thumbnail === 'object' ? (
-                        <LottiePlayer className="case-study-lottie" loop animationData={thumbnail} play={isHovering || (isMobile && isCentered)} />
-                    ) : typeof thumbnail === 'string' && thumbnail.includes('.mp4') ? (
+                    typeof thumbnail === 'string' && thumbnail.includes('.mp4') ? (
                         <video
                             ref={videoRef}
                             src={thumbnail}
@@ -140,8 +140,12 @@ export function CaseStudyWrapper({ thumbnail, caption, date, posterImage, route 
                             poster={typeof thumbnail === 'string' && thumbnail.includes('.mp4') ? (typeof posterImage === 'string' ? posterImage : posterImage?.src) : undefined}
                             className="case-study-video"
                         />
+                    ) : typeof thumbnail === 'object' && 'src' in thumbnail ? (
+                        <img src={(thumbnail as StaticImageData).src} alt={caption || 'Case study'} />
+                    ) : typeof thumbnail === 'object' ? (
+                        <LottiePlayer className="case-study-lottie" loop animationData={thumbnail} play={isHovering || (isMobile && isCentered)} />
                     ) : (
-                        <img src={typeof thumbnail === 'string' ? thumbnail : (thumbnail as StaticImageData).src} alt={caption || 'Case study'} />
+                        <img src={thumbnail} alt={caption || 'Case study'} />
                     )
                 ) : (
                     <div className="placeholder" />
@@ -154,7 +158,7 @@ export function CaseStudyWrapper({ thumbnail, caption, date, posterImage, route 
                         {date || '2026'}
                     </p>
                     <div className="case-study-corner">
-                        <img src={tagCorner} alt="corner" />
+                        <img src="/tag-corner.svg" alt="corner" />
                     </div>
                 </div>
                 <p className="case-study-caption">

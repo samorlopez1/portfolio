@@ -107,7 +107,7 @@ export function Footer() {
                         <p className="footer-subtitle">© SL 2026</p>
                     </div>
                     <div>
-                        <p className="footer-subtitle">BUILT WITH REACT</p>
+                        <p className="footer-subtitle">BUILT WITH NEXT.JS</p>
                     </div>
                 </div>
 

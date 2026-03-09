@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect, memo } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Lottie from 'lottie-react';
 import gsap from 'gsap';
 import { Lightbox } from '../../components/Lightbox';
@@ -46,7 +46,7 @@ function getMediaType(media: string | any): 'image' | 'video' | 'lottie' {
     return 'image';
 }
 
-function renderMedia(media: string | any, alt: string, className: string) {
+function renderMedia(media: string | any, alt: string, className: string, isTopImage: boolean = false) {
     const type = getMediaType(media);
 
     const handleImageLoad = (e: React.SyntheticEvent<HTMLImageElement | HTMLVideoElement>) => {
@@ -77,12 +77,14 @@ function renderMedia(media: string | any, alt: string, className: string) {
             />
         );
     } else {
+        // Handle both string URLs and StaticImageData objects
+        const imageSrc = typeof media === 'string' ? media : (media as any).src;
         return (
             <img
-                src={media}
+                src={imageSrc}
                 alt={alt}
                 className={className}
-                loading="lazy"
+                loading={isTopImage ? 'eager' : 'lazy'}
                 decoding="async"
                 onLoad={handleImageLoad}
             />
@@ -99,21 +101,20 @@ interface GalleryItemProps {
     onImageClick: (id: number) => void;
 }
 
-const GalleryItemComponent = memo(function GalleryItem({
+function GalleryItem({
     item,
     hoveredId,
     onMouseEnter,
     onMouseLeave,
     onImageClick,
 }: GalleryItemProps) {
-    const [bottomImageLoaded, setBottomImageLoaded] = useState(false);
+    const [bottomImageLoaded, setBottomImageLoaded] = useState(item.bottomImage === 'NA');
     const bottomImageRef = useRef<HTMLDivElement>(null);
     const itemRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         // Use Intersection Observer to load bottom image only when near viewport
         if (item.bottomImage === 'NA') {
-            setBottomImageLoaded(false);
             return;
         }
 
@@ -131,7 +132,9 @@ const GalleryItemComponent = memo(function GalleryItem({
             observer.observe(bottomImageRef.current);
         }
 
-        return () => observer.disconnect();
+        return () => {
+            if (observer) observer.disconnect();
+        };
     }, [item.bottomImage]);
 
     return (
@@ -143,16 +146,17 @@ const GalleryItemComponent = memo(function GalleryItem({
             onMouseLeave={onMouseLeave}
             onClick={() => onImageClick(item.id)}
             style={{ cursor: 'pointer' }}
+            suppressHydrationWarning
         >
             <div className="gallery-image-wrapper" ref={bottomImageRef}>
                 {/* Bottom media - lazy loaded with Intersection Observer */}
                 {item.bottomImage !== 'NA' && bottomImageLoaded && (
-                    renderMedia(item.bottomImage, `${item.title} - bottom`, 'gallery-image bottom-image')
+                    renderMedia(item.bottomImage, `${item.title} - bottom`, 'gallery-image bottom-image', false)
                 )}
 
                 {/* Top media - always rendered (high priority) */}
-                <div className={`gallery-image top-image ${item.bottomImage !== 'NA' && hoveredId === item.id ? 'faded' : ''}`}>
-                    {renderMedia(item.topImage, `${item.title} - top`, 'gallery-image')}
+                <div className={`gallery-image top-image ${item.bottomImage !== 'NA' && hoveredId === item.id ? 'faded' : ''}`} suppressHydrationWarning>
+                    {renderMedia(item.topImage, `${item.title} - top`, 'gallery-image', true)}
                 </div>
             </div>
 
@@ -173,9 +177,7 @@ const GalleryItemComponent = memo(function GalleryItem({
             </div>
         </div>
     );
-});
-
-const GalleryItem = GalleryItemComponent;
+}
 
 export function Gallery() {
     const [hoveredId, setHoveredId] = useState<number | null>(null);

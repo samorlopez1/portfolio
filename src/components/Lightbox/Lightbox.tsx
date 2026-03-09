@@ -39,7 +39,9 @@ function renderMedia(media: string | any, alt: string, className: string) {
     } else if (type === 'lottie') {
         return <Lottie animationData={media} loop autoplay className={className} />;
     } else {
-        return <img src={media} alt={alt} className={className} />;
+        // Handle both string URLs and StaticImageData objects
+        const imageSrc = typeof media === 'string' ? media : (media as any).src;
+        return <img src={imageSrc} alt={alt} className={className} />;
     }
 }
 

@@ -51,6 +51,10 @@
     transition: transform 0.2s ease-in-out;
 }
 
+.case-study-link {
+    display: contents;
+}
+
 .case-study-wrapper:hover .case-study-thumbnail img,
 .case-study-wrapper:hover .case-study-thumbnail .case-study-lottie,
 .case-study-wrapper:hover .case-study-thumbnail video {

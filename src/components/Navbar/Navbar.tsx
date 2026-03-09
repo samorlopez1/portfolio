@@ -45,6 +45,11 @@ export function Navbar() {
     }, []);
 
     const handleHomeClick = (e: React.MouseEvent) => {
+        if (pathname !== '/') {
+            // Allow navigation to home page
+            return;
+        }
+        // Only prevent default and scroll if already on home page
         e.preventDefault();
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };

@@ -1,13 +1,14 @@
 .navbar {
     display: flex;
-    position: sticky;
+    position: fixed;
     z-index: 100;
     top: 0;
+    left: 0;
+    right: 0;
     justify-content: space-between;
     align-items: flex-start;
     padding: var(--padding-page) var(--padding-page);
     width: 100%;
-    max-width: 1920px;
     background-color: transparent;
     transition: transform .35s ease-in-out;
     transform: translateY(0);

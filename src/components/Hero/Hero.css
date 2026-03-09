@@ -8,6 +8,7 @@
     max-width: 1920px;
     max-height: 1440px;
     margin: 0 auto;
+    margin-top: 64px;
     height: var(--height-hero);
     padding: var(--padding-xxxl) var(--padding-page) 20px;
     box-sizing: border-box;
