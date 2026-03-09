@@ -1,12 +1,12 @@
-'use client';
-
 import { Suspense } from 'react';
-import { TrainTrekCaseStudy } from '@/src/pages/CaseStudy/TrainTrek';
-import { TikTokCaseStudy } from '@/src/pages/CaseStudy/tiktok';
-import { InstagramCaseStudy } from '@/src/pages/CaseStudy/instagram';
-import { WordletCaseStudy } from '@/src/pages/CaseStudy/wordlet';
-import { EACaseStudy } from '@/src/pages/CaseStudy/ea';
-import '@/src/pages/CaseStudy/CaseStudy.css';
+import { TrainTrekCaseStudy } from '@/src/page-components/CaseStudy/TrainTrek';
+import { TikTokCaseStudy } from '@/src/page-components/CaseStudy/tiktok';
+import { InstagramCaseStudy } from '@/src/page-components/CaseStudy/instagram';
+import { WordletCaseStudy } from '@/src/page-components/CaseStudy/wordlet';
+import { EACaseStudy } from '@/src/page-components/CaseStudy/ea';
+import '@/src/page-components/CaseStudy/CaseStudy.css';
+
+export const dynamic = 'force-dynamic';
 
 const caseStudies: Record<string, React.ComponentType> = {
     traintrek: TrainTrekCaseStudy,
@@ -16,8 +16,8 @@ const caseStudies: Record<string, React.ComponentType> = {
     ea: EACaseStudy,
 };
 
-export default function CaseStudyPage({ params }: { params: { id: string } }) {
-    const { id } = params;
+export default async function CaseStudyPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
     const CaseStudyComponent = caseStudies[id];
 
     if (!CaseStudyComponent) {
@@ -31,7 +31,7 @@ export default function CaseStudyPage({ params }: { params: { id: string } }) {
     );
 }
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
     return Object.keys(caseStudies).map((id) => ({
         id,
     }));
