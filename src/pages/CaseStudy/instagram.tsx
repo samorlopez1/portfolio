@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import './CaseStudy.css';
 import {
@@ -10,9 +12,14 @@ import {
 } from './components';
 
 import InstagramThumbnail from '../../assets/instagram_events_cover.png';
+import instagram00 from '../../assets/instagram_pictures/instagram_00.json';
+import instagram01 from '../../assets/instagram_pictures/instagram_01.webp';
+import instagram02 from '../../assets/instagram_pictures/instagram_02.json';
+import instagram03 from '../../assets/instagram_pictures/instagram_03.json';
+import instagram04 from '../../assets/instagram_pictures/instagram_04.png';
+import instagram05 from '../../assets/instagram_pictures/instagram_05.png';
 
-const images = import.meta.glob('../../assets/instagram_pictures/*.{png,webp,json}', { eager: true });
-const imageUrls = Object.values(images).map((module: any) => (module as any).default || module);
+const imageUrls = [instagram00, instagram01, instagram02, instagram03, instagram04, instagram05];
 
 const sidebarLinks = [
     { id: 'context', label: 'OVERVIEW' },

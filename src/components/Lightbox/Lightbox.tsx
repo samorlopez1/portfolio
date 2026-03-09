@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import Lottie from 'lottie-react';
 import './Lightbox.css';

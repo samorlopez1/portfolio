@@ -1,5 +1,7 @@
+'use client';
+
 import { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import Link from 'next/link';
 import './CaseStudies.css';
 import { caseStudiesData } from '../../data/caseStudies';
 import LottiePlayer from 'react-lottie-player';
@@ -13,7 +15,6 @@ interface CaseStudyProps {
 }
 
 export function CaseStudyWrapper({ thumbnail, caption, date, posterImage, route }: CaseStudyProps & { date?: string }) {
-    const navigate = useNavigate();
     const [isHovering, setIsHovering] = useState(false);
     const [isTextFlipped, setIsTextFlipped] = useState(false);
     const [isCentered, setIsCentered] = useState(false);
@@ -117,19 +118,12 @@ export function CaseStudyWrapper({ thumbnail, caption, date, posterImage, route 
         }
     };
 
-    const handleClick = () => {
-        if (route) {
-            navigate(route);
-        }
-    };
-
-    return (
+    const content = (
         <div
             ref={wrapperRef}
             className={`case-study-wrapper ${isTextFlipped ? 'text-flipped' : ''} ${isMobile && isCentered ? 'mobile-centered' : ''} ${route ? 'clickable' : ''}`}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            onClick={handleClick}
         >
             <div className="case-study-thumbnail" data-node-id="854:232">
                 {thumbnail ? (
@@ -169,6 +163,16 @@ export function CaseStudyWrapper({ thumbnail, caption, date, posterImage, route 
             <div className="case-study-text-visibility" ref={visibilityRef} />
         </div>
     );
+
+    if (route) {
+        return (
+            <Link href={route} className="case-study-link">
+                {content}
+            </Link>
+        );
+    }
+
+    return content;
 }
 
 export function CaseStudies() {

@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import './AboutSection.css';
 import meImage from '../../assets/me.webp';

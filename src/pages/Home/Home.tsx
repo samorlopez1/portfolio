@@ -1,19 +1,20 @@
+'use client';
+
 import { Hero } from '../../components/Hero';
 import { CaseStudies } from '../../components/CaseStudies';
 import { AboutSection } from '../../components/AboutSection';
-import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import './Home.css';
 
 export function HomePage() {
-    const location = useLocation();
-
     useEffect(() => {
-        if (location.state?.scrollTo) {
+        // Check if there's a hash in the URL for scrolling to a section
+        const hash = window.location.hash;
+        if (hash) {
             setTimeout(() => {
-                const element = document.getElementById(location.state.scrollTo);
+                const element = document.getElementById(hash.substring(1));
                 if (element) {
-                    const offset = location.state?.offset || 64;
+                    const offset = 64;
                     const offsetPosition =
                         element.getBoundingClientRect().top +
                         window.scrollY +
@@ -26,7 +27,7 @@ export function HomePage() {
                 }
             }, 100);
         }
-    }, [location]);
+    }, []);
 
     return (
         <div className="home-page-wrapper">

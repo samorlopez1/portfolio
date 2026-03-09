@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import './CaseStudy.css';
 import {
@@ -8,8 +10,24 @@ import {
     TextSection,
 } from './components';
 
-const images = import.meta.glob('../../assets/traintrek_pictures/*.png', { eager: true, import: 'default' });
-const imageUrls = Object.values(images) as string[];
+// Static imports for Next.js
+import traintrek01 from '../../assets/traintrek_pictures/traintrek_01.png';
+import traintrek02 from '../../assets/traintrek_pictures/traintrek_02.png';
+import traintrek03 from '../../assets/traintrek_pictures/traintrek_03.png';
+import traintrek04 from '../../assets/traintrek_pictures/traintrek_04.png';
+import traintrek05 from '../../assets/traintrek_pictures/traintrek_05.png';
+import traintrek06 from '../../assets/traintrek_pictures/traintrek_06.png';
+import traintrek07 from '../../assets/traintrek_pictures/traintrek_07.png';
+import traintrek08 from '../../assets/traintrek_pictures/traintrek_08.png';
+import traintrek09 from '../../assets/traintrek_pictures/traintrek_09.png';
+import traintrek10 from '../../assets/traintrek_pictures/traintrek_10.png';
+import traintrek11 from '../../assets/traintrek_pictures/traintrek_11.png';
+import traintrek12 from '../../assets/traintrek_pictures/traintrek_12.png';
+import traintrek13 from '../../assets/traintrek_pictures/traintrek_13.png';
+import traintrek14 from '../../assets/traintrek_pictures/traintrek_14.png';
+import traintrek15 from '../../assets/traintrek_pictures/traintrek_15.png';
+
+const imageUrls = [traintrek01, traintrek02, traintrek03, traintrek04, traintrek05, traintrek06, traintrek07, traintrek08, traintrek09, traintrek10, traintrek11, traintrek12, traintrek13, traintrek14, traintrek15];
 
 const sidebarLinks = [
     { id: 'context', label: 'OVERVIEW' },

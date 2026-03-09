@@ -1,3 +1,5 @@
+'use client';
+
 import './Hero.css';
 import '../P5Background/P5Background.css';
 import { P5Background } from '../P5Background';

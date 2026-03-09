@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import './CaseStudy.css';
 import {
@@ -9,9 +11,9 @@ import {
 } from './components';
 
 import TikTokThumbnail from '../../assets/tiktok.png';
+import tiktok01 from '../../assets/tiktok_pictures/tiktok_01.json';
 
-const images = import.meta.glob('../../assets/tiktok_pictures/*.{png,webp,json}', { eager: true });
-const imageUrls = Object.values(images).map((module: any) => (module as any).default || module);
+const imageUrls = [tiktok01];
 
 
 const sidebarLinks = [

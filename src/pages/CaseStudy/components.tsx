@@ -1,4 +1,7 @@
+'use client';
+
 import React from 'react';
+import Link from 'next/link';
 import Lottie from 'lottie-react';
 
 interface TextSectionProps {
@@ -191,7 +194,7 @@ export const CaseStudySidebar: React.FC<CaseStudySidebarProps> = ({
                         {link.label}
                     </a>
                 ))}
-                <a href="/" className="sidebar-back-button">BACK</a>
+                <Link href="/" className="sidebar-back-button">BACK</Link>
             </nav>
 
         </aside>

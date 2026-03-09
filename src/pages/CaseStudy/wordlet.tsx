@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import './CaseStudy.css';
 import {
@@ -10,8 +12,13 @@ import {
 } from './components';
 
 import WordletThumbnail from '../../assets/wordlet.png';
-const images = import.meta.glob('../../assets/wordlet_pictures/*.{png,webp,json,mp4}', { eager: true });
-const imageUrls = Object.values(images).map((module: any) => (module as any).default || module);
+import wordlet00 from '../../assets/wordlet_pictures/wordlet_00.mp4';
+import wordlet01 from '../../assets/wordlet_pictures/wordlet_01.png';
+import wordlet02 from '../../assets/wordlet_pictures/wordlet_02.webp';
+import wordlet03 from '../../assets/wordlet_pictures/wordlet_03.png';
+import wordlet04 from '../../assets/wordlet_pictures/wordlet_04.png';
+
+const imageUrls = [wordlet00, wordlet01, wordlet02, wordlet03, wordlet04];
 
 const sidebarLinks = [
     { id: 'context', label: 'OVERVIEW' },

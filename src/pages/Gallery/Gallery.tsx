@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useRef, useEffect, memo } from 'react';
 import Lottie from 'lottie-react';
 import gsap from 'gsap';
