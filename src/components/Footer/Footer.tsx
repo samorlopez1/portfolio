@@ -1,48 +1,48 @@
+'use client';
+
 import './Footer.css';
 import { ThreeJsHero } from '../ThreeJsHero';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 import resumePdf from '../../assets/Resume_Samuel_Lopez.pdf';
 
 
 export function Footer() {
-    const navigate = useNavigate();
-    const location = useLocation();
+    const pathname = usePathname();
 
     const handleHomeClick = (e: React.MouseEvent) => {
         e.preventDefault();
-        navigate('/');
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     const handlePlayClick = (e: React.MouseEvent) => {
         e.preventDefault();
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        navigate('/play');
     };
 
     const handleWorkClick = (e: React.MouseEvent) => {
         e.preventDefault();
-        if (location.pathname === '/') {
+        if (pathname === '/') {
             const element = document.getElementById('work');
             if (element) {
                 const offsetPosition = element.getBoundingClientRect().top + window.scrollY + 64;
                 window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
             }
         } else {
-            navigate('/', { state: { scrollTo: 'work', offset: 64 } });
+            window.location.href = '/#work';
         }
     };
 
     const handleAboutClick = (e: React.MouseEvent) => {
         e.preventDefault();
-        if (location.pathname === '/') {
+        if (pathname === '/') {
             const element = document.getElementById('about');
             if (element) {
                 const offsetPosition = element.getBoundingClientRect().top + window.scrollY + 64;
                 window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
             }
         } else {
-            navigate('/', { state: { scrollTo: 'about', offset: 64 } });
+            window.location.href = '/#about';
         }
     };
 
@@ -86,9 +86,9 @@ export function Footer() {
                         {/* nav */}
                         <div className="footer-column" data-node-id="854:311">
                             <div className="footer-subtitle" data-node-id="854:310">
-                                <a href="/" onClick={handleHomeClick} >HOME</a>
+                                <Link href="/" onClick={handleHomeClick}>HOME</Link>
                                 <a href="#work" onClick={handleWorkClick}>WORK</a>
-                                <a href="/play" onClick={handlePlayClick}>PLAYGROUND</a>
+                                <Link href="/play" onClick={handlePlayClick}>PLAYGROUND</Link>
                                 <a href="#about" onClick={handleAboutClick}>ABOUT</a>
                             </div>
                         </div>
