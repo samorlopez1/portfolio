@@ -3,33 +3,32 @@
 import { useState } from 'react';
 import './AboutSection.css';
 import meImage from '../../assets/me.webp';
-import resumePdf from '../../assets/Resume_Samuel_Lopez.pdf';
+import type { StaticImageData } from 'next/image';
 
 // Import your default skill image and specific skill images here
 import defaultSkillImage from '../../assets/about_me_pictures/default.png';
 import myFriendsImage from '../../assets/about_me_pictures/friends.jpg';
 import filmImage from '../../assets/about_me_pictures/film.webp';
 import newPeople from '../../assets/about_me_pictures/new_people.webp';
-import golf from '../../assets/about_me_pictures/golf.mp4';
 import theSundays from '../../assets/about_me_pictures/the_sundays.png';
 import rougelikes from '../../assets/about_me_pictures/rougelikes.png';
 import podcasts from '../../assets/about_me_pictures/podcasts.png';
 
-const DEFAULT_SKILL_IMAGE = defaultSkillImage; // Replace with your default image
+const DEFAULT_SKILL_IMAGE = defaultSkillImage;
 
 // Helper function to check if a file is a video
-const isVideoFile = (filePath: string): boolean => {
-    return filePath.endsWith('.mp4') || filePath.endsWith('.webm') || filePath.endsWith('.mov');
+const isVideoFile = (filePath: string | StaticImageData): boolean => {
+    const path = typeof filePath === 'string' ? filePath : (filePath as any).src || '';
+    return path.endsWith('.mp4') || path.endsWith('.webm') || path.endsWith('.mov');
 };
 
-const skillImageMap: Record<string, string> = {
-    'film photos': filmImage, // Replace with actual image
-    'golf': golf, // Replace with actual image
-    'his friends': myFriendsImage, // Replace with actual image
-    'new people': newPeople, // Replace with actual image
-    'the sundays': theSundays, // Replace with actual image
-    'rougelikes': rougelikes, // Replace with actual image
-    'podcasts': podcasts, // Replace with actual image
+const skillImageMap: Record<string, string | StaticImageData> = {
+    'film photos': filmImage,
+    'his friends': myFriendsImage,
+    'new people': newPeople,
+    'the sundays': theSundays,
+    'rougelikes': rougelikes,
+    'podcasts': podcasts,
 };
 
 export function AboutSection() {
@@ -53,10 +52,10 @@ export function AboutSection() {
                     </div>
                 </div>
                 <div className="about-image-wrapper">
-                    <img src={meImage} alt="About me" className="about-image" />
+                    <img src={typeof meImage === 'string' ? meImage : meImage.src} alt="About me" className="about-image" />
                     <div className="about-image-links">
                         <a href="mailto:samorlopez.work@gmail.com">EMAIL</a>
-                        <a href={resumePdf} target="_blank" rel="noopener noreferrer">RESUME</a>
+                        <a href="/Resume_Samuel_Lopez.pdf" target="_blank" rel="noopener noreferrer">RESUME</a>
                         <a href="https://linkedin.com/in/samorlopez" target="_blank" rel="noopener noreferrer">LINKEDIN</a>
                     </div>
                 </div>
@@ -206,7 +205,7 @@ export function AboutSection() {
                 <div className="about-image-wrapper skills-image">
                     {isVideoFile(hoveredSkill ? skillImageMap[hoveredSkill] : DEFAULT_SKILL_IMAGE) ? (
                         <video
-                            src={hoveredSkill ? skillImageMap[hoveredSkill] : DEFAULT_SKILL_IMAGE}
+                            src={hoveredSkill ? (typeof skillImageMap[hoveredSkill] === 'string' ? skillImageMap[hoveredSkill] : (skillImageMap[hoveredSkill] as StaticImageData).src) : (typeof DEFAULT_SKILL_IMAGE === 'string' ? DEFAULT_SKILL_IMAGE : DEFAULT_SKILL_IMAGE.src)}
                             className="about-image"
                             autoPlay
                             loop
@@ -215,7 +214,7 @@ export function AboutSection() {
                         />
                     ) : (
                         <img
-                            src={hoveredSkill ? skillImageMap[hoveredSkill] : DEFAULT_SKILL_IMAGE}
+                            src={hoveredSkill ? (typeof skillImageMap[hoveredSkill] === 'string' ? skillImageMap[hoveredSkill] : (skillImageMap[hoveredSkill] as StaticImageData).src) : (typeof DEFAULT_SKILL_IMAGE === 'string' ? DEFAULT_SKILL_IMAGE : DEFAULT_SKILL_IMAGE.src)}
                             alt={hoveredSkill || 'Skills'}
                             className="about-image"
                         />

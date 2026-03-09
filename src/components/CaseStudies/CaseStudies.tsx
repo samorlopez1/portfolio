@@ -6,11 +6,12 @@ import './CaseStudies.css';
 import { caseStudiesData } from '../../data/caseStudies';
 import LottiePlayer from 'react-lottie-player';
 import tagCorner from '../../assets/tag-corner.svg';
+import type { StaticImageData } from 'next/image';
 
 interface CaseStudyProps {
-    thumbnail?: string | object;
+    thumbnail?: string | object | StaticImageData;
     caption?: string;
-    posterImage?: string;
+    posterImage?: string | StaticImageData;
     route?: string;
 }
 
@@ -136,11 +137,11 @@ export function CaseStudyWrapper({ thumbnail, caption, date, posterImage, route 
                             loop
                             muted
                             playsInline
-                            poster={typeof thumbnail === 'string' && thumbnail.includes('.mp4') ? posterImage : undefined}
+                            poster={typeof thumbnail === 'string' && thumbnail.includes('.mp4') ? (typeof posterImage === 'string' ? posterImage : posterImage?.src) : undefined}
                             className="case-study-video"
                         />
                     ) : (
-                        <img src={thumbnail} alt={caption || 'Case study'} />
+                        <img src={typeof thumbnail === 'string' ? thumbnail : (thumbnail as StaticImageData).src} alt={caption || 'Case study'} />
                     )
                 ) : (
                     <div className="placeholder" />

@@ -4,7 +4,6 @@ import './Footer.css';
 import { ThreeJsHero } from '../ThreeJsHero';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import resumePdf from '../../assets/Resume_Samuel_Lopez.pdf';
 
 
 export function Footer() {
@@ -65,7 +64,7 @@ export function Footer() {
                         <div className="footer-column" data-node-id="854:311">
                             <div className="footer-subtitle" data-node-id="854:310">
                                 <a href="mailto:samorlopez.work@gmail.com">SAMORLOPEZ.WORK@GMAIL.COM</a>
-                                <a href={resumePdf} target="_blank" rel="noopener noreferrer">RESUME</a>
+                                <a href="/Resume_Samuel_Lopez.pdf" target="_blank" rel="noopener noreferrer">RESUME</a>
                                 <a href="https://linkedin.com/in/samorlopez" target="_blank" rel="noopener noreferrer">LINKEDIN</a>
                             </div>
                         </div>

@@ -10,6 +10,7 @@ import {
     TextSection,
     LottieSection
 } from './components';
+import type { StaticImageData } from 'next/image';
 
 import InstagramThumbnail from '../../assets/instagram_events_cover.png';
 import instagram00 from '../../assets/instagram_pictures/instagram_00.json';
@@ -19,7 +20,7 @@ import instagram03 from '../../assets/instagram_pictures/instagram_03.json';
 import instagram04 from '../../assets/instagram_pictures/instagram_04.png';
 import instagram05 from '../../assets/instagram_pictures/instagram_05.png';
 
-const imageUrls = [instagram00, instagram01, instagram02, instagram03, instagram04, instagram05];
+const imageUrls: (StaticImageData | object | string)[] = [instagram00, instagram01, instagram02, instagram03, instagram04, instagram05];
 
 const sidebarLinks = [
     { id: 'context', label: 'OVERVIEW' },
@@ -113,7 +114,7 @@ export const InstagramCaseStudy: React.FC = () => {
                             src={imageUrls[0]}
                         />
                         <ImageSection
-                            src={imageUrls[1]}
+                            src={imageUrls[1] as StaticImageData}
                             header="Add Key Event Details Through the New Event Creation Flow"
                             caption="Event details and third-party integrations can be added to an event post. The information is then used to power various features that enhance event discovery and participation."
                         />
@@ -126,7 +127,7 @@ export const InstagramCaseStudy: React.FC = () => {
                             caption="Event posts now are supplemented with an RSVP button, allowing users to quickly access important event links."
                         />
                         <ImageSection
-                            src={imageUrls[4]}
+                            src={imageUrls[4] as StaticImageData}
                             header="Data-Powered Event Discovery"
                             caption="Event posts now leverage metadata to enhance discovery and participation, making it easier for users to find and engage with local, relevant events."
                         />
@@ -141,7 +142,7 @@ export const InstagramCaseStudy: React.FC = () => {
                             body2="One design choice that I reconsidered was the RSVP link on feed posts. This design choice uses Instagram's link banner component, which is typically seen only on ads and paid content posts. If this UI is now seen on free, non-ad posts, how would it interfere with current user expectations, and Instagrams business model?"
                         />
                         <ImageSection
-                            src={imageUrls[5]}
+                            src={imageUrls[5] as StaticImageData}
                         />
                     </section>
                 </main>

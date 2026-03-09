@@ -4,13 +4,14 @@ import wordlet from '../assets/wordlet2.png';
 import traintrek from '../assets/traintrek_cover.webp';
 import ea from '../assets/ea.png';
 import stealth from '../assets/stealth.png';
+import type { StaticImageData } from 'next/image';
 
 export interface CaseStudy {
     id: number;
     caption: string;
-    thumbnail: string | object;
+    thumbnail: string | object | StaticImageData;
     date: string;
-    posterImage?: string;
+    posterImage?: string | StaticImageData;
     route?: string;
 }
 

@@ -4,7 +4,7 @@ import './Navbar.css';
 import { useEffect, useState } from "react";
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import resumePdf from '../../assets/Resume_Samuel_Lopez.pdf';
+
 
 export function Navbar() {
     const pathname = usePathname();
@@ -45,11 +45,6 @@ export function Navbar() {
     }, []);
 
     const handleHomeClick = (e: React.MouseEvent) => {
-        e.preventDefault();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
-
-    const handlePlayClick = (e: React.MouseEvent) => {
         e.preventDefault();
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
@@ -100,7 +95,7 @@ export function Navbar() {
             </div>
             <div className="navbar-right" data-node-id="854:223">
                 <a href="#about" onClick={handleAboutClick} className="nav-item">ABOUT</a>
-                <a href={resumePdf} target="_blank" rel="noopener noreferrer" className="nav-item">RESUME</a>
+                <a href="/Resume_Samuel_Lopez.pdf" target="_blank" rel="noopener noreferrer" className="nav-item">RESUME</a>
             </div>
         </nav>
     );

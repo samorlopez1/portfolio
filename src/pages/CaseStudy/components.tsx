@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Lottie from 'lottie-react';
+import type { StaticImageData } from 'next/image';
 
 interface TextSectionProps {
     caption?: string;
@@ -25,17 +26,18 @@ export const TextSection: React.FC<TextSectionProps> = ({ caption, heading, body
 };
 
 interface ImageSectionProps {
-    src: string;
+    src: string | StaticImageData;
     alt?: string;
     header?: string;
     caption?: string;
 }
 
 export const ImageSection: React.FC<ImageSectionProps> = ({ src, alt = '', caption, header }) => {
+    const imageSrc = typeof src === 'string' ? src : src.src;
     return (
         <div className="image-section">
             <div className="image-container">
-                <img src={src} alt={alt} />
+                <img src={imageSrc} alt={alt} />
             </div>
             {header && <p className="image-header">{header}</p>}
             {caption && <p className="caption">{caption}</p>}
@@ -111,17 +113,21 @@ export const TextContentWithMetadata: React.FC<TextContentWithMetadataProps> = (
 };
 
 interface CaseStudyHeroProps {
-    image: string;
+    image: string | StaticImageData;
 }
 
-const isVideo = (src: string) => /\.(mp4|webm|ogg|mov)([?#].*)?$/i.test(src);
+const isVideo = (src: string | StaticImageData) => {
+    const srcStr = typeof src === 'string' ? src : src.src;
+    return /\.(mp4|webm|ogg|mov)([?#].*)?$/i.test(srcStr);
+};
 
 export const CaseStudyHero: React.FC<CaseStudyHeroProps> = ({ image }) => {
+    const imageSrc = typeof image === 'string' ? image : image.src;
     return (
         <section className="case-study-hero">
             {isVideo(image) ? (
                 <video
-                    src={image}
+                    src={imageSrc}
                     className="case-study-hero-image"
                     autoPlay
                     muted
@@ -129,7 +135,7 @@ export const CaseStudyHero: React.FC<CaseStudyHeroProps> = ({ image }) => {
                     playsInline
                 />
             ) : (
-                <img src={image} alt="" className="case-study-hero-image" />
+                <img src={imageSrc} alt="" className="case-study-hero-image" />
             )}
         </section>
     );

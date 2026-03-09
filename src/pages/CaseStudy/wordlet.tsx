@@ -10,15 +10,15 @@ import {
     TextSection,
     VideoSection,
 } from './components';
+import type { StaticImageData } from 'next/image';
 
 import WordletThumbnail from '../../assets/wordlet.png';
-import wordlet00 from '../../assets/wordlet_pictures/wordlet_00.mp4';
 import wordlet01 from '../../assets/wordlet_pictures/wordlet_01.png';
 import wordlet02 from '../../assets/wordlet_pictures/wordlet_02.webp';
 import wordlet03 from '../../assets/wordlet_pictures/wordlet_03.png';
 import wordlet04 from '../../assets/wordlet_pictures/wordlet_04.png';
 
-const imageUrls = [wordlet00, wordlet01, wordlet02, wordlet03, wordlet04];
+const imageUrls: (StaticImageData | string)[] = ['/wordlet_00.mp4', wordlet01, wordlet02, wordlet03, wordlet04];
 
 const sidebarLinks = [
     { id: 'context', label: 'OVERVIEW' },
@@ -104,20 +104,20 @@ export const WordletCaseStudy: React.FC = () => {
                     {/* IMAGES */}
                     <section id="challenge" className="case-study-section">
                         <VideoSection
-                            src={imageUrls[0]}
+                            src={imageUrls[0] as string}
                             header="Type as many words as possible!"
                             caption="The player is given with a two-letter prompt, must enter as many words as they can that contain the prompt. Prompts rotate every 20 seconds, and players can combo past prompts for extra points."
                         />
                         <ImageSection
-                            src={imageUrls[1]}
+                            src={imageUrls[1] as StaticImageData}
                             caption="Words that contain previous substring prompts earn bonus points."
                         />
                         <ImageSection
-                            src={imageUrls[2]}
+                            src={imageUrls[2] as StaticImageData}
                             caption="Example final summary screen"
                         />
                         <ImageSection
-                            src={imageUrls[3]}
+                            src={imageUrls[3] as StaticImageData}
                             header="Multiplayer functionality with Firebase"
                             caption="Players can either host a game or join an existing game by entering the lobby code."
                         />
