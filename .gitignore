@@ -13,6 +13,15 @@ dist-ssr
 .next
 *.local
 
+# Media files - use CDN or cloud storage instead
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.mp4
+*.webm
+*.webp
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
