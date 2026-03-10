@@ -1,4 +1,4 @@
-import instagram from '../assets/instagram_events_cover.png';
+import instagram from '../assets/instagram_events_cover.webp';
 import tiktok from '../assets/tiktok.png';
 import wordlet from '../assets/wordlet2.png';
 import traintrek from '../assets/traintrek_cover.webp';

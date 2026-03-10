@@ -35,7 +35,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ id: 
     }
 
     return (
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div></div>}>
             <CaseStudyComponent />
         </Suspense>
     );

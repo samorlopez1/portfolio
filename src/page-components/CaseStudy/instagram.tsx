@@ -12,7 +12,7 @@ import {
 } from './components';
 import type { StaticImageData } from 'next/image';
 
-import InstagramThumbnail from '../../assets/instagram_events_cover.png';
+import InstagramThumbnail from '../../assets/instagram_events_cover.webp';
 import instagram01 from '../../assets/instagram_pictures/instagram_01.webp';
 import instagram04 from '../../assets/instagram_pictures/instagram_04.png';
 import instagram05 from '../../assets/instagram_pictures/instagram_05.png';
