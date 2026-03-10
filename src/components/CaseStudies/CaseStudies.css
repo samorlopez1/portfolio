@@ -24,6 +24,7 @@
 }
 
 .case-study-thumbnail {
+    position: relative;
     width: 100%;
     aspect-ratio: 3 / 2;
     background-color: var(--light-grey);

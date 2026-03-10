@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import Lottie from 'lottie-react';
 import type { StaticImageData } from 'next/image';
 
@@ -33,11 +34,21 @@ interface ImageSectionProps {
 }
 
 export const ImageSection: React.FC<ImageSectionProps> = ({ src, alt = '', caption, header }) => {
-    const imageSrc = typeof src === 'string' ? src : src.src;
+    const isStaticImage = typeof src !== 'string';
     return (
         <div className="image-section">
             <div className="image-container">
-                <img src={imageSrc} alt={alt} />
+                {isStaticImage ? (
+                    <Image
+                        src={src as StaticImageData}
+                        alt={alt}
+                        width={(src as StaticImageData).width}
+                        height={(src as StaticImageData).height}
+                        sizes="(max-width: 1080px) 100vw, 67vw"
+                    />
+                ) : (
+                    <img src={src as string} alt={alt} loading="lazy" />
+                )}
             </div>
             {header && <p className="image-header">{header}</p>}
             {caption && <p className="caption">{caption}</p>}
@@ -52,10 +63,42 @@ interface LottieSectionProps {
 }
 
 export const LottieSection: React.FC<LottieSectionProps> = ({ src, caption, header }) => {
+    const [animationData, setAnimationData] = React.useState<any>(typeof src === 'string' ? null : src);
+
+    React.useEffect(() => {
+        let isMounted = true;
+
+        const loadAnimation = async () => {
+            if (typeof src !== 'string') {
+                setAnimationData(src);
+                return;
+            }
+
+            try {
+                const response = await fetch(src);
+                if (!response.ok) {
+                    throw new Error(`Failed to load animation: ${response.status}`);
+                }
+                const json = await response.json();
+                if (isMounted) {
+                    setAnimationData(json);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        loadAnimation();
+
+        return () => {
+            isMounted = false;
+        };
+    }, [src]);
+
     return (
         <div className="image-section">
             <div className="image-container">
-                <Lottie animationData={src} loop autoplay />
+                {animationData ? <Lottie animationData={animationData} loop autoplay /> : null}
             </div>
             {header && <p className="image-header">{header}</p>}
             {caption && <p className="caption">{caption}</p>}
@@ -123,6 +166,7 @@ const isVideo = (src: string | StaticImageData) => {
 
 export const CaseStudyHero: React.FC<CaseStudyHeroProps> = ({ image }) => {
     const imageSrc = typeof image === 'string' ? image : image.src;
+    const isStaticImage = typeof image !== 'string';
     return (
         <section className="case-study-hero">
             {isVideo(image) ? (
@@ -135,7 +179,17 @@ export const CaseStudyHero: React.FC<CaseStudyHeroProps> = ({ image }) => {
                     playsInline
                 />
             ) : (
-                <img src={imageSrc} alt="" className="case-study-hero-image" />
+                isStaticImage ? (
+                    <Image
+                        src={image as StaticImageData}
+                        alt=""
+                        className="case-study-hero-image"
+                        priority
+                        sizes="100vw"
+                    />
+                ) : (
+                    <img src={imageSrc} alt="" className="case-study-hero-image" loading="eager" />
+                )
             )}
         </section>
     );

@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import './CaseStudies.css';
 import { caseStudiesData } from '../../data/caseStudies';
 import LottiePlayer from 'react-lottie-player';
@@ -141,11 +142,21 @@ export function CaseStudyWrapper({ thumbnail, caption, date, posterImage, route 
                             className="case-study-video"
                         />
                     ) : typeof thumbnail === 'object' && 'src' in thumbnail ? (
-                        <img src={(thumbnail as StaticImageData).src} alt={caption || 'Case study'} />
+                        <Image
+                            src={thumbnail as StaticImageData}
+                            alt={caption || 'Case study'}
+                            fill
+                            sizes="(max-width: 1080px) 100vw, 50vw"
+                        />
                     ) : typeof thumbnail === 'object' ? (
                         <LottiePlayer className="case-study-lottie" loop animationData={thumbnail} play={isHovering || (isMobile && isCentered)} />
                     ) : (
-                        <img src={thumbnail} alt={caption || 'Case study'} />
+                        <Image
+                            src={thumbnail}
+                            alt={caption || 'Case study'}
+                            fill
+                            sizes="(max-width: 1080px) 100vw, 50vw"
+                        />
                     )
                 ) : (
                     <div className="placeholder" />
@@ -171,7 +182,7 @@ export function CaseStudyWrapper({ thumbnail, caption, date, posterImage, route 
 
     if (route) {
         return (
-            <Link href={route} className="case-study-link">
+            <Link href={route} className="case-study-link" prefetch={false}>
                 {content}
             </Link>
         );
