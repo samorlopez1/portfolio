@@ -1,27 +1,37 @@
 import { Suspense } from 'react';
-import { TrainTrekCaseStudy } from '@/src/page-components/CaseStudy/TrainTrek';
-import { TikTokCaseStudy } from '@/src/page-components/CaseStudy/tiktok';
-import { InstagramCaseStudy } from '@/src/page-components/CaseStudy/instagram';
-import { WordletCaseStudy } from '@/src/page-components/CaseStudy/wordlet';
-import { EACaseStudy } from '@/src/page-components/CaseStudy/ea';
+import type { ComponentType } from 'react';
+import { notFound } from 'next/navigation';
 import '@/src/page-components/CaseStudy/CaseStudy.css';
 
-export const dynamic = 'force-dynamic';
-
-const caseStudies: Record<string, React.ComponentType> = {
-    traintrek: TrainTrekCaseStudy,
-    tiktok: TikTokCaseStudy,
-    'instagram-events': InstagramCaseStudy,
-    wordlet: WordletCaseStudy,
-    ea: EACaseStudy,
+type CaseStudyModule = {
+    default: ComponentType;
 };
+
+const CASE_STUDY_IDS = ['traintrek', 'tiktok', 'instagram-events', 'wordlet', 'ea'] as const;
+
+async function loadCaseStudyComponent(id: string): Promise<ComponentType | null> {
+    switch (id) {
+        case 'traintrek':
+            return (await import('@/src/page-components/CaseStudy/TrainTrek') as CaseStudyModule).default;
+        case 'tiktok':
+            return (await import('@/src/page-components/CaseStudy/tiktok') as CaseStudyModule).default;
+        case 'instagram-events':
+            return (await import('@/src/page-components/CaseStudy/instagram') as CaseStudyModule).default;
+        case 'wordlet':
+            return (await import('@/src/page-components/CaseStudy/wordlet') as CaseStudyModule).default;
+        case 'ea':
+            return (await import('@/src/page-components/CaseStudy/ea') as CaseStudyModule).default;
+        default:
+            return null;
+    }
+}
 
 export default async function CaseStudyPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
-    const CaseStudyComponent = caseStudies[id];
+    const CaseStudyComponent = await loadCaseStudyComponent(id);
 
     if (!CaseStudyComponent) {
-        return <div>Case study not found</div>;
+        notFound();
     }
 
     return (
@@ -32,7 +42,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ id: 
 }
 
 export async function generateStaticParams() {
-    return Object.keys(caseStudies).map((id) => ({
+    return CASE_STUDY_IDS.map((id) => ({
         id,
     }));
 }

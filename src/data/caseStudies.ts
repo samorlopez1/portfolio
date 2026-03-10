@@ -1,4 +1,4 @@
-import instagram from '../assets/Instagram-Events.json';
+import instagram from '../assets/instagram_events_cover.png';
 import tiktok from '../assets/tiktok.png';
 import wordlet from '../assets/wordlet2.png';
 import traintrek from '../assets/traintrek_cover.webp';
@@ -13,6 +13,7 @@ export interface CaseStudy {
     date: string;
     posterImage?: string | StaticImageData;
     route?: string;
+    shouldPrefetch?: boolean;
 }
 
 export const caseStudiesData: CaseStudy[] = [
@@ -22,14 +23,16 @@ export const caseStudiesData: CaseStudy[] = [
         date: 'SPECULATIVE, PROTOTYPE',
         thumbnail: "https://dl.dropboxusercontent.com/scl/fi/ds2cqvyov05jgy38x3vnq/Mockup-Vid-3.mp4?rlkey=5nr7xpiqja7br169y6c4pu4zc&st=f5flje9l&dl=0",
         posterImage: traintrek,
-        route: '/case-study/traintrek'
+        route: '/case-study/traintrek',
+        shouldPrefetch: true,
     },
     {
         id: 2,
         caption: 'Designing user-AI interactions for TikTok',
         date: 'INTERNSHIP',
         thumbnail: tiktok,
-        route: '/case-study/tiktok'
+        route: '/case-study/tiktok',
+        shouldPrefetch: true,
     },
     {
         id: 3,

@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import './CaseStudies.css';
 import { caseStudiesData } from '../../data/caseStudies';
 import LottiePlayer from 'react-lottie-player';
@@ -13,9 +14,11 @@ interface CaseStudyProps {
     caption?: string;
     posterImage?: string | StaticImageData;
     route?: string;
+    shouldPrefetch?: boolean;
 }
 
-export function CaseStudyWrapper({ thumbnail, caption, date, posterImage, route }: CaseStudyProps & { date?: string }) {
+export function CaseStudyWrapper({ thumbnail, caption, date, posterImage, route, shouldPrefetch = false }: CaseStudyProps & { date?: string }) {
+    const router = useRouter();
     const [isHovering, setIsHovering] = useState(false);
     const [isTextFlipped, setIsTextFlipped] = useState(false);
     const [isCentered, setIsCentered] = useState(false);
@@ -102,6 +105,11 @@ export function CaseStudyWrapper({ thumbnail, caption, date, posterImage, route 
 
     const handleMouseEnter = () => {
         if (isMobile) return; // Disable hover on mobile
+
+        if (route && shouldPrefetch) {
+            router.prefetch(route);
+        }
+
         setIsHovering(true);
         if (videoRef.current) {
             videoRef.current.play();
@@ -182,7 +190,7 @@ export function CaseStudyWrapper({ thumbnail, caption, date, posterImage, route 
 
     if (route) {
         return (
-            <Link href={route} className="case-study-link" prefetch={false}>
+            <Link href={route} className="case-study-link" prefetch={shouldPrefetch}>
                 {content}
             </Link>
         );
@@ -202,6 +210,7 @@ export function CaseStudies() {
                     date={caseStudy.date}
                     posterImage={caseStudy.posterImage}
                     route={caseStudy.route}
+                    shouldPrefetch={caseStudy.shouldPrefetch}
                 />
             ))}
         </section>

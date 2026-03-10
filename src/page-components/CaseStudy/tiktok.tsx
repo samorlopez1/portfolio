@@ -11,9 +11,8 @@ import {
 } from './components';
 
 import TikTokThumbnail from '../../assets/tiktok.png';
-import tiktok01 from '../../assets/tiktok_pictures/tiktok_01.json';
 
-const imageUrls = [tiktok01];
+const imageUrls = ['/animations/tiktok_01.json'];
 
 
 const sidebarLinks = [

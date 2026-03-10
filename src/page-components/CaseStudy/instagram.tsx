@@ -13,14 +13,18 @@ import {
 import type { StaticImageData } from 'next/image';
 
 import InstagramThumbnail from '../../assets/instagram_events_cover.png';
-import instagram00 from '../../assets/instagram_pictures/instagram_00.json';
 import instagram01 from '../../assets/instagram_pictures/instagram_01.webp';
-import instagram02 from '../../assets/instagram_pictures/instagram_02.json';
-import instagram03 from '../../assets/instagram_pictures/instagram_03.json';
 import instagram04 from '../../assets/instagram_pictures/instagram_04.png';
 import instagram05 from '../../assets/instagram_pictures/instagram_05.png';
 
-const imageUrls: (StaticImageData | object | string)[] = [instagram00, instagram01, instagram02, instagram03, instagram04, instagram05];
+const imageUrls: (StaticImageData | string)[] = [
+    '/animations/instagram_00.json',
+    instagram01,
+    '/animations/instagram_02.json',
+    '/animations/instagram_03.json',
+    instagram04,
+    instagram05,
+];
 
 const sidebarLinks = [
     { id: 'context', label: 'OVERVIEW' },
