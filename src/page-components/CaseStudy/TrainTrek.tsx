@@ -11,6 +11,7 @@ import {
 } from './components';
 
 // Static imports for Next.js
+import trainTrekCover from '../../assets/traintrek_cover.webp';
 import traintrek01 from '../../assets/traintrek_pictures/traintrek_01.png';
 import traintrek02 from '../../assets/traintrek_pictures/traintrek_02.png';
 import traintrek03 from '../../assets/traintrek_pictures/traintrek_03.png';
@@ -65,6 +66,7 @@ export const TrainTrekCaseStudy: React.FC = () => {
         <div style={{ backgroundColor: '#fff' }}>
             <CaseStudyHero
                 image="https://dl.dropboxusercontent.com/scl/fi/ds2cqvyov05jgy38x3vnq/Mockup-Vid-3.mp4?rlkey=5nr7xpiqja7br169y6c4pu4zc&st=f5flje9l&dl=0"
+                coverImage={trainTrekCover}
             />
 
             <div id="case-study-content-top" className="case-study-content-wrapper">

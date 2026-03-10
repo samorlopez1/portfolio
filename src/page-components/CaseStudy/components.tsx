@@ -157,6 +157,7 @@ export const TextContentWithMetadata: React.FC<TextContentWithMetadataProps> = (
 
 interface CaseStudyHeroProps {
     image: string | StaticImageData;
+    coverImage?: string | StaticImageData;
 }
 
 const isVideo = (src: string | StaticImageData) => {
@@ -164,20 +165,45 @@ const isVideo = (src: string | StaticImageData) => {
     return /\.(mp4|webm|ogg|mov)([?#].*)?$/i.test(srcStr);
 };
 
-export const CaseStudyHero: React.FC<CaseStudyHeroProps> = ({ image }) => {
+export const CaseStudyHero: React.FC<CaseStudyHeroProps> = ({ image, coverImage }) => {
     const imageSrc = typeof image === 'string' ? image : image.src;
     const isStaticImage = typeof image !== 'string';
+    const [isVideoReady, setIsVideoReady] = React.useState(false);
+
+    React.useEffect(() => {
+        setIsVideoReady(false);
+    }, [imageSrc]);
+
+    const coverSrc = coverImage
+        ? typeof coverImage === 'string'
+            ? coverImage
+            : coverImage.src
+        : undefined;
+
+    const isVideoHero = isVideo(image);
+
     return (
         <section className="case-study-hero">
-            {isVideo(image) ? (
-                <video
-                    src={imageSrc}
-                    className="case-study-hero-image"
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                />
+            {isVideoHero ? (
+                <>
+                    <video
+                        src={imageSrc}
+                        className="case-study-hero-image"
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        preload="auto"
+                        onLoadedData={() => setIsVideoReady(true)}
+                    />
+                    <div className={`case-study-hero-cover ${isVideoReady ? 'is-hidden' : ''}`} aria-hidden="true">
+                        {coverSrc ? (
+                            <img src={coverSrc} alt="" className="case-study-hero-cover-image" loading="eager" />
+                        ) : (
+                            <div className="case-study-hero-cover-placeholder" />
+                        )}
+                    </div>
+                </>
             ) : (
                 isStaticImage ? (
                     <Image

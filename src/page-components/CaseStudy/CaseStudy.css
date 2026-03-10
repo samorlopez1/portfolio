@@ -24,6 +24,7 @@
     flex-direction: column;
     background-color: var(--white);
     overflow: hidden;
+    position: relative;
 }
 
 .case-study-hero-content {
@@ -65,6 +66,31 @@
     height: 720px;
     background-color: #d0d0d0;
     object-fit: cover;
+}
+
+.case-study-hero-cover {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.35s ease;
+}
+
+.case-study-hero-cover.is-hidden {
+    opacity: 0;
+}
+
+.case-study-hero-cover-image,
+.case-study-hero-cover-placeholder {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.case-study-hero-cover-placeholder {
+    background: linear-gradient(120deg, #f4f4f4, #dfdfdf);
 }
 
 /* MAIN CONTENT WRAPPER */
