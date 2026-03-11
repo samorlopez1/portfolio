@@ -65,15 +65,17 @@
     display: flex;
     flex-direction: column;
     gap: var(--padding-l);
+    width: var(--width-about-image);
     max-width: var(--width-about-image);
     align-items: flex-start;
-    aspect-ratio: 4/5;
 }
 
 .about-image {
     width: 100%;
-    height: var(--height-about-image);
+    aspect-ratio: 4/5;
+    height: auto;
     object-fit: cover;
+    display: block;
     border-radius: 12px;
 }
 
@@ -171,8 +173,9 @@
     .about-image-wrapper {
         width: 100%;
         max-width: 100%;
-        height: 560px;
+        height: auto;
         align-items: flex-end;
+        padding-bottom: 10vh;
     }
 
     .about-image {

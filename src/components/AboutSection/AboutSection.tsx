@@ -6,13 +6,13 @@ import meImage from '../../assets/me.webp';
 import type { StaticImageData } from 'next/image';
 
 // Import your default skill image and specific skill images here
-import defaultSkillImage from '../../assets/about_me_pictures/default.png';
-import myFriendsImage from '../../assets/about_me_pictures/friends.jpg';
+import defaultSkillImage from '../../assets/about_me_pictures/default.webp';
+import myFriendsImage from '../../assets/about_me_pictures/friends.webp';
 import filmImage from '../../assets/about_me_pictures/film.webp';
 import newPeople from '../../assets/about_me_pictures/new_people.webp';
-import theSundays from '../../assets/about_me_pictures/the_sundays.png';
-import rougelikes from '../../assets/about_me_pictures/rougelikes.png';
-import podcasts from '../../assets/about_me_pictures/podcasts.png';
+import theSundays from '../../assets/about_me_pictures/the_sundays.webp';
+import rougelikes from '../../assets/about_me_pictures/rougelikes.webp';
+import podcasts from '../../assets/about_me_pictures/podcasts.webp';
 
 const DEFAULT_SKILL_IMAGE = defaultSkillImage;
 
@@ -24,6 +24,7 @@ const isVideoFile = (filePath: string | StaticImageData): boolean => {
 
 const skillImageMap: Record<string, string | StaticImageData> = {
     'film photos': filmImage,
+    'golf': '/images/golf.mp4',
     'his friends': myFriendsImage,
     'new people': newPeople,
     'the sundays': theSundays,
@@ -33,6 +34,8 @@ const skillImageMap: Record<string, string | StaticImageData> = {
 
 export function AboutSection() {
     const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
+    const selectedSkillMedia = hoveredSkill ? skillImageMap[hoveredSkill] ?? DEFAULT_SKILL_IMAGE : DEFAULT_SKILL_IMAGE;
+    const selectedSkillSrc = typeof selectedSkillMedia === 'string' ? selectedSkillMedia : selectedSkillMedia.src;
 
     return (
         <section className="about-section" id="about">
@@ -203,9 +206,9 @@ export function AboutSection() {
                 </div>
 
                 <div className="about-image-wrapper skills-image">
-                    {isVideoFile(hoveredSkill ? skillImageMap[hoveredSkill] : DEFAULT_SKILL_IMAGE) ? (
+                    {isVideoFile(selectedSkillMedia) ? (
                         <video
-                            src={hoveredSkill ? (typeof skillImageMap[hoveredSkill] === 'string' ? skillImageMap[hoveredSkill] : (skillImageMap[hoveredSkill] as StaticImageData).src) : (typeof DEFAULT_SKILL_IMAGE === 'string' ? DEFAULT_SKILL_IMAGE : DEFAULT_SKILL_IMAGE.src)}
+                            src={selectedSkillSrc}
                             className="about-image"
                             autoPlay
                             loop
@@ -214,7 +217,7 @@ export function AboutSection() {
                         />
                     ) : (
                         <img
-                            src={hoveredSkill ? (typeof skillImageMap[hoveredSkill] === 'string' ? skillImageMap[hoveredSkill] : (skillImageMap[hoveredSkill] as StaticImageData).src) : (typeof DEFAULT_SKILL_IMAGE === 'string' ? DEFAULT_SKILL_IMAGE : DEFAULT_SKILL_IMAGE.src)}
+                            src={selectedSkillSrc}
                             alt={hoveredSkill || 'Skills'}
                             className="about-image"
                         />
