@@ -8,6 +8,7 @@ import './CaseStudies.css';
 import { caseStudiesData } from '../../data/caseStudies';
 import LottiePlayer from 'react-lottie-player';
 import type { StaticImageData } from 'next/image';
+import gsap from 'gsap';
 
 interface CaseStudyProps {
     thumbnail?: string | object | StaticImageData;
@@ -200,19 +201,43 @@ export function CaseStudyWrapper({ thumbnail, caption, date, posterImage, route,
 }
 
 export function CaseStudies() {
+    const sectionRef = useRef<HTMLElement>(null);
+    const innerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const inner = innerRef.current;
+        if (!inner) return;
+
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReducedMotion) return;
+
+        gsap.fromTo(inner,
+            { opacity: 0, y: 32 },
+            {
+                opacity: 1,
+                y: 0,
+                duration: 1.2,
+                ease: 'power2.out',
+                delay: 1,
+            }
+        );
+    }, []);
+
     return (
-        <section className="case-studies">
-            {caseStudiesData.map((caseStudy) => (
-                <CaseStudyWrapper
-                    key={caseStudy.id}
-                    caption={caseStudy.caption}
-                    thumbnail={caseStudy.thumbnail}
-                    date={caseStudy.date}
-                    posterImage={caseStudy.posterImage}
-                    route={caseStudy.route}
-                    shouldPrefetch={caseStudy.shouldPrefetch}
-                />
-            ))}
+        <section ref={sectionRef} className="case-studies">
+            <div ref={innerRef} className="case-studies-inner">
+                {caseStudiesData.map((caseStudy) => (
+                    <CaseStudyWrapper
+                        key={caseStudy.id}
+                        caption={caseStudy.caption}
+                        thumbnail={caseStudy.thumbnail}
+                        date={caseStudy.date}
+                        posterImage={caseStudy.posterImage}
+                        route={caseStudy.route}
+                        shouldPrefetch={caseStudy.shouldPrefetch}
+                    />
+                ))}
+            </div>
         </section>
     );
 }

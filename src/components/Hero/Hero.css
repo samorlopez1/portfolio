@@ -98,7 +98,7 @@
 @media (max-width: 768px) {
     .hero {
         position: relative;
-        height: 66vh;
+        height: 80vh;
         gap: var(--padding-l, 16px);
         padding-bottom: var(--padding-page);
     }

@@ -1,9 +1,4 @@
 .case-studies {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--padding-page);
-    align-items: flex-start;
-    justify-content: flex-start;
     position: relative;
     z-index: 2;
     isolation: isolate;
@@ -11,6 +6,15 @@
     padding: 0 var(--padding-page);
     box-sizing: border-box;
     background-color: var(--white);
+}
+
+.case-studies-inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--padding-page);
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
 }
 
 .case-study-wrapper {

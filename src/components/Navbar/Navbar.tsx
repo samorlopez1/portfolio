@@ -20,9 +20,9 @@ export function Navbar() {
 
         const handleScroll = () => {
             const currentScrollY = window.scrollY;
-            const threshold = window.innerHeight;
+            const threshold = 64;
 
-            // Always show navbar before 80vh
+            // Always show navbar before threshold
             if (currentScrollY < threshold) {
                 setShowNavbar(true);
             } else {
@@ -60,7 +60,7 @@ export function Navbar() {
         if (pathname === '/') {
             const element = document.getElementById('work');
             if (element) {
-                const offsetPosition = element.getBoundingClientRect().top + window.scrollY + 64;
+                const offsetPosition = element.getBoundingClientRect().top + window.scrollY - 16;
                 window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
             }
         } else {
