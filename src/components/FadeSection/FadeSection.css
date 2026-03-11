@@ -1,8 +1,8 @@
 .fade-section {
     width: 100%;
     height: 30vh;
-    max-height: 1440px;
-    margin-top: 90vh;
+    max-height: 200px;
+    margin-top: min(90vh, 1440px);
     background: linear-gradient(to bottom,
             rgba(255, 255, 255, 0) 0%,
             rgba(255, 255, 255, 1) 100%);
