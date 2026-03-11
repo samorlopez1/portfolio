@@ -9,6 +9,8 @@
     align-items: flex-start;
     padding: var(--padding-page) var(--padding-page);
     width: 100%;
+    max-width: 1920px;
+    margin: 0 auto;
     background-color: transparent;
     transition: transform .35s ease-in-out, opacity 0.35s ease-in-out;
     transform: translateY(0);

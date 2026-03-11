@@ -46,4 +46,8 @@
         overflow: hidden;
         opacity: 0.85;
     }
+
+    .p5-background-overlay-bottom {
+        height: 20%;
+    }
 }

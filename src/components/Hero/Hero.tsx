@@ -2,8 +2,8 @@
 
 import './Hero.css';
 import '../P5Background/P5Background.css';
-import { P5Background } from '../P5Background';
-import { useRef, memo, useEffect } from 'react';
+import { P5Background, P5BackgroundLite } from '../P5Background';
+import { useRef, memo, useEffect, useState } from 'react';
 import gsap from 'gsap';
 import { SplitText } from 'gsap/dist/SplitText';
 
@@ -20,6 +20,15 @@ function HeroComponent({ sweepCallbackRef }: HeroProps) {
     const headingRef = useRef<HTMLDivElement>(null);
     const subtitleRef = useRef<HTMLParagraphElement>(null);
     const nameRef = useRef<HTMLParagraphElement>(null);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const mql = window.matchMedia('(max-width: 499px)');
+        setIsMobile(mql.matches);
+        const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+        mql.addEventListener('change', handler);
+        return () => mql.removeEventListener('change', handler);
+    }, []);
 
     // Setup the sweep callback for P5Background
     const handleSetSweepCallback = (callback: (x: number, y: number) => void) => {
@@ -91,6 +100,11 @@ function HeroComponent({ sweepCallbackRef }: HeroProps) {
 
         const update = () => {
             rafId = 0;
+            if (window.innerWidth < 768) {
+                hero.style.opacity = '1';
+                hero.style.transform = '';
+                return;
+            }
             const fadeDistance = window.innerHeight;
             const linear = Math.min(Math.max(window.scrollY / fadeDistance, 0), 1);
             const progress = linear * linear; // ease-in curve
@@ -122,7 +136,7 @@ function HeroComponent({ sweepCallbackRef }: HeroProps) {
         <section className="hero" id="home" ref={heroRef}>
             <div className="p5-background">
                 <div className="p5-background-overlay-top" />
-                <P5Background setSweepCallback={handleSetSweepCallback} />
+                {isMobile ? <P5BackgroundLite /> : <P5Background setSweepCallback={handleSetSweepCallback} />}
                 <div className="p5-background-overlay-bottom" />
             </div>
 
