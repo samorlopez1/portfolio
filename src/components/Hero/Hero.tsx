@@ -20,7 +20,7 @@ function HeroComponent({ sweepCallbackRef }: HeroProps) {
     const headingRef = useRef<HTMLDivElement>(null);
     const subtitleRef = useRef<HTMLParagraphElement>(null);
     const nameRef = useRef<HTMLParagraphElement>(null);
-    const [isMobile, setIsMobile] = useState(false);
+    const [isMobile, setIsMobile] = useState<boolean | null>(null);
 
     useEffect(() => {
         const mql = window.matchMedia('(max-width: 499px)');
@@ -136,7 +136,7 @@ function HeroComponent({ sweepCallbackRef }: HeroProps) {
         <section className="hero" id="home" ref={heroRef}>
             <div className="p5-background">
                 <div className="p5-background-overlay-top" />
-                {isMobile ? <P5BackgroundLite /> : <P5Background setSweepCallback={handleSetSweepCallback} />}
+                {isMobile === null ? null : isMobile ? <P5BackgroundLite /> : <P5Background setSweepCallback={handleSetSweepCallback} />}
                 <div className="p5-background-overlay-bottom" />
             </div>
 
