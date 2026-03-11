@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 import { Navbar } from "@/src/components/Navbar";
 import { Footer } from "@/src/components/Footer";
 import { ScrollToTop } from "@/src/components/ScrollToTop/ScrollToTop";
+import { SmoothScroll } from "@/src/components/SmoothScroll/SmoothScroll";
 import "@/src/index.css";
 import "@/src/tokens.css";
 
@@ -41,10 +42,12 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body>
-                <ScrollToTop />
-                <Navbar />
-                {children}
-                <Footer />
+                <SmoothScroll>
+                    <ScrollToTop />
+                    <Navbar />
+                    {children}
+                    <Footer />
+                </SmoothScroll>
             </body>
         </html>
     );

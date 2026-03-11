@@ -201,7 +201,7 @@ export function CaseStudyWrapper({ thumbnail, caption, date, posterImage, route,
 
 export function CaseStudies() {
     return (
-        <section className="case-studies" id="work">
+        <section className="case-studies">
             {caseStudiesData.map((caseStudy) => (
                 <CaseStudyWrapper
                     key={caseStudy.id}

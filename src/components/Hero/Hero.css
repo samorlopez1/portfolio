@@ -1,6 +1,6 @@
 .hero {
     display: flex;
-    position: relative;
+    position: fixed;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
@@ -14,6 +14,7 @@
     box-sizing: border-box;
     background-color: transparent;
     container-type: size;
+    z-index: 0;
 }
 
 .hero-header {
@@ -96,6 +97,7 @@
 
 @media (max-width: 768px) {
     .hero {
+        position: relative;
         height: 66vh;
         gap: var(--padding-l, 16px);
         padding-bottom: var(--padding-page);

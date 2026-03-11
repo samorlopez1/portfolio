@@ -4,10 +4,13 @@
     gap: var(--padding-page);
     align-items: flex-start;
     justify-content: flex-start;
+    position: relative;
+    z-index: 2;
+    isolation: isolate;
     width: 100%;
-    padding: 80px var(--padding-page);
+    padding: 0 var(--padding-page);
     box-sizing: border-box;
-    background-color: transparent;
+    background-color: var(--white);
 }
 
 .case-study-wrapper {
@@ -189,7 +192,6 @@
     .case-studies {
         gap: var(--padding-page);
         padding-bottom: 160px;
-        padding-top: var(--padding-page);
     }
 
     .case-study-wrapper {

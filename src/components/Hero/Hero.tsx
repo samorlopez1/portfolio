@@ -16,6 +16,7 @@ interface HeroProps {
 
 
 function HeroComponent({ sweepCallbackRef }: HeroProps) {
+    const heroRef = useRef<HTMLElement>(null);
     const headingRef = useRef<HTMLDivElement>(null);
     const subtitleRef = useRef<HTMLParagraphElement>(null);
     const nameRef = useRef<HTMLParagraphElement>(null);
@@ -81,8 +82,44 @@ function HeroComponent({ sweepCallbackRef }: HeroProps) {
         };
     }, []);
 
+    // Fade out + shift hero up 40px as the case-studies section scrolls up to cover it.
+    useEffect(() => {
+        const hero = heroRef.current;
+        if (!hero) return;
+
+        let rafId = 0;
+
+        const update = () => {
+            rafId = 0;
+            const fadeDistance = window.innerHeight;
+            const linear = Math.min(Math.max(window.scrollY / fadeDistance, 0), 1);
+            const progress = linear * linear; // ease-in curve
+            const opacity = 1 - progress;
+            const translateY = -progress * 40;
+            const scale = 1 - progress * 0.03;
+            hero.style.opacity = String(opacity);
+            hero.style.transform = `translateY(${translateY}px) scale(${scale})`;
+            hero.style.transformOrigin = 'center center';
+        };
+
+        const onScroll = () => {
+            if (rafId) return;
+            rafId = requestAnimationFrame(update);
+        };
+
+        update();
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll);
+
+        return () => {
+            if (rafId) cancelAnimationFrame(rafId);
+            window.removeEventListener('scroll', onScroll);
+            window.removeEventListener('resize', onScroll);
+        };
+    }, []);
+
     return (
-        <section className="hero" id="home">
+        <section className="hero" id="home" ref={heroRef}>
             <div className="p5-background">
                 <div className="p5-background-overlay-top" />
                 <P5Background setSweepCallback={handleSetSweepCallback} />

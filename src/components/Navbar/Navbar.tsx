@@ -20,12 +20,13 @@ export function Navbar() {
 
         const handleScroll = () => {
             const currentScrollY = window.scrollY;
+            const threshold = window.innerHeight;
 
-            // Always show navbar at the top of the page, disable hide logic entirely
-            if (currentScrollY < 50) {
+            // Always show navbar before 80vh
+            if (currentScrollY < threshold) {
                 setShowNavbar(true);
             } else {
-                // Only apply scroll hide/show logic when past 50px
+                // Only apply scroll hide/show logic past 80vh
                 if (currentScrollY > lastScrollY) {
                     // Scrolling down - hide
                     setShowNavbar(false);

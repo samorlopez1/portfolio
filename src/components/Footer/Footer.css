@@ -3,6 +3,9 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
+    position: relative;
+    z-index: 2;
+    isolation: isolate;
     width: 100%;
     max-width: 1920px;
     height: 100vh;
