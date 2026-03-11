@@ -2,16 +2,20 @@
 
 import { useEffect, useRef } from 'react';
 
+// Eagerly start loading p5 at module level so the fetch begins
+// as soon as this chunk is parsed, not after React mounts.
+const p5Promise = import('p5');
+
 // ============================================================
 // CONSTANTS
 // ============================================================
-const CELL_SIZE = 20;
+const CELL_SIZE = 25;
 const STARTING_ALPHA = 255;
 const BACKGROUND_COLOR = 255;
 const PROB_OF_NEIGHBOR = 0.3;
 const AMT_FADE_PER_FRAME = 5;
 const STROKE_WEIGHT = 1;
-const RANDOM_RADIUS = 8;
+const RANDOM_RADIUS = 6;
 const CIRCLE_RADIUS = 1;
 const CIRCLE_RADIUS_HOVER = 1;
 const HOVER_LERP_SPEED = 0.18;
@@ -38,7 +42,7 @@ export function P5Background({ setSweepCallback }: P5BackgroundProps) {
         if (!containerRef.current) return;
 
         const loadP5 = async () => {
-            const p5Module = await import('p5');
+            const p5Module = await p5Promise;
             const p5 = p5Module.default;
 
             const sketch = (p: any) => {
