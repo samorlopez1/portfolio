@@ -32,7 +32,7 @@
     padding-bottom: var(--padding-xs);
     color: var(--color-text, #000000);
     margin: 0;
-    font-family: 'Helvetica Neue', sans-serif;
+    font-family: var(--font-primary);
 }
 
 .gallery-subtitle {
@@ -41,7 +41,7 @@
     line-height: 1;
     color: var(--grey, rgba(41, 41, 46, 0.6));
     margin: 0;
-    font-family: 'Helvetica Neue', sans-serif;
+    font-family: var(--font-primary);
 }
 
 .gallery-grid {
@@ -111,7 +111,7 @@
 .gallery-item-title,
 .gallery-item-caption {
     margin: 0;
-    font-family: 'Helvetica Neue', sans-serif;
+    font-family: var(--font-primary);
     font-weight: 400;
 }
 

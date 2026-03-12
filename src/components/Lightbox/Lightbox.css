@@ -106,14 +106,14 @@
     font-weight: 400;
     margin: 0;
     color: var(--black);
-    font-family: 'Helvetica Neue', sans-serif;
+    font-family: var(--font-primary);
 }
 
 .lightbox-info p {
     font-size: 12px;
     margin: 0;
     color: var(--grey);
-    font-family: 'Helvetica Neue', sans-serif;
+    font-family: var(--font-primary);
 }
 
 .lightbox-carousel-nav {
@@ -132,7 +132,7 @@
     cursor: pointer;
     padding: 8px 12px;
     transition: color 0.2s ease;
-    font-family: 'Helvetica Neue', sans-serif;
+    font-family: var(--font-primary);
     font-weight: 400;
 }
 

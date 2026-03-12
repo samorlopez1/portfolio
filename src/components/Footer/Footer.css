@@ -83,7 +83,7 @@
 }
 
 .footer-subtitle {
-    font-family: 'Helvetica Neue', sans-serif;
+    font-family: var(--font-primary);
     font-size: 12px;
     font-weight: 400;
     line-height: normal;
@@ -94,7 +94,7 @@
 }
 
 .footer-subtitle-right {
-    font-family: 'Helvetica Neue', sans-serif;
+    font-family: var(--font-primary);
     font-size: 12px;
     font-weight: 400;
     line-height: normal;
@@ -155,7 +155,7 @@ a:hover {
 }
 
 .footer-meta {
-    font-family: 'Helvetica Neue', sans-serif;
+    font-family: var(--font-primary);
     font-size: 12px;
     font-weight: 400;
     line-height: normal;
