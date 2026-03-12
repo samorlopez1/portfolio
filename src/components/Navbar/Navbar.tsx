@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 
+const HOME_SCROLL_THRESHOLD_RATIO = 0.9;
+const DEFAULT_SCROLL_THRESHOLD = 64;
 
 export function Navbar() {
     const pathname = usePathname();
@@ -16,11 +18,14 @@ export function Navbar() {
     };
 
     useEffect(() => {
+        setShowNavbar(true);
         let lastScrollY = window.scrollY;
 
         const handleScroll = () => {
             const currentScrollY = window.scrollY;
-            const threshold = 64;
+            const threshold = pathname === '/'
+                ? window.innerHeight * HOME_SCROLL_THRESHOLD_RATIO
+                : DEFAULT_SCROLL_THRESHOLD;
 
             // Always show navbar before threshold
             if (currentScrollY < threshold) {
@@ -43,7 +48,7 @@ export function Navbar() {
         return () => {
             window.removeEventListener("scroll", handleScroll);
         }
-    }, []);
+    }, [pathname]);
 
     const handleHomeClick = (e: React.MouseEvent) => {
         if (pathname !== '/') {

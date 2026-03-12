@@ -2,8 +2,17 @@
 
 import './Hero.css';
 import '../P5Background/P5Background.css';
-import { P5Background, P5BackgroundLite } from '../P5Background';
+import dynamic from 'next/dynamic';
 import { useRef, memo, useEffect, useState } from 'react';
+
+const P5Background = dynamic(
+    () => import('../P5Background/P5Background').then((m) => m.P5Background),
+    { ssr: false }
+);
+const P5BackgroundLite = dynamic(
+    () => import('../P5Background/P5BackgroundLite').then((m) => m.P5BackgroundLite),
+    { ssr: false }
+);
 import gsap from 'gsap';
 import { SplitText } from 'gsap/dist/SplitText';
 
@@ -20,7 +29,11 @@ function HeroComponent({ sweepCallbackRef }: HeroProps) {
     const headingRef = useRef<HTMLDivElement>(null);
     const subtitleRef = useRef<HTMLParagraphElement>(null);
     const nameRef = useRef<HTMLParagraphElement>(null);
-    const [isMobile, setIsMobile] = useState<boolean | null>(null);
+    const [isMobile, setIsMobile] = useState<boolean>(() => {
+        if (typeof window === 'undefined') return false;
+        return window.matchMedia('(max-width: 499px)').matches;
+    });
+    const [showBackground, setShowBackground] = useState(false);
 
     useEffect(() => {
         const mql = window.matchMedia('(max-width: 499px)');
@@ -28,6 +41,11 @@ function HeroComponent({ sweepCallbackRef }: HeroProps) {
         const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
         mql.addEventListener('change', handler);
         return () => mql.removeEventListener('change', handler);
+    }, []);
+
+    useEffect(() => {
+        const frameId = requestAnimationFrame(() => setShowBackground(true));
+        return () => cancelAnimationFrame(frameId);
     }, []);
 
     // Setup the sweep callback for P5Background
@@ -134,9 +152,9 @@ function HeroComponent({ sweepCallbackRef }: HeroProps) {
 
     return (
         <section className="hero" id="home" ref={heroRef}>
-            <div className="p5-background">
+            <div className={`p5-background ${showBackground ? 'p5-background-visible' : ''}`}>
                 <div className="p5-background-overlay-top" />
-                {isMobile === null ? null : isMobile ? <P5BackgroundLite /> : <P5Background setSweepCallback={handleSetSweepCallback} />}
+                {isMobile ? <P5BackgroundLite /> : <P5Background setSweepCallback={handleSetSweepCallback} />}
                 <div className="p5-background-overlay-bottom" />
             </div>
 

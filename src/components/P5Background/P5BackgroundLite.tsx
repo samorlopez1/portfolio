@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react';
 const p5Promise = import('p5');
 
 // CONSTANTS
-const CELL_SIZE = 22;
+const CELL_SIZE = 30;
 const COLOR_R = 40;
 const COLOR_G = 40;
 const COLOR_B = 40;
@@ -17,6 +17,7 @@ const STROKE_WEIGHT = 1;
 const RANDOM_RADIUS = 17;
 const CIRCLE_RADIUS = 1;
 const GRID_DOT_ALPHA = 70;
+const FRAME_RATE = 30;
 
 export function P5BackgroundLite() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -35,6 +36,7 @@ export function P5BackgroundLite() {
                 let currentRow = -1;
                 let currentCol = -1;
                 let allNeighbors: Array<{ row: number; col: number; opacity: number }> = [];
+                let gridBuffer: any = null;
 
                 p.setup = () => {
                     const cnv = p.createCanvas(window.innerWidth, window.innerHeight);
@@ -44,20 +46,18 @@ export function P5BackgroundLite() {
 
                     p.noFill();
                     p.strokeWeight(STROKE_WEIGHT);
+                    p.frameRate(FRAME_RATE);
 
                     numRows = Math.ceil(window.innerHeight / CELL_SIZE);
                     numCols = Math.ceil(window.innerWidth / CELL_SIZE);
+                    rebuildGridBuffer();
                 };
 
                 p.draw = () => {
                     p.background(BACKGROUND_COLOR);
 
-                    // Draw the default grid of dots
-                    p.stroke(COLOR_R, COLOR_G, COLOR_B, GRID_DOT_ALPHA);
-                    for (let col = 0; col <= numCols; col++) {
-                        for (let row = 0; row <= numRows; row++) {
-                            p.circle(col * CELL_SIZE, row * CELL_SIZE, CIRCLE_RADIUS);
-                        }
+                    if (gridBuffer) {
+                        p.image(gridBuffer, 0, 0);
                     }
 
                     // Calculate the row and column of the cell that the mouse is over
@@ -80,14 +80,19 @@ export function P5BackgroundLite() {
                     }
 
                     // Draw and update all neighbors
-                    for (let neighbor of allNeighbors) {
+                    let writeIndex = 0;
+                    for (let i = 0; i < allNeighbors.length; i++) {
+                        const neighbor = allNeighbors[i];
                         neighbor.opacity = Math.max(0, neighbor.opacity - AMT_FADE_PER_FRAME);
+                        if (neighbor.opacity <= 0) continue;
+
                         p.stroke(COLOR_R, COLOR_G, COLOR_B, neighbor.opacity);
                         p.circle(neighbor.col * CELL_SIZE, neighbor.row * CELL_SIZE, CIRCLE_RADIUS);
+                        allNeighbors[writeIndex] = neighbor;
+                        writeIndex += 1;
                     }
 
-                    // Remove neighbors with zero opacity
-                    allNeighbors = allNeighbors.filter((n) => n.opacity > 0);
+                    allNeighbors.length = writeIndex;
                 };
 
                 const getRandomNeighbors = (row: number, col: number) => {
@@ -129,6 +134,24 @@ export function P5BackgroundLite() {
                     p.resizeCanvas(window.innerWidth, window.innerHeight);
                     numRows = Math.ceil(window.innerHeight / CELL_SIZE);
                     numCols = Math.ceil(window.innerWidth / CELL_SIZE);
+                    rebuildGridBuffer();
+                };
+
+                const rebuildGridBuffer = () => {
+                    if (gridBuffer) {
+                        gridBuffer.remove();
+                    }
+
+                    gridBuffer = p.createGraphics(p.width, p.height);
+                    gridBuffer.noFill();
+                    gridBuffer.strokeWeight(STROKE_WEIGHT);
+                    gridBuffer.stroke(COLOR_R, COLOR_G, COLOR_B, GRID_DOT_ALPHA);
+
+                    for (let col = 0; col <= numCols; col++) {
+                        for (let row = 0; row <= numRows; row++) {
+                            gridBuffer.circle(col * CELL_SIZE, row * CELL_SIZE, CIRCLE_RADIUS);
+                        }
+                    }
                 };
             };
 

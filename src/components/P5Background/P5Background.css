@@ -8,13 +8,11 @@
     z-index: 1;
     pointer-events: none;
     opacity: 0;
-    animation: p5-fade-in 1.5s ease-out 0.5s forwards;
+    transition: opacity 1s ease-out;
 }
 
-@keyframes p5-fade-in {
-    to {
-        opacity: 1;
-    }
+.p5-background.p5-background-visible {
+    opacity: 1;
 }
 
 .p5-background-canvas {
