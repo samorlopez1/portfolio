@@ -50,4 +50,8 @@
     .p5-background-overlay-bottom {
         height: 20%;
     }
+
+    .p5-background-overlay-top {
+        height: 10%;
+    }
 }

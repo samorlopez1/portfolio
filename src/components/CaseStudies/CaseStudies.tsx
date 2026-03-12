@@ -141,15 +141,26 @@ export function CaseStudyWrapper({ thumbnail, caption, date, posterImage, route,
             <div className="case-study-thumbnail" data-node-id="854:232">
                 {thumbnail ? (
                     typeof thumbnail === 'string' && thumbnail.includes('.mp4') ? (
-                        <video
-                            ref={videoRef}
-                            src={thumbnail}
-                            loop
-                            muted
-                            playsInline
-                            poster={typeof thumbnail === 'string' && thumbnail.includes('.mp4') ? (typeof posterImage === 'string' ? posterImage : posterImage?.src) : undefined}
-                            className="case-study-video"
-                        />
+                        <>
+                            <video
+                                ref={videoRef}
+                                src={thumbnail}
+                                loop
+                                muted
+                                playsInline
+                                className="case-study-video"
+                            />
+                            {posterImage && (
+                                <div className={`case-study-poster-overlay ${isHovering || (isMobile && isCentered) ? 'hidden' : ''}`}>
+                                    <Image
+                                        src={posterImage}
+                                        alt={caption || 'Case study'}
+                                        fill
+                                        sizes="(max-width: 1080px) 100vw, 50vw"
+                                    />
+                                </div>
+                            )}
+                        </>
                     ) : typeof thumbnail === 'object' && 'src' in thumbnail ? (
                         <Image
                             src={thumbnail as StaticImageData}

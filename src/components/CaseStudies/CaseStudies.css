@@ -69,6 +69,25 @@
     transform: scale(1.02);
 }
 
+.case-study-poster-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    opacity: 1;
+    transition: opacity 0.4s ease-in-out;
+    pointer-events: none;
+}
+
+.case-study-poster-overlay.hidden {
+    opacity: 0;
+}
+
+.case-study-poster-overlay img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .case-study-thumbnail .placeholder {
     width: 100%;
     height: 100%;
