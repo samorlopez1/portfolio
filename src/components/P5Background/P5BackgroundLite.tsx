@@ -16,7 +16,7 @@ const AMT_FADE_PER_FRAME = 5;
 const STROKE_WEIGHT = 1;
 const RANDOM_RADIUS = 17;
 const CIRCLE_RADIUS = 1;
-const GRID_DOT_ALPHA = 110;
+const GRID_DOT_ALPHA = 70;
 
 export function P5BackgroundLite() {
     const containerRef = useRef<HTMLDivElement>(null);

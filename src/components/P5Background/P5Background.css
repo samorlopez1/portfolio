@@ -7,6 +7,14 @@
     height: 100%;
     z-index: 1;
     pointer-events: none;
+    opacity: 0;
+    animation: p5-fade-in 1.5s ease-out 0.5s forwards;
+}
+
+@keyframes p5-fade-in {
+    to {
+        opacity: 1;
+    }
 }
 
 .p5-background canvas {
@@ -44,7 +52,6 @@
     .p5-background {
         height: 66vh;
         overflow: hidden;
-        opacity: 0.85;
     }
 
     .p5-background-overlay-bottom {
