@@ -116,17 +116,13 @@ export const InstagramCaseStudy: React.FC = () => {
                         />
                         <LottieSection
                             src={imageUrls[0]}
-                        />
-                        <ImageSection
-                            src={imageUrls[1] as StaticImageData}
+                            image={imageUrls[1] as StaticImageData}
                             header="Add Key Event Details Through the New Event Creation Flow"
                             caption="Event details and third-party integrations can be added to an event post. The information is then used to power various features that enhance event discovery and participation."
                         />
                         <LottieSection
                             src={imageUrls[3]}
-                        />
-                        <LottieSection
-                            src={imageUrls[2]}
+                            src2={imageUrls[2]}
                             header="RSVP to Events Effortlessly"
                             caption="Event posts now are supplemented with an RSVP button, allowing users to quickly access important event links."
                         />

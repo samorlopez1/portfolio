@@ -5,16 +5,16 @@ import { useEffect, useRef } from 'react';
 const p5Promise = import('p5');
 
 // CONSTANTS
-const CELL_SIZE = 25;
-const COLOR_R = 80;
-const COLOR_G = 80;
-const COLOR_B = 80;
+const CELL_SIZE = 22;
+const COLOR_R = 40;
+const COLOR_G = 40;
+const COLOR_B = 40;
 const STARTING_ALPHA = 255;
 const BACKGROUND_COLOR = 255;
 const PROB_OF_NEIGHBOR = 0.3;
 const AMT_FADE_PER_FRAME = 5;
 const STROKE_WEIGHT = 1;
-const RANDOM_RADIUS = 12;
+const RANDOM_RADIUS = 17;
 const CIRCLE_RADIUS = 1;
 const GRID_DOT_ALPHA = 110;
 

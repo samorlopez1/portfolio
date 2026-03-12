@@ -1,9 +1,9 @@
 import instagram from '../assets/instagram_events_cover.webp';
 import tiktok from '../assets/tiktok.png';
-import wordlet from '../assets/wordlet2.png';
+import wordlet from '../assets/wordlet_cover.webp';
 import traintrek from '../assets/traintrek_cover.webp';
 import ea from '../assets/ea.png';
-import stealth from '../assets/stealth.png';
+import stealth from '../assets/stealth.webp';
 import type { StaticImageData } from 'next/image';
 
 export interface CaseStudy {

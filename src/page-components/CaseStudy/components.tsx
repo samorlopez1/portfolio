@@ -28,44 +28,59 @@ export const TextSection: React.FC<TextSectionProps> = ({ caption, heading, body
 
 interface ImageSectionProps {
     src: string | StaticImageData;
+    src2?: string | StaticImageData;
     alt?: string;
     header?: string;
     caption?: string;
 }
 
-export const ImageSection: React.FC<ImageSectionProps> = ({ src, alt = '', caption, header }) => {
+const ImageContent: React.FC<{ src: string | StaticImageData; alt: string }> = ({ src, alt }) => {
     const isStaticImage = typeof src !== 'string';
+    return isStaticImage ? (
+        <Image
+            src={src as StaticImageData}
+            alt={alt}
+            width={(src as StaticImageData).width}
+            height={(src as StaticImageData).height}
+            sizes="(max-width: 1080px) 100vw, 67vw"
+        />
+    ) : (
+        <img src={src as string} alt={alt} loading="lazy" />
+    );
+};
+
+export const ImageSection: React.FC<ImageSectionProps> = ({ src, src2, alt = '', caption, header }) => {
     return (
         <div className="image-section">
             <div className="image-container">
-                {isStaticImage ? (
-                    <Image
-                        src={src as StaticImageData}
-                        alt={alt}
-                        width={(src as StaticImageData).width}
-                        height={(src as StaticImageData).height}
-                        sizes="(max-width: 1080px) 100vw, 67vw"
-                    />
-                ) : (
-                    <img src={src as string} alt={alt} loading="lazy" />
-                )}
+                <ImageContent src={src} alt={alt} />
             </div>
-            {header && <p className="image-header">{header}</p>}
-            {caption && <p className="caption">{caption}</p>}
+            {src2 && (
+                <div className="image-container">
+                    <ImageContent src={src2} alt={alt} />
+                </div>
+            )}
+            <div className="text-content">
+                {header && <p className="image-header">{header}</p>}
+                {caption && <p className="caption">{caption}</p>}
+            </div>
         </div>
     );
 };
 
 interface LottieSectionProps {
     src: any;
+    src2?: any;
+    image?: string | StaticImageData;
     header?: string;
     caption?: string;
 }
 
-export const LottieSection: React.FC<LottieSectionProps> = ({ src, caption, header }) => {
-    const [animationData, setAnimationData] = React.useState<any>(typeof src === 'string' ? null : src);
+const useLottieData = (src: any) => {
+    const [animationData, setAnimationData] = React.useState<any>(!src ? null : typeof src === 'string' ? null : src);
 
     React.useEffect(() => {
+        if (!src) return;
         let isMounted = true;
 
         const loadAnimation = async () => {
@@ -95,24 +110,44 @@ export const LottieSection: React.FC<LottieSectionProps> = ({ src, caption, head
         };
     }, [src]);
 
+    return animationData;
+};
+
+export const LottieSection: React.FC<LottieSectionProps> = ({ src, src2, image, caption, header }) => {
+    const animationData = useLottieData(src);
+    const animationData2 = useLottieData(src2);
+
     return (
         <div className="image-section">
             <div className="image-container">
                 {animationData ? <Lottie animationData={animationData} loop autoplay /> : null}
             </div>
-            {header && <p className="image-header">{header}</p>}
-            {caption && <p className="caption">{caption}</p>}
+            {src2 && (
+                <div className="image-container">
+                    {animationData2 ? <Lottie animationData={animationData2} loop autoplay /> : null}
+                </div>
+            )}
+            {image && (
+                <div className="image-container">
+                    <ImageContent src={image} alt="" />
+                </div>
+            )}
+            <div className="text-content">
+                {header && <p className="image-header">{header}</p>}
+                {caption && <p className="caption">{caption}</p>}
+            </div>
         </div>
     );
 };
 
 interface VideoSectionProps {
     src: string;
+    src2?: string;
     caption?: string;
     header?: string;
 }
 
-export const VideoSection: React.FC<VideoSectionProps> = ({ src, caption, header }) => {
+export const VideoSection: React.FC<VideoSectionProps> = ({ src, src2, caption, header }) => {
     return (
         <div className="video-section">
             <div className="video-container">
@@ -121,8 +156,18 @@ export const VideoSection: React.FC<VideoSectionProps> = ({ src, caption, header
                     Your browser does not support the video tag.
                 </video>
             </div>
-            {header && <p className="image-header">{header}</p>}
-            {caption && <p className="caption">{caption}</p>}
+            {src2 && (
+                <div className="video-container">
+                    <video autoPlay loop muted playsInline>
+                        <source src={src2} type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            )}
+            <div className="text-content">
+                {header && <p className="image-header">{header}</p>}
+                {caption && <p className="caption">{caption}</p>}
+            </div>
         </div>
     );
 };

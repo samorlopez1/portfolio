@@ -12,7 +12,8 @@ import {
 } from './components';
 import type { StaticImageData } from 'next/image';
 
-import WordletThumbnail from '../../assets/wordlet.png';
+import WordletCover from '../../assets/wordlet_cover.webp';
+import WordletThumbnail from '../../assets/wordlet.webp';
 import wordlet01 from '../../assets/wordlet_pictures/wordlet_01.png';
 import wordlet02 from '../../assets/wordlet_pictures/wordlet_02.webp';
 import wordlet03 from '../../assets/wordlet_pictures/wordlet_03.png';
@@ -54,6 +55,7 @@ export const WordletCaseStudy: React.FC = () => {
         <div style={{ backgroundColor: '#fff' }}>
             <CaseStudyHero
                 image="https://dl.dropboxusercontent.com/scl/fi/aqfbdi0k6fy9r388g0i6o/wordlet.mp4?rlkey=jq5aucif6k6uu2qjucz6yf6vl&st=tnvexotf&dl=0"
+                coverImage={WordletCover}
             />
 
             <div id="case-study-content-top" className="case-study-content-wrapper">
