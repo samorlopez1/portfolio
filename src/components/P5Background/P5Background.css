@@ -17,7 +17,13 @@
     }
 }
 
-.p5-background canvas {
+.p5-background-canvas {
+    width: 100%;
+    height: 100%;
+}
+
+.p5-background canvas,
+.p5-background-canvas canvas {
     max-height: 1440px;
     pointer-events: none;
     display: block;
@@ -50,15 +56,15 @@
 
 @media (max-width: 768px) {
     .p5-background {
-        height: 66vh;
+        height: 70vh;
         overflow: hidden;
     }
 
     .p5-background-overlay-bottom {
-        height: 20%;
+        height: 40%;
     }
 
     .p5-background-overlay-top {
-        height: 10%;
+        height: 20%;
     }
 }

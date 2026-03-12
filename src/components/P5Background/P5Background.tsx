@@ -274,5 +274,5 @@ export function P5Background({ setSweepCallback }: P5BackgroundProps) {
         };
     }, [setSweepCallback]);
 
-    return <div ref={containerRef} className="p5-background" />;
+    return <div ref={containerRef} className="p5-background-canvas" />;
 }

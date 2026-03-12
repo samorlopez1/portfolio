@@ -142,5 +142,5 @@ export function P5BackgroundLite() {
         };
     }, []);
 
-    return <div ref={containerRef} className="p5-background" />;
+    return <div ref={containerRef} className="p5-background-canvas" />;
 }
