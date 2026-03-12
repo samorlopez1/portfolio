@@ -340,7 +340,7 @@
 
 }
 
-@media (max-width: 890px) {
+@media (max-width: 768px) {
 
     :root {
         --case-study-content-width: 100%;
@@ -366,7 +366,7 @@
 
     .sidebar-top {
         width: 100%;
-        margin-bottom: 10vh;
+        margin-bottom: var(--padding-xxl);
         flex-direction: column-reverse;
     }
 
@@ -388,6 +388,14 @@
 
     .image-header {
         font-size: var(--text-sm);
+    }
+
+    .case-study-hero-image {
+        aspect-ratio: 3/2;
+    }
+
+    .video-container {
+        aspect-ratio: 3/2;
     }
 
 }

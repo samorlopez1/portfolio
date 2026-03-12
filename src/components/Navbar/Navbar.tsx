@@ -7,6 +7,7 @@ import Link from 'next/link';
 
 const HOME_SCROLL_THRESHOLD_RATIO = 0.9;
 const DEFAULT_SCROLL_THRESHOLD = 64;
+const DESKTOP_MIN_WIDTH = 769;
 
 export function Navbar() {
     const pathname = usePathname();
@@ -23,7 +24,7 @@ export function Navbar() {
 
         const handleScroll = () => {
             const currentScrollY = window.scrollY;
-            const threshold = pathname === '/'
+            const threshold = pathname === '/' && window.innerWidth >= DESKTOP_MIN_WIDTH
                 ? window.innerHeight * HOME_SCROLL_THRESHOLD_RATIO
                 : DEFAULT_SCROLL_THRESHOLD;
 
