@@ -315,9 +315,10 @@
 
 .video-container {
     width: 100%;
-    aspect-ratio: 2 / 1;
+    aspect-ratio: 3 / 2;
     overflow: hidden;
     margin-bottom: var(--padding-m);
+    border-radius: 12px;
 }
 
 .video-container video {
@@ -325,6 +326,8 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    aspect-ratio: 3 / 2;
+
 }
 
 /* SECTION ANCHOR TARGETS */
