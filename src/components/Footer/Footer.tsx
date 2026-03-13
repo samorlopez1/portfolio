@@ -4,6 +4,7 @@ import './Footer.css';
 import { ThreeJsHero } from '../ThreeJsHero';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { scrollToHomeSection } from '@/src/lib/sectionNavigation';
 
 
 export function Footer() {
@@ -20,29 +21,21 @@ export function Footer() {
     };
 
     const handleWorkClick = (e: React.MouseEvent) => {
-        e.preventDefault();
-        if (pathname === '/') {
-            const element = document.getElementById('work');
-            if (element) {
-                const offsetPosition = element.getBoundingClientRect().top + window.scrollY + 64;
-                window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-            }
-        } else {
-            window.location.href = '/#work';
+        if (pathname !== '/') {
+            return;
         }
+
+        e.preventDefault();
+        scrollToHomeSection('work');
     };
 
     const handleAboutClick = (e: React.MouseEvent) => {
-        e.preventDefault();
-        if (pathname === '/') {
-            const element = document.getElementById('about');
-            if (element) {
-                const offsetPosition = element.getBoundingClientRect().top + window.scrollY + 64;
-                window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-            }
-        } else {
-            window.location.href = '/#about';
+        if (pathname !== '/') {
+            return;
         }
+
+        e.preventDefault();
+        scrollToHomeSection('about');
     };
 
     return (
@@ -64,7 +57,7 @@ export function Footer() {
                         <div className="footer-column" data-node-id="854:311">
                             <div className="footer-subtitle" data-node-id="854:310">
                                 <a href="mailto:samorlopez.work@gmail.com">SAMORLOPEZ.WORK@GMAIL.COM</a>
-                                <a href="/Resume_Samuel_Lopez.pdf" target="_blank" rel="noopener noreferrer">RESUME</a>
+                                <a href="/Resume_Samuel_Lopez_2026.pdf" target="_blank" rel="noopener noreferrer">RESUME</a>
                                 <a href="https://linkedin.com/in/samorlopez" target="_blank" rel="noopener noreferrer">LINKEDIN</a>
                             </div>
                         </div>
@@ -86,9 +79,9 @@ export function Footer() {
                         <div className="footer-column" data-node-id="854:311">
                             <div className="footer-subtitle" data-node-id="854:310">
                                 <Link href="/" onClick={handleHomeClick}>HOME</Link>
-                                <a href="#work" onClick={handleWorkClick}>WORK</a>
+                                <a href="/#work" onClick={handleWorkClick}>WORK</a>
                                 <Link href="/play" onClick={handlePlayClick}>PLAYGROUND</Link>
-                                <a href="#about" onClick={handleAboutClick}>ABOUT</a>
+                                <a href="/#about" onClick={handleAboutClick}>ABOUT</a>
                             </div>
                         </div>
                     </div>

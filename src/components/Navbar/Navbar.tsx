@@ -4,6 +4,7 @@ import './Navbar.css';
 import { useEffect, useState } from "react";
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { scrollToHomeSection } from '@/src/lib/sectionNavigation';
 
 const HOME_SCROLL_THRESHOLD_RATIO = 0.9;
 const DEFAULT_SCROLL_THRESHOLD = 64;
@@ -62,31 +63,21 @@ export function Navbar() {
     };
 
     const handleWorkClick = (e: React.MouseEvent) => {
-        e.preventDefault();
-        if (pathname === '/') {
-            const element = document.getElementById('work');
-            if (element) {
-                const offsetPosition = element.getBoundingClientRect().top + window.scrollY - 16;
-                window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-            }
-        } else {
-            // Navigate to home and let the page handle scrolling
-            window.location.href = '/#work';
+        if (pathname !== '/') {
+            return;
         }
+
+        e.preventDefault();
+        scrollToHomeSection('work');
     };
 
     const handleAboutClick = (e: React.MouseEvent) => {
-        e.preventDefault();
-        if (pathname === '/') {
-            const element = document.getElementById('about');
-            if (element) {
-                const offsetPosition = element.getBoundingClientRect().top + window.scrollY + 64;
-                window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-            }
-        } else {
-            // Navigate to home and let the page handle scrolling
-            window.location.href = '/#about';
+        if (pathname !== '/') {
+            return;
         }
+
+        e.preventDefault();
+        scrollToHomeSection('about');
     };
 
     return (
@@ -99,15 +90,15 @@ export function Navbar() {
             </div>
             <div className="navbar-center" data-node-id="854:221">
                 <div className="navbar-right">
-                    <a href="#work" onClick={handleWorkClick} className="nav-item">WORK</a>
+                    <a href="/#work" onClick={handleWorkClick} className="nav-item">WORK</a>
                 </div>
                 <div className="navbar-left">
                     <Link href="/play" onMouseEnter={handlePlayHover} className="nav-item">PLAY</Link>
                 </div>
             </div>
             <div className="navbar-right" data-node-id="854:223">
-                <a href="#about" onClick={handleAboutClick} className="nav-item">ABOUT</a>
-                <a href="/Resume_Samuel_Lopez.pdf" target="_blank" rel="noopener noreferrer" className="nav-item">RESUME</a>
+                <a href="/#about" onClick={handleAboutClick} className="nav-item">ABOUT</a>
+                <a href="/Resume_Samuel_Lopez_2026.pdf" target="_blank" rel="noopener noreferrer" className="nav-item">RESUME</a>
             </div>
         </nav>
     );
