@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import Lottie from 'lottie-react';
 import gsap from 'gsap';
 import { Lightbox } from '../../components/Lightbox';
@@ -266,23 +266,24 @@ export function Gallery() {
         setLightboxId(itemId);
     };
 
-    // Simple staggered fade-in for each image wrapper on mount
-    useEffect(() => {
+    // Simple staggered fade-in for each image wrapper on mount and caption
+    const headingRef = useRef<HTMLHeadingElement>(null);
+    const subtitleRef = useRef<HTMLParagraphElement>(null);
+
+    useLayoutEffect(() => {
         if (!galleryGridRef.current) return;
 
-        // Target the whole image block for each gallery item
-        const wrappers = galleryGridRef.current.querySelectorAll('.gallery-image-wrapper');
-        if (!wrappers.length) return;
+        const items = galleryGridRef.current.querySelectorAll('.gallery-item');
+        if (!items.length) return;
 
-        // Start all wrappers invisible
-        gsap.set(wrappers, { opacity: 0 });
+        const targets = [headingRef.current, subtitleRef.current, ...items].filter(Boolean);
 
-        // Staggered fade-in of the entire image area
-        gsap.to(wrappers, {
+        gsap.to(targets, {
             opacity: 1,
-            duration: 0.8,
+            y: 0,
+            duration: 1,
             stagger: 0.1,
-            ease: "power1.inOut",
+            ease: 'power1.out',
         });
     }, []);
 
@@ -290,8 +291,8 @@ export function Gallery() {
         <div className="gallery-page-wrapper">
             <main className="gallery-container">
                 <div className="gallery-header">
-                    <h1>Playground</h1>
-                    <p className="gallery-subtitle">LAST UPDATED ON 2/20/26</p>
+                    <h1 ref={headingRef}>Playground</h1>
+                    <p className="gallery-subtitle" ref={subtitleRef}>LAST UPDATED ON 2/20/26</p>
                 </div>
 
                 <div className="gallery-grid" ref={galleryGridRef}>

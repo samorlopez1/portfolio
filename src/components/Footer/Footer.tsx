@@ -1,6 +1,7 @@
 'use client';
 
 import './Footer.css';
+import { useEffect, useState } from 'react';
 import { ThreeJsHero } from '../ThreeJsHero';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
@@ -8,6 +9,22 @@ import { scrollToHomeSection } from '@/src/lib/sectionNavigation';
 
 
 export function Footer() {
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        const reveal = () => {
+            window.setTimeout(() => setIsVisible(true), 1200);
+        };
+
+        if (document.readyState === 'complete') {
+            reveal();
+            return;
+        }
+
+        window.addEventListener('load', reveal);
+        return () => window.removeEventListener('load', reveal);
+    }, []);
+
     const pathname = usePathname();
 
     const handleHomeClick = (e: React.MouseEvent) => {
@@ -39,7 +56,7 @@ export function Footer() {
     };
 
     return (
-        <footer className="footer" data-node-id="854:347">
+        <footer className={`footer ${isVisible ? 'visible' : ''}`}>
             {/* Footer Top */}
             <div className="footer-top" data-node-id="854:303">
                 <div className="footer-content" data-node-id="854:304">

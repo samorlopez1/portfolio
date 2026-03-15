@@ -18,13 +18,10 @@ import { SplitText } from 'gsap/dist/SplitText';
 
 gsap.registerPlugin(SplitText);
 
-interface HeroProps {
-    sweepCallbackRef?: React.MutableRefObject<((x: number, y: number) => void) | null>;
-}
 
 
 
-function HeroComponent({ sweepCallbackRef }: HeroProps) {
+function HeroComponent() {
     const heroRef = useRef<HTMLElement>(null);
     const headingRef = useRef<HTMLDivElement>(null);
     const subtitleRef = useRef<HTMLParagraphElement>(null);
@@ -48,12 +45,6 @@ function HeroComponent({ sweepCallbackRef }: HeroProps) {
         return () => cancelAnimationFrame(frameId);
     }, []);
 
-    // Setup the sweep callback for P5Background
-    const handleSetSweepCallback = (callback: (x: number, y: number) => void) => {
-        if (sweepCallbackRef) {
-            sweepCallbackRef.current = callback;
-        }
-    };
 
     // Animate hero text with gsap
     useEffect(() => {
@@ -154,22 +145,22 @@ function HeroComponent({ sweepCallbackRef }: HeroProps) {
         <section className="hero" id="home" ref={heroRef}>
             <div className={`p5-background ${showBackground ? 'p5-background-visible' : ''}`}>
                 <div className="p5-background-overlay-top" />
-                {isMobile ? <P5BackgroundLite /> : <P5Background setSweepCallback={handleSetSweepCallback} />}
+                {isMobile ? <P5BackgroundLite /> : <P5Background />}
                 <div className="p5-background-overlay-bottom" />
             </div>
 
-            <div className="hero-header" data-node-id="854:226">
-                <div className="hero-heading" ref={headingRef} data-node-id="854:227">
+            <div className="hero-header">
+                <div className="hero-heading" ref={headingRef}>
                     <p>Thrives in fast-paced environments,</p>
                     <p>interested in AI, motion, and creative tools,</p>
                     <p>passionate for all things design.</p>
                 </div>
-                <p className="hero-subtitle" ref={subtitleRef} data-node-id="854:228">
+                <p className="hero-subtitle" ref={subtitleRef}>
                     PRODUCT DESIGN INTERN @ TIKTOK
                 </p>
             </div>
             <div className="hero-name-wrapper">
-                <p className="hero-name" ref={nameRef} data-node-id="854:229">
+                <p className="hero-name" ref={nameRef}>
                     Samuel Orendain Lopez
                 </p>
             </div>
