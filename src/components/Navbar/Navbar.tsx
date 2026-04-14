@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { scrollToHomeSection } from '@/src/lib/sectionNavigation';
 import instagramPreview from '@/src/assets/instagram_phone.webp';
 import tiktokPreview from '@/src/assets/wordlet_phone.webp';
-import traintrekPreview from '@/src/assets/traintrek_phone.webp';
+import traintrekPreview from '@/src/assets/Traintrek_Phone.webp';
 import friendsPreview from '@/src/assets/about_me_pictures/friends.webp';
 import filmPreview from '@/src/assets/me.webp';
 import podcastsPreview from '@/src/assets/about_me_pictures/new_people.webp';
