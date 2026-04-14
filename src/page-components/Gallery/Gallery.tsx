@@ -21,6 +21,7 @@ import invisibleArchitecture2 from '../../assets/play_pictures/invisible_archite
 import interviewWorkshop from '../../assets/play_pictures/interview_workshop.webp';
 import openStudio from '../../assets/play_pictures/open_studio.webp';
 import vitaminDesign from '../../assets/play_pictures/vitamin_design_2.json';
+import aiDesign from '../../assets/play_pictures/ai_in_design.webp';
 
 
 interface GalleryItemData {
@@ -256,6 +257,13 @@ export function Gallery() {
             title: 'FITTED.UW',
             caption: 'PROMOTIONAL MATERIAL',
         },
+        {
+            id: 11,
+            topImage: aiDesign,
+            bottomImage: 'NA',
+            title: 'AI IN DESIGN',
+            caption: 'INSTAGRAM POST',
+        },
     ];
 
     const currentLightboxItem = galleryItems.find(item => item.id === lightboxId);
@@ -292,7 +300,7 @@ export function Gallery() {
             <main className="gallery-container">
                 <div className="gallery-header">
                     <h1 ref={headingRef}>Playground</h1>
-                    <p className="gallery-subtitle" ref={subtitleRef}>LAST UPDATED ON 2/20/26</p>
+                    <p className="gallery-subtitle" ref={subtitleRef}>LAST UPDATED ON 4/14/26</p>
                 </div>
 
                 <div className="gallery-grid" ref={galleryGridRef}>
