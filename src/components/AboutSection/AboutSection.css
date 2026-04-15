@@ -96,9 +96,9 @@
 
 .about-copy-row {
     display: inline-flex;
-    align-items: center;
-    gap: 8px;
+    align-items: baseline;
     min-height: 18px;
+    position: relative;
 }
 
 .about-image-links p {
@@ -126,6 +126,11 @@
     visibility: hidden;
     color: var(--black);
     pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: calc(100% + 8px);
+    transform: none;
+    white-space: nowrap;
 }
 
 /* Skills Section */
