@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
 import './AboutSection.css';
 import meImage from '../../assets/me.webp';
 import type { StaticImageData } from 'next/image';
@@ -34,8 +35,75 @@ const skillImageMap: Record<string, string | StaticImageData> = {
 
 export function AboutSection() {
     const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
+    const emailAddress = 'samorlopez.work@gmail.com';
+    const copiedBadgeRef = useRef<HTMLSpanElement | null>(null);
+    const copiedResetTimeoutRef = useRef<number | null>(null);
     const selectedSkillMedia = hoveredSkill ? skillImageMap[hoveredSkill] ?? DEFAULT_SKILL_IMAGE : DEFAULT_SKILL_IMAGE;
     const selectedSkillSrc = typeof selectedSkillMedia === 'string' ? selectedSkillMedia : selectedSkillMedia.src;
+
+    useEffect(() => {
+        return () => {
+            if (copiedResetTimeoutRef.current !== null) {
+                window.clearTimeout(copiedResetTimeoutRef.current);
+            }
+        };
+    }, []);
+
+    const copyEmailWithFallback = () => {
+        const textarea = document.createElement('textarea');
+        textarea.value = emailAddress;
+        textarea.setAttribute('readonly', '');
+        textarea.style.position = 'absolute';
+        textarea.style.left = '-9999px';
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+    };
+
+    const animateCopiedBadge = () => {
+        const badge = copiedBadgeRef.current;
+
+        if (!badge) {
+            return;
+        }
+
+        if (copiedResetTimeoutRef.current !== null) {
+            window.clearTimeout(copiedResetTimeoutRef.current);
+        }
+
+        gsap.killTweensOf(badge);
+        gsap.set(badge, { y: 10, autoAlpha: 0 });
+        gsap.to(badge, {
+            y: 0,
+            autoAlpha: 1,
+            duration: 0.24,
+            ease: 'power2.out',
+        });
+
+        copiedResetTimeoutRef.current = window.setTimeout(() => {
+            gsap.to(badge, {
+                y: -10,
+                autoAlpha: 0,
+                duration: 0.2,
+                ease: 'power2.in',
+            });
+        }, 1400);
+    };
+
+    const handleEmailCopy = async () => {
+        try {
+            if (navigator.clipboard?.writeText) {
+                await navigator.clipboard.writeText(emailAddress);
+            } else {
+                copyEmailWithFallback();
+            }
+            animateCopiedBadge();
+        } catch {
+            copyEmailWithFallback();
+            animateCopiedBadge();
+        }
+    };
 
     return (
         <section className="about-section" id="about">
@@ -57,7 +125,19 @@ export function AboutSection() {
                 <div className="about-image-wrapper">
                     <img src={typeof meImage === 'string' ? meImage : meImage.src} alt="About me" className="about-image" />
                     <div className="about-image-links">
-                        <a href="mailto:samorlopez.work@gmail.com">EMAIL</a>
+                        <div className="about-copy-row">
+                            <button
+                                type="button"
+                                className="about-copy-button"
+                                onClick={handleEmailCopy}
+                                aria-label="Copy email address to clipboard"
+                            >
+                                EMAIL
+                            </button>
+                            <span ref={copiedBadgeRef} className="about-copy-feedback" aria-live="polite">
+                                COPIED!
+                            </span>
+                        </div>
                         <a href="/Resume_Samuel_Lopez.pdf" target="_blank" rel="noopener noreferrer">RESUME</a>
                         <a href="https://linkedin.com/in/samorlopez" target="_blank" rel="noopener noreferrer">LINKEDIN</a>
                     </div>

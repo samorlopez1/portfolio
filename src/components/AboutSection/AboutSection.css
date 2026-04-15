@@ -94,10 +94,38 @@
     color: var(--grey);
 }
 
+.about-copy-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 18px;
+}
+
 .about-image-links p {
     margin: 0;
     padding: 0;
     white-space: nowrap;
+}
+
+.about-image-links a,
+.about-copy-button {
+    color: inherit;
+    font: inherit;
+    text-decoration: none;
+}
+
+.about-copy-button {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.about-copy-feedback {
+    opacity: 0;
+    visibility: hidden;
+    color: var(--black);
+    pointer-events: none;
 }
 
 /* Skills Section */

@@ -1,7 +1,8 @@
 'use client';
 
 import './Footer.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
 import { ThreeJsHero } from '../ThreeJsHero';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
@@ -10,6 +11,9 @@ import { scrollToHomeSection } from '@/src/lib/sectionNavigation';
 
 export function Footer() {
     const [isVisible, setIsVisible] = useState(false);
+    const emailAddress = 'samorlopez.work@gmail.com';
+    const copiedBadgeRef = useRef<HTMLSpanElement | null>(null);
+    const copiedResetTimeoutRef = useRef<number | null>(null);
 
     useEffect(() => {
         const reveal = () => {
@@ -25,7 +29,57 @@ export function Footer() {
         return () => window.removeEventListener('load', reveal);
     }, []);
 
+    useEffect(() => {
+        return () => {
+            if (copiedResetTimeoutRef.current !== null) {
+                window.clearTimeout(copiedResetTimeoutRef.current);
+            }
+        };
+    }, []);
+
     const pathname = usePathname();
+
+    const copyEmailWithFallback = () => {
+        const textarea = document.createElement('textarea');
+        textarea.value = emailAddress;
+        textarea.setAttribute('readonly', '');
+        textarea.style.position = 'absolute';
+        textarea.style.left = '-9999px';
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+    };
+
+    const animateCopiedBadge = () => {
+        const badge = copiedBadgeRef.current;
+
+        if (!badge) {
+            return;
+        }
+
+        if (copiedResetTimeoutRef.current !== null) {
+            window.clearTimeout(copiedResetTimeoutRef.current);
+        }
+
+        gsap.killTweensOf(badge);
+        gsap.set(badge, { y: 10, autoAlpha: 0 });
+        gsap.to(badge, {
+            y: 0,
+            autoAlpha: 1,
+            duration: 0.24,
+            ease: 'power2.out',
+        });
+
+        copiedResetTimeoutRef.current = window.setTimeout(() => {
+            gsap.to(badge, {
+                y: -10,
+                autoAlpha: 0,
+                duration: 0.2,
+                ease: 'power2.in',
+            });
+        }, 1400);
+    };
 
     const handleHomeClick = (e: React.MouseEvent) => {
         e.preventDefault();
@@ -55,6 +109,20 @@ export function Footer() {
         scrollToHomeSection('about');
     };
 
+    const handleEmailCopy = async () => {
+        try {
+            if (navigator.clipboard?.writeText) {
+                await navigator.clipboard.writeText(emailAddress);
+            } else {
+                copyEmailWithFallback();
+            }
+            animateCopiedBadge();
+        } catch {
+            copyEmailWithFallback();
+            animateCopiedBadge();
+        }
+    };
+
     return (
         <footer className={`footer ${isVisible ? 'visible' : ''}`}>
             {/* Footer Top */}
@@ -73,7 +141,19 @@ export function Footer() {
                         {/* contact */}
                         <div className="footer-column" data-node-id="854:311">
                             <div className="footer-subtitle" data-node-id="854:310">
-                                <a href="mailto:samorlopez.work@gmail.com">SAMORLOPEZ.WORK@GMAIL.COM</a>
+                                <div className="footer-copy-row">
+                                    <button
+                                        type="button"
+                                        className="footer-copy-button"
+                                        onClick={handleEmailCopy}
+                                        aria-label="Copy email address to clipboard"
+                                    >
+                                        SAMORLOPEZ.WORK@GMAIL.COM
+                                    </button>
+                                    <span ref={copiedBadgeRef} className="footer-copy-feedback" aria-live="polite">
+                                        COPIED!
+                                    </span>
+                                </div>
                                 <a href="/Resume_Samuel_Lopez_2026.pdf" target="_blank" rel="noopener noreferrer">RESUME</a>
                                 <a href="https://linkedin.com/in/samorlopez" target="_blank" rel="noopener noreferrer">LINKEDIN</a>
                             </div>
