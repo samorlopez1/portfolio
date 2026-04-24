@@ -7,10 +7,10 @@
     isolation: isolate;
     width: 100vw;
     max-width: 1920px;
-    padding: calc(2 * var(--padding-xxxl)) var(--padding-page);
+    padding: calc(4 * var(--padding-xxxl)) var(--padding-page);
     box-sizing: border-box;
     background-color: var(--white);
-    gap: calc(2 * var(--padding-xxxl));
+    gap: calc(4 * var(--padding-xxxl));
     scroll-margin-top: -64px;
 }
 
@@ -34,10 +34,18 @@
 .about-text-wrapper {
     display: flex;
     flex-direction: column;
-    gap: var(--padding-m);
+    gap: var(--padding-l);
+    justify-content: space-between;
     align-items: flex-start;
+    align-self: stretch;
     max-width: 560px;
     flex-shrink: 0;
+}
+
+.about-copy-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-m);
 }
 
 .about-title {
@@ -139,7 +147,7 @@
     flex-direction: column;
     gap: var(--padding-l);
     align-items: flex-start;
-    width: 640px;
+    width: 560px;
 }
 
 .skills-row {

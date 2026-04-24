@@ -110,16 +110,18 @@ export function AboutSection() {
             {/* First Row: About Text + Image */}
             <div className="about-row" data-node-id="865:123">
                 <div className="about-text-wrapper" data-node-id="865:124">
-                    <p className="about-title" data-node-id="865:125">
-                        Sees the big picture and sweats the details.
-                    </p>
-                    <div className="about-description" data-node-id="865:126">
-                        <p>
-                            I believe that the power of design is not only its ability to appeal visually, but for its role in shaping the systems and societies we live in.
+                    <div className="about-copy-group">
+                        <p className="about-title" data-node-id="865:125">
+                            Sees the big picture and sweats the details.
                         </p>
-                        <p>
-                            Strives to constantly improve, and to make meaningful impacts on the world.
-                        </p>
+                        <div className="about-description" data-node-id="865:126">
+                            <p>
+                                I believe that the power of design is not only its ability to appeal visually, but for its role in shaping the systems and societies we live in.
+                            </p>
+                            <p>
+                                Strives to constantly improve, and to make meaningful impacts on the world.
+                            </p>
+                        </div>
                     </div>
                 </div>
                 <div className="about-image-wrapper">

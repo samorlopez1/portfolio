@@ -151,12 +151,12 @@ function HeroComponent() {
 
             <div className="hero-header">
                 <div className="hero-heading" ref={headingRef}>
-                    <p>Fast paced product designer,</p>
+                    <p>Thrives in fast paced environments,</p>
                     <p>interested in AI, motion, and creative tools,</p>
                     <p>passionate for all things design.</p>
                 </div>
                 <p className="hero-subtitle" ref={subtitleRef}>
-                    UW HCDE | PREV. @ TIKTOK
+                    → PRODUCT DESIGNER @ MERCURY | PREV. TIKTOK
                 </p>
             </div>
             <div className="hero-name-wrapper">

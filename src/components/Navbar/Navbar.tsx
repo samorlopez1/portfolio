@@ -1,7 +1,9 @@
 'use client';
 
 import './Navbar.css';
+import gsap from 'gsap';
 import { useEffect, useState } from "react";
+import { useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { scrollToHomeSection } from '@/src/lib/sectionNavigation';
@@ -10,7 +12,11 @@ import tiktokPreview from '@/src/assets/wordlet_phone.webp';
 import traintrekPreview from '@/src/assets/Traintrek_Phone.webp';
 import friendsPreview from '@/src/assets/about_me_pictures/friends.webp';
 import filmPreview from '@/src/assets/me.webp';
+import mercuryIcon from '@/src/assets/about_me_pictures/mercury_icon.png';
 import podcastsPreview from '@/src/assets/about_me_pictures/new_people.webp';
+import eaIcon from '@/src/assets/about_me_pictures/ea_icon.png';
+import stealthAiIcon from '@/src/assets/about_me_pictures/stealth_ai_icon.jpeg';
+import tiktokIcon from '@/src/assets/about_me_pictures/tiktok_icon.jpeg';
 import invisibleArchitecturePreview from '@/src/assets/play_pictures/clothing_swap_1.webp';
 import happyHourPreview from '@/src/assets/play_pictures/ai_in_design.webp';
 import seatacAirportPreview from '@/src/assets/play_pictures/seatac_airport.webp';
@@ -19,13 +25,45 @@ const HOME_SCROLL_THRESHOLD_RATIO = 0.9;
 const DEFAULT_SCROLL_THRESHOLD = 64;
 const DESKTOP_MIN_WIDTH = 769;
 
+const resumePreviewEntries = [
+    {
+        organization: 'MERCURY',
+        title: 'Product Design',
+        type: 'INTERNSHIP',
+        timeframe: '→ Summer \'26',
+        icon: mercuryIcon.src,
+    },
+    {
+        organization: 'TIKTOK',
+        title: 'Product Design',
+        type: 'INTERNSHIP',
+        timeframe: 'Sep \'25 – Jan \'26',
+        icon: tiktokIcon.src,
+    },
+    {
+        organization: 'STEALTH AI STARTUP',
+        title: 'Interaction Design',
+        type: 'INTERNSHIP',
+        timeframe: 'Aug \'25 – Sep \'25',
+        icon: stealthAiIcon.src,
+    },
+    {
+        organization: 'EA GAMES',
+        title: 'Product Design',
+        type: 'CAPSTONE',
+        timeframe: 'Jan \'26 – Present',
+        icon: eaIcon.src,
+    },
+] as const;
+
 export function Navbar() {
     const pathname = usePathname();
     const [showNavbar, setShowNavbar] = useState(true);
-    const [activePreview, setActivePreview] = useState<'work' | 'play' | 'about' | null>(null);
+    const [activePreview, setActivePreview] = useState<'work' | 'play' | 'about' | 'resume' | null>(null);
     const [isPreviewEnabled, setIsPreviewEnabled] = useState(false);
+    const resumePreviewRef = useRef<HTMLDivElement | null>(null);
 
-    const handlePreviewEnter = (preview: 'work' | 'play' | 'about') => {
+    const handlePreviewEnter = (preview: 'work' | 'play' | 'about' | 'resume') => {
         if (!isPreviewEnabled) {
             return;
         }
@@ -81,6 +119,36 @@ export function Navbar() {
             window.removeEventListener("scroll", handleScroll);
         }
     }, [pathname]);
+
+    useEffect(() => {
+        const resumePreview = resumePreviewRef.current;
+
+        if (!resumePreview) {
+            return;
+        }
+
+        const rows = resumePreview.querySelectorAll<HTMLElement>('.nav-resume-item');
+        gsap.killTweensOf(rows);
+
+        if (activePreview !== 'resume') {
+            gsap.set(rows, { clearProps: 'all' });
+            return;
+        }
+
+        gsap.set(rows, {
+            autoAlpha: 0,
+            y: -14,
+        });
+
+        gsap.to(rows, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.32,
+            stagger: 0.05,
+            ease: 'power2.out',
+            overwrite: true,
+        });
+    }, [activePreview]);
 
     const handleHomeClick = (e: React.MouseEvent) => {
         if (pathname !== '/') {
@@ -140,8 +208,28 @@ export function Navbar() {
         );
     };
 
+    const renderResumePreview = () => (
+        <div ref={resumePreviewRef} className="nav-resume-card" aria-hidden={activePreview !== 'resume'}>
+            {resumePreviewEntries.map((entry) => (
+                <article className="nav-resume-item" key={`${entry.organization}-${entry.title}`}>
+                    <div className="nav-resume-organization">
+                        <img className="nav-resume-icon" src={entry.icon} alt="" />
+                        <div className="nav-resume-copy">
+                            <p className="nav-resume-kicker">{entry.organization}</p>
+                            <p className="nav-resume-title">{entry.title}</p>
+                        </div>
+                    </div>
+                    <div className="nav-resume-meta">
+                        <p className="nav-resume-kicker">{entry.type}</p>
+                        <p className="nav-resume-title">{entry.timeframe}</p>
+                    </div>
+                </article>
+            ))}
+        </div>
+    );
+
     const renderPreviewGroup = (
-        preview: 'work' | 'play' | 'about',
+        preview: 'work' | 'play' | 'about' | 'resume',
         label: string,
         content: React.ReactNode,
         isImageLayer: boolean,
@@ -158,7 +246,8 @@ export function Navbar() {
             ) : (
                 content
             )}
-            {isImageLayer && renderPreviewImages(preview)}
+            {isImageLayer && preview !== 'resume' && renderPreviewImages(preview)}
+            {isImageLayer && preview === 'resume' && renderResumePreview()}
         </div>
     );
 
@@ -199,7 +288,7 @@ export function Navbar() {
                 {isImageLayer ? (
                     <>
                         {renderPreviewGroup('about', 'ABOUT', null, isImageLayer)}
-                        <div className="nav-item nav-item-placeholder" aria-hidden="true">RESUME</div>
+                        {renderPreviewGroup('resume', 'RESUME', null, isImageLayer)}
                     </>
                 ) : (
                     <>
@@ -209,7 +298,12 @@ export function Navbar() {
                             <a href="/#about" onClick={handleAboutClick} className="nav-item">ABOUT</a>,
                             isImageLayer,
                         )}
-                        <a href="/Resume_Samuel_Lopez_2026.pdf" target="_blank" rel="noopener noreferrer" className="nav-item">RESUME</a>
+                        {renderPreviewGroup(
+                            'resume',
+                            'RESUME',
+                            <a href="/Resume_Samuel_Lopez_2026.pdf" target="_blank" rel="noopener noreferrer" className="nav-item">RESUME</a>,
+                            isImageLayer,
+                        )}
                     </>
                 )}
             </div>
