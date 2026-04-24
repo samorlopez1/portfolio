@@ -12,11 +12,7 @@ import tiktokPreview from '@/src/assets/wordlet_phone.webp';
 import traintrekPreview from '@/src/assets/Traintrek_Phone.webp';
 import friendsPreview from '@/src/assets/about_me_pictures/friends.webp';
 import filmPreview from '@/src/assets/me.webp';
-import mercuryIcon from '@/src/assets/about_me_pictures/mercury_icon.png';
 import podcastsPreview from '@/src/assets/about_me_pictures/new_people.webp';
-import eaIcon from '@/src/assets/about_me_pictures/ea_icon.png';
-import stealthAiIcon from '@/src/assets/about_me_pictures/stealth_ai_icon.jpeg';
-import tiktokIcon from '@/src/assets/about_me_pictures/tiktok_icon.jpeg';
 import invisibleArchitecturePreview from '@/src/assets/play_pictures/clothing_swap_1.webp';
 import happyHourPreview from '@/src/assets/play_pictures/ai_in_design.webp';
 import seatacAirportPreview from '@/src/assets/play_pictures/seatac_airport.webp';
@@ -31,28 +27,42 @@ const resumePreviewEntries = [
         title: 'Product Design',
         type: 'INTERNSHIP',
         timeframe: '→ Summer \'26',
-        icon: mercuryIcon.src,
     },
     {
         organization: 'TIKTOK',
         title: 'Product Design',
         type: 'INTERNSHIP',
-        timeframe: 'Sep \'25 – Jan \'26',
-        icon: tiktokIcon.src,
+        timeframe: 'Sep \'25 – Apr \'26',
     },
     {
         organization: 'STEALTH AI STARTUP',
         title: 'Interaction Design',
         type: 'INTERNSHIP',
         timeframe: 'Aug \'25 – Sep \'25',
-        icon: stealthAiIcon.src,
     },
     {
         organization: 'EA GAMES',
         title: 'Product Design',
         type: 'CAPSTONE',
         timeframe: 'Jan \'26 – Present',
-        icon: eaIcon.src,
+    },
+    {
+        organization: 'DESIGN FOR AMERICA UW',
+        title: 'Product Design Lead',
+        type: 'CAMPUS',
+        timeframe: 'Jan \'26 – Present',
+    },
+    {
+        organization: 'UX @ UW',
+        title: 'Director of Design',
+        type: 'CAMPUS',
+        timeframe: 'Dec \'26 – Present',
+    },
+    {
+        organization: 'FITTED UW',
+        title: 'Graphic Designer',
+        type: 'CAMPUS',
+        timeframe: 'Nov \'25 – Present',
     },
 ] as const;
 
@@ -137,15 +147,15 @@ export function Navbar() {
 
         gsap.set(rows, {
             autoAlpha: 0,
-            y: -14,
+            y: -16,
         });
 
         gsap.to(rows, {
             autoAlpha: 1,
             y: 0,
-            duration: 0.32,
+            duration: .75,
             stagger: 0.05,
-            ease: 'power2.out',
+            ease: 'power4.out',
             overwrite: true,
         });
     }, [activePreview]);
