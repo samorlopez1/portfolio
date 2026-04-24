@@ -213,7 +213,6 @@ export function Navbar() {
             {resumePreviewEntries.map((entry) => (
                 <article className="nav-resume-item" key={`${entry.organization}-${entry.title}`}>
                     <div className="nav-resume-organization">
-                        <img className="nav-resume-icon" src={entry.icon} alt="" />
                         <div className="nav-resume-copy">
                             <p className="nav-resume-kicker">{entry.organization}</p>
                             <p className="nav-resume-title">{entry.title}</p>
