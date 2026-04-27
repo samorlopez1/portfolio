@@ -251,3 +251,10 @@
         white-space: normal;
     }
 }
+
+@media (max-width: 480px) {
+    .footer {
+        height: 80vh;
+        margin-top: 20vh;
+    }
+}
