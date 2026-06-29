@@ -16,6 +16,13 @@
     display: block;
 }
 
+@media (min-width: 481px) {
+    .threejs-hero canvas {
+        width: 100% !important;
+        height: 120% !important;
+    }
+}
+
 @media (max-width: 1080px) {
     .threejs-hero {
         top: -40px;
