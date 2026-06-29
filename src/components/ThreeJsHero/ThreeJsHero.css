@@ -12,11 +12,8 @@
     pointer-events: none;
 }
 
-/* Make the renderer fill its container */
 .threejs-hero canvas {
     display: block;
-    width: 100% !important;
-    height: 120% !important;
 }
 
 @media (max-width: 1080px) {

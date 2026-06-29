@@ -22,8 +22,7 @@ export function ThreeJsHero() {
         const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
 
         const getCameraY = () => {
-            const base = window.screen.width > 1664 ? 50 : 42;
-            return base / window.devicePixelRatio;
+            return document.documentElement.clientWidth > 1664 ? 50 : 42;
         };
 
         camera.position.set(0, getCameraY(), 0);
