@@ -34,3 +34,10 @@
         top: 0px;
     }
 }
+
+@media (max-width: 480px) {
+    .threejs-hero {
+        padding: 0px;
+        left: -20px;
+    }
+}

@@ -24,7 +24,7 @@ export function ThreeJsHero() {
         const getCameraY = () => {
             const vw = document.documentElement.clientWidth;
             if (vw <= 480) {
-                return 42;
+                return 24;
             }
             const base = window.screen.width > 1664 ? 50 : 42;
             return base / window.devicePixelRatio;
