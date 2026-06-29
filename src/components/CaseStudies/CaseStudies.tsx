@@ -222,6 +222,8 @@ export function CaseStudies() {
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (prefersReducedMotion) return;
 
+        if (window.innerWidth > 1080) return;
+
         gsap.fromTo(inner,
             { opacity: 0, y: 32 },
             {

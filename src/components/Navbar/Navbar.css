@@ -18,6 +18,11 @@
     mix-blend-mode: difference;
 }
 
+.intro-playing .navbar {
+    opacity: 0 !important;
+    pointer-events: none;
+}
+
 .navbar-image-layer {
     z-index: 99;
     mix-blend-mode: normal;

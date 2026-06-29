@@ -17,7 +17,7 @@ export function Footer() {
 
     useEffect(() => {
         const reveal = () => {
-            window.setTimeout(() => setIsVisible(true), 1200);
+            window.setTimeout(() => setIsVisible(true), 0);
         };
 
         if (document.readyState === 'complete') {

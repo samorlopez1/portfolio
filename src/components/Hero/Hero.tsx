@@ -52,7 +52,8 @@ function HeroComponent() {
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (prefersReducedMotion) return;
 
-        const tl = gsap.timeline();
+        const introDelay = document.body.classList.contains('intro-playing') ? 5 : 0;
+        const tl = gsap.timeline({ delay: introDelay });
 
         // Split text animations
         const headingElements = headingRef.current?.querySelectorAll('p');

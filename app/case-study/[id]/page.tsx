@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import type { ComponentType } from 'react';
 import { notFound } from 'next/navigation';
+import { Analytics } from '@vercel/analytics/next';
 import '@/src/page-components/CaseStudy/CaseStudy.css';
 
 type CaseStudyModule = {
@@ -35,9 +36,12 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ id: 
     }
 
     return (
-        <Suspense fallback={<div></div>}>
-            <CaseStudyComponent />
-        </Suspense>
+        <>
+            <Suspense fallback={<div></div>}>
+                <CaseStudyComponent />
+            </Suspense>
+            <Analytics />
+        </>
     );
 }
 

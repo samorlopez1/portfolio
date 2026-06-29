@@ -53,7 +53,7 @@ export const TikTokCaseStudy: React.FC = () => {
             <div id="case-study-content-top" className="case-study-content-wrapper">
                 <CaseStudySidebar
                     projectHeader="TikTok"
-                    projectType="Designing AI-Human Interactions for TikTok Effect House & TikTok Creation"
+                    projectType="Designing AI-human interactions for TikTok Effect House & TikTok Creation"
                     links={sidebarLinks}
                     activeSection={activeSection}
                     onSectionClick={setActiveSection}

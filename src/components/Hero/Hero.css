@@ -60,12 +60,12 @@
 .hero-name {
     font-family: var(--font-serif);
     font-size: clamp(24px, 13cqw, 256px);
-    font-weight: var(--weight-light);
+    font-weight: 200;
     line-height: var(--line-tight);
-    letter-spacing: -0.05em;
+    letter-spacing: -0.055em;
     color: var(--black);
     margin: 0;
-    padding: 0;
+    padding-bottom: 14px;
     white-space: nowrap;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -98,7 +98,7 @@
 @media (max-width: 768px) {
     .hero {
         position: relative;
-        height: 72vh;
+        height: 75vh;
         gap: var(--padding-l, 16px);
         padding-bottom: var(--padding-page);
         padding-top: 64px;
@@ -116,5 +116,11 @@
 
     .hero-name-wrapper {
         bottom: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        height: 600px;
     }
 }

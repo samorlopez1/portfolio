@@ -101,7 +101,7 @@ export const InstagramCaseStudy: React.FC = () => {
                     <section id="context" className="case-study-section">
                         <TextSection
                             caption="OVERVIEW"
-                            heading="Identify a Problem with Instagram... and Design a Solution"
+                            heading="Identify a problem with Instagram... and design a solution"
                             body="This project was a 2 day design excercise where I was given the prompt to identify a problem with Instagram and design a solution. I chose to focus on the current challenges of event sharing and discovery on Instagram."
                             body2="As a college student involved in many clubs and activities, I often find myself struggling to keep track of all the events being shared on Instagram. Important event details are often buried in captions and often forgotten, and remembering to RSVP to each even can be a hassle. I wanted to design a solultion that would streamline the event discovery and participation process."
                         />
@@ -111,24 +111,24 @@ export const InstagramCaseStudy: React.FC = () => {
                     <section id="challenge" className="case-study-section">
                         <TextSection
                             caption="SOLUTION"
-                            heading="Using Metadata to Power Event Sharing and Discovery"
+                            heading="Using metadata to power event sharing and discovery"
                             body="Through the new event creation flow, users can add data such as event name, date, location, and important links. This data is then used to power features such as calendar & third-party integration, location-based event discovery, and a shortened user flow of event discovery to event participation."
                         />
                         <LottieSection
                             src={imageUrls[0]}
                             image={imageUrls[1] as StaticImageData}
-                            header="Add Key Event Details Through the New Event Creation Flow"
+                            header="Add key event details through the new event creation flow"
                             caption="Event details and third-party integrations can be added to an event post. The information is then used to power various features that enhance event discovery and participation."
                         />
                         <LottieSection
                             src={imageUrls[3]}
                             src2={imageUrls[2]}
-                            header="RSVP to Events Effortlessly"
+                            header="RSVP to events effortlessly"
                             caption="Event posts now are supplemented with an RSVP button, allowing users to quickly access important event links."
                         />
                         <ImageSection
                             src={imageUrls[4] as StaticImageData}
-                            header="Data-Powered Event Discovery"
+                            header="Data-powered event discovery"
                             caption="Event posts now leverage metadata to enhance discovery and participation, making it easier for users to find and engage with local, relevant events."
                         />
                     </section>
@@ -137,7 +137,7 @@ export const InstagramCaseStudy: React.FC = () => {
                     <section id="reflection" className="case-study-section">
                         <TextSection
                             caption="REFLECTION"
-                            heading="How Does it Fit Into Instagram's Design System?"
+                            heading="How does it fit into Instagram's design system?"
                             body="After designing my proposed Events feature, I took the time to reflect on how my designs fit into Instagram's existing design system. Where does it fit well, and more importantly how does it break from existing patterns?"
                             body2="One design choice that I reconsidered was the RSVP link on feed posts. This design choice uses Instagram's link banner component, which is typically seen only on ads and paid content posts. If this UI is now seen on free, non-ad posts, how would it interfere with current user expectations, and Instagrams business model?"
                         />

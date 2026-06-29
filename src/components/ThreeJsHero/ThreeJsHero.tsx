@@ -58,9 +58,15 @@ export function ThreeJsHero() {
                         scene.remove(glbModel);
                     }
                     glbModel = gltf.scene as THREE.Object3D;
+                    glbModel!.traverse((child) => {
+                        if ((child as THREE.Mesh).isMesh) {
+                            const mesh = child as THREE.Mesh;
+                            mesh.material = new THREE.MeshStandardMaterial({ color: 0xfbfbfb });
+                        }
+                    });
                     glbModel!.position.set(0, 0, 0);
 
-                    const initialScale = getSize().width / 130;
+                    const initialScale = getSize().width / 137;
                     glbModel!.scale.set(initialScale, initialScale, initialScale);
 
                     scene.add(glbModel!);
@@ -91,7 +97,7 @@ export function ThreeJsHero() {
             camera.position.set(0, getCameraY(), 0);
 
             if (glbModel) {
-                const scale = width / 130;
+                const scale = width / 137;
                 glbModel.scale.set(scale, scale, scale);
             }
         };
