@@ -157,7 +157,7 @@ function HeroComponent() {
                     <p>passionate for all things design.</p>
                 </div>
                 <p className="hero-subtitle" ref={subtitleRef}>
-                    → PRODUCT DESIGNER @ MERCURY | PREV. TIKTOK
+                    PRODUCT DESIGNER @ MERCURY | PREV. TIKTOK
                 </p>
             </div>
             <div className="hero-name-wrapper">

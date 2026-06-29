@@ -60,7 +60,7 @@
 .hero-name {
     font-family: var(--font-serif);
     font-size: clamp(24px, 13cqw, 256px);
-    font-weight: 200;
+    font-weight: 300;
     line-height: var(--line-tight);
     letter-spacing: -0.055em;
     color: var(--black);

@@ -98,7 +98,7 @@ export const WordletCaseStudy: React.FC = () => {
                     <section id="context" className="case-study-section">
                         <TextSection
                             caption="OVERVIEW"
-                            heading="Building a Challenging, Browser-Based Multiplayer Word Game"
+                            heading="Building a challenging, browser-based multiplayer word game"
                             body="Inspired by games such as Bomb Party and Monkeytype, Wordlet is a word game that challenges players to think quickly and creatively. As the sole developer, I had to tackle creating the game's core mechanics, implementing real-time multiplayer functionality and optimization strategies with Firebase, and designing a clean and engaging visual identity."
                         />
                     </section>

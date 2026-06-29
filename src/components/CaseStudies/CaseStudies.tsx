@@ -16,9 +16,10 @@ interface CaseStudyProps {
     posterImage?: string | StaticImageData;
     route?: string;
     shouldPrefetch?: boolean;
+    aspectRatio?: 'landscape' | 'portrait';
 }
 
-export function CaseStudyWrapper({ thumbnail, caption, date, posterImage, route, shouldPrefetch = false }: CaseStudyProps & { date?: string }) {
+export function CaseStudyWrapper({ thumbnail, caption, date, posterImage, route, shouldPrefetch = false, aspectRatio = 'landscape' }: CaseStudyProps & { date?: string }) {
     const router = useRouter();
     const [isHovering, setIsHovering] = useState(false);
     const [isTextFlipped, setIsTextFlipped] = useState(false);
@@ -134,7 +135,7 @@ export function CaseStudyWrapper({ thumbnail, caption, date, posterImage, route,
     const content = (
         <div
             ref={wrapperRef}
-            className={`case-study-wrapper ${isTextFlipped ? 'text-flipped' : ''} ${isMobile && isCentered ? 'mobile-centered' : ''} ${route ? 'clickable' : ''}`}
+            className={`case-study-wrapper ${aspectRatio} ${isTextFlipped ? 'text-flipped' : ''} ${isMobile && isCentered ? 'mobile-centered' : ''} ${route ? 'clickable' : ''}`}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
@@ -248,6 +249,7 @@ export function CaseStudies() {
                         posterImage={caseStudy.posterImage}
                         route={caseStudy.route}
                         shouldPrefetch={caseStudy.shouldPrefetch}
+                        aspectRatio={caseStudy.aspectRatio}
                     />
                 ))}
             </div>

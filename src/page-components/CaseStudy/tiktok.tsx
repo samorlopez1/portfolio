@@ -88,7 +88,7 @@ export const TikTokCaseStudy: React.FC = () => {
                     <section id="context" className="case-study-section">
                         <TextSection
                             caption="OVERVIEW"
-                            heading="Designing the Future of AR Creation on TikTok"
+                            heading="Designing the future of AR creation on TikTok"
                             body="As a Product Design Intern at TikTok, I contributed to the Effect House (AR creation platform) and Creation teams. In the fall, I focused on designing AI–human interaction systems, visual branding, and an icon set for Effect House. My internship was extended into the winter, where I continued designing for the Creation team, supporting tools used by millions of creators."
                         />
                     </section>
