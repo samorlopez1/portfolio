@@ -8,7 +8,7 @@ type CaseStudyModule = {
     default: ComponentType;
 };
 
-const CASE_STUDY_IDS = ['traintrek', 'tiktok', 'instagram-events', 'wordlet', 'ea'] as const;
+const CASE_STUDY_IDS = ['traintrek', 'tiktok', 'instagram-events', 'wordlet', 'ea', 'spur', 'mercury'] as const;
 
 async function loadCaseStudyComponent(id: string): Promise<ComponentType | null> {
     switch (id) {
@@ -22,6 +22,10 @@ async function loadCaseStudyComponent(id: string): Promise<ComponentType | null>
             return (await import('@/src/page-components/CaseStudy/wordlet') as CaseStudyModule).default;
         case 'ea':
             return (await import('@/src/page-components/CaseStudy/ea') as CaseStudyModule).default;
+        case 'spur':
+            return (await import('@/src/page-components/CaseStudy/spur') as CaseStudyModule).default;
+        case 'mercury':
+            return (await import('@/src/page-components/CaseStudy/mercury') as CaseStudyModule).default;
         default:
             return null;
     }

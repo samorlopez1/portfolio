@@ -29,14 +29,14 @@
     transition: transform 0.2s ease-in-out;
 }
 
-/* Landscape (3:2): takes 3/5 of available row width for equal height with square */
+/* Landscape (16:9): takes 16/25 of available row width for equal height with square */
 .case-study-wrapper.landscape {
-    width: calc((100% - var(--padding-page)) * 3 / 5);
+    width: calc((100% - var(--padding-page)) * 16 / 25);
 }
 
-/* Portrait (1:1 square): takes 2/5 of available row width for equal height with landscape */
+/* Portrait (1:1 square): takes 9/25 of available row width for equal height with landscape */
 .case-study-wrapper.portrait {
-    width: calc((100% - var(--padding-page)) * 2 / 5);
+    width: calc((100% - var(--padding-page)) * 9 / 25);
 }
 
 .case-study-thumbnail {
@@ -48,7 +48,7 @@
 }
 
 .case-study-wrapper.landscape .case-study-thumbnail {
-    aspect-ratio: 3 / 2;
+    aspect-ratio: 16 / 9;
 }
 
 .case-study-wrapper.portrait .case-study-thumbnail {
@@ -244,6 +244,6 @@
 
     /* Reset square thumbnails to landscape ratio on mobile */
     .case-study-wrapper.portrait .case-study-thumbnail {
-        aspect-ratio: 3 / 2;
+        aspect-ratio: 16 / 9;
     }
 }

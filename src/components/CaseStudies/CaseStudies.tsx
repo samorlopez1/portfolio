@@ -17,14 +17,17 @@ interface CaseStudyProps {
     route?: string;
     shouldPrefetch?: boolean;
     aspectRatio?: 'landscape' | 'portrait';
+    imageX?: string;
+    mobileOrder?: number;
 }
 
-export function CaseStudyWrapper({ thumbnail, caption, date, posterImage, route, shouldPrefetch = false, aspectRatio = 'landscape' }: CaseStudyProps & { date?: string }) {
+export function CaseStudyWrapper({ thumbnail, caption, date, posterImage, route, shouldPrefetch = false, aspectRatio = 'landscape', imageX, mobileOrder }: CaseStudyProps & { date?: string }) {
     const router = useRouter();
     const [isHovering, setIsHovering] = useState(false);
     const [isTextFlipped, setIsTextFlipped] = useState(false);
     const [isCentered, setIsCentered] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
+    const [isNarrow, setIsNarrow] = useState(false);
     const wrapperRef = useRef<HTMLDivElement | null>(null);
     const visibilityRef = useRef<HTMLDivElement | null>(null);
     const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -33,6 +36,7 @@ export function CaseStudyWrapper({ thumbnail, caption, date, posterImage, route,
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth <= 480);
+            setIsNarrow(window.innerWidth <= 1080);
         };
 
         // Set initial value on mount
@@ -136,6 +140,7 @@ export function CaseStudyWrapper({ thumbnail, caption, date, posterImage, route,
         <div
             ref={wrapperRef}
             className={`case-study-wrapper ${aspectRatio} ${isTextFlipped ? 'text-flipped' : ''} ${isMobile && isCentered ? 'mobile-centered' : ''} ${route ? 'clickable' : ''}`}
+            style={isNarrow && mobileOrder !== undefined ? { order: mobileOrder } : undefined}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
@@ -150,6 +155,7 @@ export function CaseStudyWrapper({ thumbnail, caption, date, posterImage, route,
                                 muted
                                 playsInline
                                 className="case-study-video"
+                                style={imageX ? { objectPosition: `${imageX} center` } : undefined}
                             />
                             {posterImage && (
                                 <div className={`case-study-poster-overlay ${isHovering || (isMobile && isCentered) ? 'hidden' : ''}`}>
@@ -158,6 +164,7 @@ export function CaseStudyWrapper({ thumbnail, caption, date, posterImage, route,
                                         alt={caption || 'Case study'}
                                         fill
                                         sizes="(max-width: 1080px) 100vw, 50vw"
+                                        style={imageX ? { objectPosition: `${imageX} center` } : undefined}
                                     />
                                 </div>
                             )}
@@ -168,6 +175,7 @@ export function CaseStudyWrapper({ thumbnail, caption, date, posterImage, route,
                             alt={caption || 'Case study'}
                             fill
                             sizes="(max-width: 1080px) 100vw, 50vw"
+                            style={imageX ? { objectPosition: `${imageX} center` } : undefined}
                         />
                     ) : typeof thumbnail === 'object' ? (
                         <LottiePlayer className="case-study-lottie" loop animationData={thumbnail} play={isHovering || (isMobile && isCentered)} />
@@ -177,6 +185,7 @@ export function CaseStudyWrapper({ thumbnail, caption, date, posterImage, route,
                             alt={caption || 'Case study'}
                             fill
                             sizes="(max-width: 1080px) 100vw, 50vw"
+                            style={imageX ? { objectPosition: `${imageX} center` } : undefined}
                         />
                     )
                 ) : (
@@ -250,6 +259,8 @@ export function CaseStudies() {
                         route={caseStudy.route}
                         shouldPrefetch={caseStudy.shouldPrefetch}
                         aspectRatio={caseStudy.aspectRatio}
+                        imageX={caseStudy.imageX}
+                        mobileOrder={caseStudy.mobileOrder}
                     />
                 ))}
             </div>

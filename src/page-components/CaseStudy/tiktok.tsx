@@ -10,7 +10,7 @@ import {
     LottieSection
 } from './components';
 
-import TikTokThumbnail from '../../assets/tiktok.png';
+import TikTokThumbnail from '../../assets/tiktok_color.png';
 
 const imageUrls = ['/animations/tiktok_01.json'];
 

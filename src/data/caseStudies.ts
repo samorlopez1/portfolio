@@ -1,11 +1,11 @@
-import instagram from '../assets/instagram2.png';
-import tiktok from '../assets/tiktok2.png';
-import wordlet from '../assets/wordlet2.png';
-import traintrek from '../assets/traintrek2.png';
-import ea from '../assets/ea2.png';
-import spur from '../assets/spur.png';
-import mercury from '../assets/mercury.png';
-import stealth from '../assets/4est2.png';
+import instagram from '../assets/instagram_events_cover.webp';
+import tiktok from '../assets/tiktok_color.png';
+import wordlet from '../assets/wordlet_cover.webp';
+import traintrek from '../assets/traintrek_cover.webp';
+import ea from '../assets/ea_color.png';
+import spur from '../assets/spur_cover.png';
+import mercury from '../assets/mercury_color.png';
+import stealth from '../assets/4est_color.png';
 import type { StaticImageData } from 'next/image';
 
 export interface CaseStudy {
@@ -17,24 +17,29 @@ export interface CaseStudy {
     route?: string;
     shouldPrefetch?: boolean;
     aspectRatio: 'landscape' | 'portrait';
+    imageX?: string;
+    mobileOrder?: number;
 }
 
 export const caseStudiesData: CaseStudy[] = [
     {
         id: 1,
-        caption: '',
-        date: '',
+        caption: 'Exploring growth-focused empty states',
+        date: 'INTERNSHIP',
         thumbnail: mercury,
-        route: '',
+        route: '/case-study/mercury',
         aspectRatio: 'landscape',
+        mobileOrder: 1,
     },
     {
         id: 2,
-        caption: '',
-        date: '',
-        thumbnail: spur,
+        caption: 'Turning digital clutter into creative action',
+        date: 'SPECULATIVE, PROTOTYPE, MOTION',
+        thumbnail: "https://dl.dropboxusercontent.com/scl/fi/34kjxz5abuvkoru2cai6i/Spur-video.mp4?rlkey=vtnhqlq95shnkbj1z92nvb8zz&st=t85o1w38&dl=0",
+        posterImage: spur,
         route: '',
         aspectRatio: 'portrait',
+        mobileOrder: 2,
     },
     {
         id: 3,
@@ -43,6 +48,7 @@ export const caseStudiesData: CaseStudy[] = [
         thumbnail: instagram,
         route: '/case-study/instagram-events',
         aspectRatio: 'portrait',
+        mobileOrder: 3,
     },
     {
         id: 4,
@@ -52,14 +58,16 @@ export const caseStudiesData: CaseStudy[] = [
         route: '/case-study/tiktok',
         shouldPrefetch: true,
         aspectRatio: 'landscape',
+        mobileOrder: 4,
     },
     {
         id: 5,
         caption: 'Enhancing gameplay through second-screen experiences',
-        date: 'CONTRACT',
+        date: 'CAPSTONE',
         thumbnail: ea,
-        route: '/case-study/ea',
         aspectRatio: 'landscape',
+        route: '/case-study/ea',
+        mobileOrder: 5,
     },
     {
         id: 6,
@@ -69,6 +77,8 @@ export const caseStudiesData: CaseStudy[] = [
         posterImage: wordlet,
         route: '/case-study/wordlet',
         aspectRatio: 'portrait',
+        imageX: '40%',
+        mobileOrder: 6,
     },
     {
         id: 7,
@@ -79,6 +89,8 @@ export const caseStudiesData: CaseStudy[] = [
         route: '/case-study/traintrek',
         shouldPrefetch: true,
         aspectRatio: 'portrait',
+        imageX: '30%',
+        mobileOrder: 7,
     },
     {
         id: 8,
@@ -87,5 +99,6 @@ export const caseStudiesData: CaseStudy[] = [
         thumbnail: stealth,
         route: '',
         aspectRatio: 'landscape',
+        mobileOrder: 8,
     },
 ];

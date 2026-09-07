@@ -9,19 +9,26 @@ const p5Promise = import('p5');
 // ============================================================
 // CONSTANTS
 // ============================================================
-const CELL_SIZE = 25;
+const CELL_SIZE = 20;
 const STARTING_ALPHA = 255;
 const BACKGROUND_COLOR = 255;
 const PROB_OF_NEIGHBOR = 0.3;
 const AMT_FADE_PER_FRAME = 5;
-const STROKE_WEIGHT = 1;
-const RANDOM_RADIUS = 6;
-const CIRCLE_RADIUS = 1;
+const SQUARE_SIZE = 1.5;
+const SQUARE_SIZE_HOVER = 1.5;
+const HOVER_LERP_SPEED = 0.18;
 const GRID_DOT_ALPHA = 110;
 const MAX_VELOCITY = 100;
-const FRAME_RATE = 30;
+const RANDOM_RADIUS_MIN = 4;
+const RANDOM_RADIUS_MAX = 10;
+const MOMENTUM_DECAY = 0.9;
+const MOMENTUM_GAIN = 1.2;
+const MOMENTUM_THRESHOLD = 1;
+const WAVE_ALPHA_SCALE = 0.6;
+const WAVE_PROB_SCALE = 0.7;
+const NEIGHBOR_BASE_SIZE = SQUARE_SIZE;
+const NEIGHBOR_MAX_EXPANSION = 1.5;
 
-// OKLab palette stops: grey → dark → blue → pink
 const PALETTE = [
     { r: 228, g: 228, b: 228 },
     { r: 70, g: 70, b: 70 },
@@ -52,10 +59,11 @@ export function P5Background({ setSweepCallback }: P5BackgroundProps) {
                 let numCols: number;
                 let currentRow = -1;
                 let currentCol = -1;
-                let allNeighbors: Array<{ row: number; col: number; opacity: number; c: any }> = [];
+                let allNeighbors = new Map<string, any>();
                 let mouseVel = 0;
-                let paletteOklab: Array<{ L: number; a: number; b: number }> = [];
-                let gridBuffer: any = null;
+                let gridDots: Array<Array<{ size: number }>> = [];
+                let momentumX = 0;
+                let momentumY = 0;
 
                 // ============================================================
                 // P5 LIFECYCLE
@@ -66,15 +74,13 @@ export function P5Background({ setSweepCallback }: P5BackgroundProps) {
                     cnv.style('inset', '0');
                     cnv.style('z-index', '-1');
 
-                    p.noFill();
-                    p.strokeWeight(STROKE_WEIGHT);
-                    p.frameRate(FRAME_RATE);
+                    p.noStroke();
+                    p.rectMode(p.CENTER);
 
                     numRows = Math.ceil(window.innerHeight / CELL_SIZE);
                     numCols = Math.ceil(window.innerWidth / CELL_SIZE);
 
-                    paletteOklab = PALETTE.map((c) => rgbToOklab(c.r, c.g, c.b));
-                    rebuildGridBuffer();
+                    initGridDots();
                 };
 
                 p.draw = () => {
@@ -82,10 +88,27 @@ export function P5Background({ setSweepCallback }: P5BackgroundProps) {
 
                     const rawVX = p.mouseX - p.pmouseX;
                     const rawVY = p.mouseY - p.pmouseY;
-                    mouseVel = Math.sqrt(rawVX * rawVX + rawVY * rawVY);
+                    mouseVel = p.sqrt(rawVX * rawVX + rawVY * rawVY);
 
-                    if (gridBuffer) {
-                        p.image(gridBuffer, 0, 0);
+                    momentumX = momentumX * MOMENTUM_DECAY + rawVX * MOMENTUM_GAIN;
+                    momentumY = momentumY * MOMENTUM_DECAY + rawVY * MOMENTUM_GAIN;
+                    const momentumMag = p.sqrt(momentumX * momentumX + momentumY * momentumY);
+
+                    // ── Grid dots with hover enlargement ──────────────────────
+                    const nearestCol = p.round(p.mouseX / CELL_SIZE);
+                    const nearestRow = p.round(p.mouseY / CELL_SIZE);
+
+                    for (let col = 0; col <= numCols; col++) {
+                        for (let row = 0; row <= numRows; row++) {
+                            const dot = gridDots[col]?.[row];
+                            if (!dot) continue;
+                            const isNearest = col === nearestCol && row === nearestRow;
+                            const targetSize = isNearest ? SQUARE_SIZE_HOVER : SQUARE_SIZE;
+                            dot.size = p.lerp(dot.size, targetSize, HOVER_LERP_SPEED);
+
+                            p.fill(185, 185, 185, GRID_DOT_ALPHA);
+                            p.square(col * CELL_SIZE, row * CELL_SIZE, dot.size);
+                        }
                     }
 
                     // ── Spawn neighbors when cell changes ─────────────────────
@@ -96,55 +119,63 @@ export function P5Background({ setSweepCallback }: P5BackgroundProps) {
                         currentRow = row;
                         currentCol = col;
 
-                        allNeighbors.push({
+                        const centerOpacity = STARTING_ALPHA;
+                        setNeighbor(row, col, {
                             row,
                             col,
-                            opacity: STARTING_ALPHA,
+                            opacity: centerOpacity,
+                            startingOpacity: centerOpacity,
                             c: getSpeedColor(),
+                            maxSize: NEIGHBOR_BASE_SIZE + NEIGHBOR_MAX_EXPANSION,
                         });
 
-                        allNeighbors.push(...getNeighbors(row, col));
+                        spawnNeighbors(row, col, radiusForVelocity(mouseVel));
+                    }
+
+                    // ── Momentum wave ──────────────────────────────────────────
+                    if (momentumMag > MOMENTUM_THRESHOLD) {
+                        const strength = p.constrain(momentumMag / (MAX_VELOCITY * MOMENTUM_GAIN), 0, 1);
+                        spawnNeighbors(
+                            currentRow,
+                            currentCol,
+                            radiusForVelocity(momentumMag),
+                            strength * WAVE_ALPHA_SCALE,
+                            WAVE_PROB_SCALE
+                        );
                     }
 
                     // ── Draw & fade active neighbors ──────────────────────────
-                    let writeIndex = 0;
-                    for (let i = 0; i < allNeighbors.length; i++) {
-                        const neighbor = allNeighbors[i];
+                    for (const [key, neighbor] of allNeighbors) {
                         neighbor.opacity = Math.max(0, neighbor.opacity - AMT_FADE_PER_FRAME);
-                        if (neighbor.opacity <= 0) continue;
 
-                        p.stroke(p.red(neighbor.c), p.green(neighbor.c), p.blue(neighbor.c), neighbor.opacity);
-                        p.circle(neighbor.col * CELL_SIZE, neighbor.row * CELL_SIZE, CIRCLE_RADIUS);
-                        allNeighbors[writeIndex] = neighbor;
-                        writeIndex += 1;
+                        const fraction = neighbor.startingOpacity > 0
+                            ? neighbor.opacity / neighbor.startingOpacity
+                            : 0;
+                        const size = p.lerp(NEIGHBOR_BASE_SIZE, neighbor.maxSize, fraction);
+
+                        p.fill(p.red(neighbor.c), p.green(neighbor.c), p.blue(neighbor.c), neighbor.opacity);
+                        p.square(neighbor.col * CELL_SIZE, neighbor.row * CELL_SIZE, size);
+
+                        if (neighbor.opacity <= 0) allNeighbors.delete(key);
                     }
-
-                    allNeighbors.length = writeIndex;
                 };
 
                 p.windowResized = () => {
                     p.resizeCanvas(window.innerWidth, window.innerHeight);
                     numRows = Math.ceil(window.innerHeight / CELL_SIZE);
                     numCols = Math.ceil(window.innerWidth / CELL_SIZE);
-                    rebuildGridBuffer();
+                    initGridDots();
                 };
 
                 // ============================================================
-                // GRID DOT BUFFER
+                // GRID DOT STATE
                 // ============================================================
-                const rebuildGridBuffer = () => {
-                    if (gridBuffer) {
-                        gridBuffer.remove();
-                    }
-
-                    gridBuffer = p.createGraphics(p.width, p.height);
-                    gridBuffer.noFill();
-                    gridBuffer.strokeWeight(STROKE_WEIGHT);
-                    gridBuffer.stroke(185, 185, 185, GRID_DOT_ALPHA);
-
+                const initGridDots = () => {
+                    gridDots = [];
                     for (let col = 0; col <= numCols; col++) {
+                        gridDots[col] = [];
                         for (let row = 0; row <= numRows; row++) {
-                            gridBuffer.circle(col * CELL_SIZE, row * CELL_SIZE, CIRCLE_RADIUS);
+                            gridDots[col][row] = { size: SQUARE_SIZE };
                         }
                     }
                 };
@@ -152,11 +183,20 @@ export function P5Background({ setSweepCallback }: P5BackgroundProps) {
                 // ============================================================
                 // NEIGHBOR LOGIC
                 // ============================================================
-                const getNeighbors = (row: number, col: number) => {
-                    const neighbors: Array<{ row: number; col: number; opacity: number; c: any }> = [];
+                const neighborKey = (row: number, col: number) => `${row},${col}`;
 
-                    for (let dRow = -RANDOM_RADIUS; dRow <= RANDOM_RADIUS; dRow++) {
-                        for (let dCol = -RANDOM_RADIUS; dCol <= RANDOM_RADIUS; dCol++) {
+                const setNeighbor = (row: number, col: number, data: any) => {
+                    allNeighbors.set(neighborKey(row, col), data);
+                };
+
+                const radiusForVelocity = (v: number) => {
+                    const clamped = p.constrain(v, 0, MAX_VELOCITY);
+                    return p.round(p.map(clamped, 0, MAX_VELOCITY, RANDOM_RADIUS_MIN, RANDOM_RADIUS_MAX));
+                };
+
+                const spawnNeighbors = (row: number, col: number, radius: number, alphaScale = 1.0, probScale = 1.0) => {
+                    for (let dRow = -radius; dRow <= radius; dRow++) {
+                        for (let dCol = -radius; dCol <= radius; dCol++) {
                             if (dRow === 0 && dCol === 0) continue;
 
                             const neighborRow = row + dRow;
@@ -170,94 +210,48 @@ export function P5Background({ setSweepCallback }: P5BackgroundProps) {
 
                             if (!isInBounds) continue;
 
-                            if (Math.random() < PROB_OF_NEIGHBOR) {
-                                const alphaFactor = getAlphaFactor(neighborRow, neighborCol, row, col);
-                                const opacity = STARTING_ALPHA * alphaFactor;
-                                neighbors.push({
+                            if (Math.random() < PROB_OF_NEIGHBOR * probScale) {
+                                const alphaFactor = getAlphaFactor(neighborRow, neighborCol, row, col, radius);
+                                const opacity = STARTING_ALPHA * alphaFactor * alphaScale;
+                                const maxSize = NEIGHBOR_BASE_SIZE + NEIGHBOR_MAX_EXPANSION * alphaFactor * alphaScale;
+
+                                setNeighbor(neighborRow, neighborCol, {
                                     row: neighborRow,
                                     col: neighborCol,
                                     opacity,
+                                    startingOpacity: opacity,
                                     c: getSpeedColor(),
+                                    maxSize,
                                 });
                             }
                         }
                     }
-
-                    return neighbors;
                 };
 
-                const getAlphaFactor = (x1: number, y1: number, x2: number, y2: number) => {
+                const getAlphaFactor = (x1: number, y1: number, x2: number, y2: number, radius: number) => {
                     const d = p.dist(x1, y1, x2, y2);
-                    return p.map(d, 0, RANDOM_RADIUS, 1, 0);
+                    return p.map(d, 0, radius, 1, 0);
                 };
 
                 // ============================================================
-                // COLOR — OKLab multi-stop velocity palette
+                // COLOR — simple multi-stop velocity palette
                 // ============================================================
-
                 const getSpeedColor = () => {
                     const t = p.constrain(p.map(mouseVel, 0, MAX_VELOCITY, 0, 1), 0, 1);
 
-                    const segments = paletteOklab.length - 1;
+                    const segments = PALETTE.length - 1;
                     const scaled = t * segments;
                     const idx = Math.min(Math.floor(scaled), segments - 1);
                     const segT = scaled - idx;
 
-                    const lab = lerpOklab(paletteOklab[idx], paletteOklab[idx + 1], segT);
-                    const { r, g, b } = oklabToRgb(lab.L, lab.a, lab.b);
+                    const c1 = PALETTE[idx];
+                    const c2 = PALETTE[idx + 1];
+
+                    const r = p.lerp(c1.r, c2.r, segT);
+                    const g = p.lerp(c1.g, c2.g, segT);
+                    const b = p.lerp(c1.b, c2.b, segT);
+
                     return p.color(r, g, b);
-                };
-
-                const lerpOklab = (c1: { L: number; a: number; b: number }, c2: { L: number; a: number; b: number }, t: number) => {
-                    return {
-                        L: p.lerp(c1.L, c2.L, t),
-                        a: p.lerp(c1.a, c2.a, t),
-                        b: p.lerp(c1.b, c2.b, t),
-                    };
-                };
-
-                const rgbToOklab = (r: number, g: number, b: number) => {
-                    r = r / 255;
-                    g = g / 255;
-                    b = b / 255;
-                    r = r > 0.04045 ? Math.pow((r + 0.055) / 1.055, 2.4) : r / 12.92;
-                    g = g > 0.04045 ? Math.pow((g + 0.055) / 1.055, 2.4) : g / 12.92;
-                    b = b > 0.04045 ? Math.pow((b + 0.055) / 1.055, 2.4) : b / 12.92;
-
-                    let l = 0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b;
-                    let m = 0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b;
-                    let s = 0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b;
-
-                    l = Math.cbrt(l);
-                    m = Math.cbrt(m);
-                    s = Math.cbrt(s);
-
-                    return {
-                        L: 0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s,
-                        a: 1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s,
-                        b: 0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s,
-                    };
-                };
-
-                const oklabToRgb = (L: number, a: number, b: number) => {
-                    let l = L + 0.3963377774 * a + 0.2158037573 * b;
-                    let m = L - 0.1055613458 * a - 0.0638541728 * b;
-                    let s = L - 0.0894841775 * a - 1.2914855480 * b;
-
-                    l = l * l * l;
-                    m = m * m * m;
-                    s = s * s * s;
-
-                    const r = 4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s;
-                    const g = -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s;
-                    const bv = -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s;
-
-                    const encode = (x: number) => {
-                        x = x > 0.0031308 ? 1.055 * Math.pow(x, 1 / 2.4) - 0.055 : 12.92 * x;
-                        return p.constrain(Math.round(x * 255), 0, 255);
-                    };
-
-                    return { r: encode(r), g: encode(g), b: encode(bv) };
                 };
             };
 

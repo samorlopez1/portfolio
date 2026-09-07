@@ -82,11 +82,19 @@ export function Footer() {
     };
 
     const handleHomeClick = (e: React.MouseEvent) => {
+        if (pathname !== '/') {
+            return;
+        }
+
         e.preventDefault();
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     const handlePlayClick = (e: React.MouseEvent) => {
+        if (pathname !== '/play') {
+            return;
+        }
+
         e.preventDefault();
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };

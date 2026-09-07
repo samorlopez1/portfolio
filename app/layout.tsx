@@ -4,6 +4,7 @@ import { Navbar } from "@/src/components/Navbar";
 import { Footer } from "@/src/components/Footer";
 import { ScrollToTop } from "@/src/components/ScrollToTop/ScrollToTop";
 import { SmoothScroll } from "@/src/components/SmoothScroll/SmoothScroll";
+import { HalftoneBackgroundLoader } from "@/src/components/HalftoneBackground/HalftoneBackgroundLoader";
 import "@/src/index.css";
 import "@/src/tokens.css";
 
@@ -42,6 +43,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body>
+                <HalftoneBackgroundLoader />
                 <SmoothScroll>
                     <ScrollToTop />
                     <Navbar />

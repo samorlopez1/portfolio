@@ -7,18 +7,20 @@ import {
     CaseStudySidebar,
     TextContentWithMetadata,
     TextSection,
-    ImageSection,
+    LottieSection
 } from './components';
 
-import eaThumbnail from '../../assets/ea_grey.png';
-import eaPic from '../../assets/ea_pictures/ea.png';
+import SpurThumbnail from '../../assets/Spur_cover.png';
+
+const imageUrls = ['/animations/tiktok_01.json'];
+
 
 const sidebarLinks = [
     { id: 'context', label: 'OVERVIEW' },
     { id: 'challenge', label: 'WORKS' },
 ];
 
-export const EACaseStudy: React.FC = () => {
+export const SpurCaseStudy: React.FC = () => {
     const [activeSection, setActiveSection] = useState('context');
 
     useEffect(() => {
@@ -45,13 +47,13 @@ export const EACaseStudy: React.FC = () => {
     return (
         <div style={{ backgroundColor: '#fff' }}>
             <CaseStudyHero
-                image={eaThumbnail}
+                image={SpurThumbnail}
             />
 
             <div id="case-study-content-top" className="case-study-content-wrapper">
                 <CaseStudySidebar
-                    projectHeader="Electronic Arts"
-                    projectType="Enhancing Gameplay Through Second-Screen Experiences"
+                    projectHeader="Spur"
+                    projectType="Designing AI-human interactions for Spur Effect House & Spur Creation"
                     links={sidebarLinks}
                     activeSection={activeSection}
                     onSectionClick={setActiveSection}
@@ -64,19 +66,19 @@ export const EACaseStudy: React.FC = () => {
                             metadata={[
                                 {
                                     label: 'ROLE',
-                                    items: ['UX DESIGNER', 'UX RESEARCHER'],
+                                    items: ['PRODUCT DESIGNER'],
                                 },
                                 {
                                     label: 'SKILLS',
-                                    items: ['RESEARCH SYNTHESIS', 'PROTOTYPING', 'UX DESIGN'],
+                                    items: ['FIGMA', 'CROSS-COLLABORATION', 'RAPID IDEATION'],
                                 },
                                 {
                                     label: 'TEAM',
-                                    items: ['ME', 'ANNIE CHANG', 'SUE JO', 'YURI YANG', 'RIGO ORDAZ (MENTOR)'],
+                                    items: ['JUNA KIM', 'SABRINA TURNES', 'INARA KHAN', 'ARIANA CAO', 'HELEN NGUYEN'],
                                 },
                                 {
                                     label: 'TIMELINE',
-                                    items: ['WINTER 2026', '6 MONTHS'],
+                                    items: ['WINTER 2025', '6 MONTHS'],
                                 },
                             ]}
                         />
@@ -86,15 +88,15 @@ export const EACaseStudy: React.FC = () => {
                     <section id="context" className="case-study-section">
                         <TextSection
                             caption="OVERVIEW"
-                            heading="Enhancing Gameplay Through Second-Screen Experiences"
-                            body="For my capstone project at the University of Washington, my team and I partnered with EA to explore how second-screen experiences can enhance player engagement and enjoyment in gaming."
-                            body2="This case study is currently in progress."
+                            heading="Designing the future of AR creation on TikTok"
+                            body="As a Product Design Intern at TikTok, I contributed to the Effect House (AR creation platform) and Creation teams. In the fall, I focused on designing AI–human interaction systems, visual branding, and an icon set for Effect House. My internship was extended into the winter, where I continued designing for the Creation team, supporting tools used by millions of creators."
                         />
                     </section>
 
-                    <section id="works" className="case-study-section">
-                        <ImageSection
-                            src={eaPic}
+                    {/* IMAGES */}
+                    <section id="challenge" className="case-study-section">
+                        <LottieSection
+                            src={imageUrls[0]}
                         />
                     </section>
                 </main>
@@ -103,4 +105,4 @@ export const EACaseStudy: React.FC = () => {
     );
 };
 
-export default EACaseStudy;
+export default SpurCaseStudy;
