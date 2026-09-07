@@ -10,7 +10,7 @@ import {
     ImageSection,
 } from './components';
 
-import eaThumbnail from '../../assets/ea_grey.png';
+import eaThumbnail from '../../assets/EA_grey.png';
 import eaPic from '../../assets/ea_pictures/ea.png';
 
 const sidebarLinks = [

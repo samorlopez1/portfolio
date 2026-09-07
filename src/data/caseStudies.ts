@@ -1,11 +1,11 @@
 import instagram from '../assets/instagram_events_cover.webp';
-import tiktok from '../assets/tiktok_color.png';
+import tiktok from '../assets/TikTok_color.png';
 import wordlet from '../assets/wordlet_cover.webp';
 import traintrek from '../assets/traintrek_cover.webp';
-import ea from '../assets/ea_color.png';
-import spur from '../assets/spur_cover.png';
-import mercury from '../assets/mercury_color.png';
-import stealth from '../assets/4est_color.png';
+import ea from '../assets/EA_color.png';
+import spur from '../assets/Spur_cover.png';
+import mercury from '../assets/Mercury_color.png';
+import stealth from '../assets/4EST_color.png';
 import type { StaticImageData } from 'next/image';
 
 export interface CaseStudy {
