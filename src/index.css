@@ -16,9 +16,9 @@
 }
 
 @font-face {
-  font-family: 'PP Editorial Sans';
-  src: url('/fonts/PPEditorialSans-Ultralight.otf') format('opentype');
-  font-weight: 200;
+  font-family: 'Neue York';
+  src: url('/fonts/PPNeueYork-CondensedMedium.otf') format('opentype');
+  font-weight: 500;
   font-display: swap;
 }
 
@@ -26,13 +26,6 @@
   font-family: 'PP Editorial Old';
   src: url('/fonts/PPEditorialOld-Ultralight.otf') format('opentype');
   font-weight: 200;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Acma';
-  src: url('/fonts/Acma-Light.otf') format('opentype');
-  font-weight: 300;
   font-display: swap;
 }
 

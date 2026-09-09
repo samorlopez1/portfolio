@@ -1,18 +1,7 @@
 'use client';
 
 import './Hero.css';
-import '../P5Background/P5Background.css';
-import dynamic from 'next/dynamic';
-import { useRef, memo, useEffect, useState } from 'react';
-
-const P5Background = dynamic(
-    () => import('../P5Background/P5Background').then((m) => m.P5Background),
-    { ssr: false }
-);
-const P5BackgroundLite = dynamic(
-    () => import('../P5Background/P5BackgroundLite').then((m) => m.P5BackgroundLite),
-    { ssr: false }
-);
+import { useRef, memo, useEffect } from 'react';
 import gsap from 'gsap';
 import { SplitText } from 'gsap/dist/SplitText';
 
@@ -26,24 +15,6 @@ function HeroComponent() {
     const headingRef = useRef<HTMLDivElement>(null);
     const subtitleRef = useRef<HTMLParagraphElement>(null);
     const nameRef = useRef<HTMLParagraphElement>(null);
-    const [isMobile, setIsMobile] = useState<boolean>(() => {
-        if (typeof window === 'undefined') return false;
-        return window.matchMedia('(max-width: 499px)').matches;
-    });
-    const [showBackground, setShowBackground] = useState(false);
-
-    useEffect(() => {
-        const mql = window.matchMedia('(max-width: 499px)');
-        setIsMobile(mql.matches);
-        const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
-        mql.addEventListener('change', handler);
-        return () => mql.removeEventListener('change', handler);
-    }, []);
-
-    useEffect(() => {
-        const frameId = requestAnimationFrame(() => setShowBackground(true));
-        return () => cancelAnimationFrame(frameId);
-    }, []);
 
 
     // Animate hero text with gsap
@@ -61,17 +32,6 @@ function HeroComponent() {
         const subtitleSplit = new SplitText(subtitleRef.current!, { type: 'lines, words', mask: 'lines' });
         const nameSplit = new SplitText(nameRef.current!, { type: 'chars, lines' });
 
-        // Animate name characters first
-        tl.from(nameSplit.chars, {
-            opacity: 0,
-            yPercent: 30,
-            autoAlpha: 0,
-            stagger: 0.025,
-            duration: 0.8,
-            ease: 'power2.out',
-            force3D: true,
-        }, 0.2);
-
         // Animate heading words after name
         headingSplits.forEach((split) => {
             tl.from(split.words, {
@@ -81,8 +41,9 @@ function HeroComponent() {
                 stagger: 0.05,
                 duration: 1.8,
                 ease: 'power2.out',
-            }, 0.5);
+            }, 0.2);
         });
+
 
         // Animate subtitle words after heading
         tl.from(subtitleSplit.words, {
@@ -92,7 +53,21 @@ function HeroComponent() {
             stagger: 0.025,
             duration: 1.2,
             ease: 'power2.out',
-        }, .9);
+        }, .4);
+
+
+        // Animate name characters first
+        tl.from(nameSplit.chars, {
+            opacity: 0,
+            yPercent: 30,
+            autoAlpha: 0,
+            stagger: 0.025,
+            duration: 0.8,
+            ease: 'power2.out',
+            force3D: true,
+        }, 0.7);
+
+
 
         return () => {
             headingSplits.forEach((split) => split.revert());
@@ -144,12 +119,6 @@ function HeroComponent() {
 
     return (
         <section className="hero" id="home" ref={heroRef}>
-            <div className={`p5-background ${showBackground ? 'p5-background-visible' : ''}`}>
-                <div className="p5-background-overlay-top" />
-                {isMobile ? <P5BackgroundLite /> : <P5Background />}
-                <div className="p5-background-overlay-bottom" />
-            </div>
-
             <div className="hero-header">
                 <div className="hero-heading" ref={headingRef}>
                     <p>Thrives in fast paced environments,</p>
@@ -157,7 +126,7 @@ function HeroComponent() {
                     <p>passionate for all things design.</p>
                 </div>
                 <p className="hero-subtitle" ref={subtitleRef}>
-                    → PRODUCT DESIGNER @ MERCURY | PREV. TIKTOK
+                    PRODUCT DESIGNER | PREV. MERCURY, TIKTOK
                 </p>
             </div>
             <div className="hero-name-wrapper">

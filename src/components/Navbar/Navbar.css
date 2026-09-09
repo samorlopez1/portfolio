@@ -8,6 +8,7 @@
     justify-content: space-between;
     align-items: flex-start;
     padding: var(--padding-page) var(--padding-page);
+    padding-bottom: 0;
     width: 100%;
     max-width: 1920px;
     margin: 0 auto;
@@ -65,23 +66,41 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+
+.nav-resume-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+    background: rgba(255, 255, 255, 0.82);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.nav-resume-overlay.active {
+    opacity: 1;
 }
 
 .nav-resume-card {
     position: absolute;
-    top: calc(100% + 18px);
+    top: 0px;
+    z-index: 100;
     right: 0;
     display: flex;
-    flex-direction: column;
-    gap: var(--padding-page);
-    width: min(440px, calc(100vw - (2 * var(--padding-page))));
-    padding: var(--padding-page);
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 1);
-    box-shadow: 0 0px 12px rgba(0, 0, 0, 0.15);
+    flex-direction: row;
+    align-items: flex-start;
+    width: 280px;
+    padding-top: var(--padding-xxl);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
     color: var(--black);
     mix-blend-mode: normal;
     isolation: isolate;
+    pointer-events: auto;
     opacity: 0;
     visibility: hidden;
     transform: translateY(-14px);
@@ -95,61 +114,89 @@
     transition: opacity 0.22s ease-in-out, transform 0.32s cubic-bezier(.2, .8, .2, 1), visibility 0s linear 0s;
 }
 
-.nav-resume-item {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: start;
-    column-gap: 24px;
-}
-
-.nav-resume-organization {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    min-width: 0;
-}
-
-.nav-resume-copy,
-.nav-resume-meta {
+.nav-resume-list-col {
+    flex: 1;
     display: flex;
     flex-direction: column;
+    gap: var(--padding-xs);
+    pointer-events: auto;
 }
 
-.nav-resume-copy {
-    min-width: 0;
+.nav-resume-item-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    transform: translateX(0);
+    transition: transform 0.1s ease-in-out;
 }
 
-.nav-resume-meta {
-    align-items: flex-end;
-    text-align: right;
+.navbar a.nav-resume-item-link {
+    color: inherit;
+    transition: color 0.2s ease, transform 0.1s ease-in-out;
 }
 
-.nav-resume-icon {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    object-fit: cover;
-    flex-shrink: 0;
+.nav-resume-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 5px 0;
+    cursor: pointer;
 }
 
-.nav-resume-kicker,
-.nav-resume-title {
-    margin: 0;
-    font-family: var(--font-primary);
-    line-height: normal;
+.nav-resume-item-link-static {
+    cursor: default;
 }
 
-.nav-resume-kicker {
-    font-size: var(--text-xs);
-    font-weight: var(--weight-regular);
+.nav-resume-item-link-static .nav-resume-item {
+    cursor: default;
+}
+
+.nav-resume-item-link-static .nav-resume-org-name {
     color: var(--grey);
 }
 
-.nav-resume-title {
-    font-size: var(--text-base);
+.nav-resume-item-link-static:hover .nav-resume-org-name {
+    color: var(--grey);
+}
+
+.nav-resume-item-link:not(.nav-resume-item-link-static):hover {
+    transform: translateX(-12px);
+}
+
+.nav-resume-item-link:not(.nav-resume-item-link-static):hover .nav-resume-org-name {
+    color: var(--black);
+}
+
+.nav-resume-item-link:not(.nav-resume-item-link-static):hover .nav-resume-kicker {
+    color: var(--black);
+}
+
+.nav-resume-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 24px;
+}
+
+.nav-resume-org-name {
+    margin: 0;
+    font-family: var(--font-primary);
+    font-size: var(--text-xs);
     font-weight: var(--weight-regular);
     color: var(--black);
+    line-height: normal;
     white-space: nowrap;
+    transition: color 0.2s ease;
+}
+
+.nav-resume-kicker {
+    margin: 0;
+    font-family: var(--font-primary);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-regular);
+    color: var(--grey);
+    line-height: normal;
+    transition: color 0.2s ease;
 }
 
 .nav-image-wrapper {

@@ -7,12 +7,14 @@ import {
     CaseStudySidebar,
     TextContentWithMetadata,
     TextSection,
-    LottieSection
+    ImageSection,
+    VideoSection,
 } from './components';
 
-import TikTokThumbnail from '../../assets/TikTok_color.png';
-
-const imageUrls = ['/animations/tiktok_01.json'];
+import MercuryThumbnail from '../../assets/Mercury_grey.png';
+import mercuryFrame1 from '../../assets/mercury_pictures/mercury_frame_1.png';
+import mercuryFrame2 from '../../assets/mercury_pictures/mercury_frame_2.png';
+import mercuryFrame8 from '../../assets/mercury_pictures/mercury_frame_8.png';
 
 
 const sidebarLinks = [
@@ -20,7 +22,7 @@ const sidebarLinks = [
     { id: 'challenge', label: 'WORKS' },
 ];
 
-export const TikTokCaseStudy: React.FC = () => {
+export const MercuryCaseStudy: React.FC = () => {
     const [activeSection, setActiveSection] = useState('context');
 
     useEffect(() => {
@@ -47,13 +49,13 @@ export const TikTokCaseStudy: React.FC = () => {
     return (
         <div style={{ backgroundColor: '#fff' }}>
             <CaseStudyHero
-                image={TikTokThumbnail}
+                image={MercuryThumbnail}
             />
 
             <div id="case-study-content-top" className="case-study-content-wrapper">
                 <CaseStudySidebar
-                    projectHeader="TikTok"
-                    projectType="Designing AI-human interactions for TikTok Effect House & TikTok Creation"
+                    projectHeader="Mercury"
+                    projectType="Shipping activation-focused empty states for Mercury's growth team"
                     links={sidebarLinks}
                     activeSection={activeSection}
                     onSectionClick={setActiveSection}
@@ -70,15 +72,15 @@ export const TikTokCaseStudy: React.FC = () => {
                                 },
                                 {
                                     label: 'SKILLS',
-                                    items: ['FIGMA', 'CROSS-COLLABORATION', 'RAPID IDEATION'],
+                                    items: ['PROTOTYPING', 'VIBE-CODING', 'USER TESTING'],
                                 },
                                 {
                                     label: 'TEAM',
-                                    items: ['SELF'],
+                                    items: ['SELF', 'TREYCE MEREDITH (MENTOR)'],
                                 },
                                 {
                                     label: 'TIMELINE',
-                                    items: ['FALL 2025', '6 MONTHS'],
+                                    items: ['SUMMER 2026', '3 MONTHS'],
                                 },
                             ]}
                         />
@@ -88,15 +90,30 @@ export const TikTokCaseStudy: React.FC = () => {
                     <section id="context" className="case-study-section">
                         <TextSection
                             caption="OVERVIEW"
-                            heading="Designing the future of AR creation on TikTok"
-                            body="As a Product Design Intern at TikTok, I contributed to the Effect House (AR creation platform) and Creation teams. In the fall, I focused on designing AI–human interaction systems, visual branding, and an icon set for Effect House. My internship was extended into the winter, where I continued designing for the Creation team, supporting tools used by millions of creators."
+                            heading="Ideating, prototyping, and shipping quickly with AI design tools"
+                            body="As a growth designer at Mercury, I used AI design tools and workflows to ideate and deliver new empty states, working closely with engineers to get both frontend and backend code shipped."
+                            body2="By the end of the internship, I shipped two empty state solutions, one currently live and one going through AB testing, seeing a positive 3% lift in treasury applications."
                         />
                     </section>
 
                     {/* IMAGES */}
                     <section id="challenge" className="case-study-section">
-                        <LottieSection
-                            src={imageUrls[0]}
+                        <ImageSection
+                            src={mercuryFrame1}
+                            src2={mercuryFrame2}
+                            caption="Complete and semi-empty states for the transactions page."
+                        />
+                        <VideoSection
+                            src="/mercury_pictures/mercury_scene_1.mp4"
+                            src2="/mercury_pictures/mercury_scene_2.mp4"
+                            caption="Post-onboarding upsell exploration for Mercury's budgets feature."
+                        />
+                        <VideoSection
+                            src="/mercury_pictures/mercury_scene_3.mp4"
+                            caption="Custom tools for vibe-coding design environment."
+                        />
+                        <ImageSection
+                            src={mercuryFrame8}
                         />
                     </section>
                 </main>
@@ -105,4 +122,4 @@ export const TikTokCaseStudy: React.FC = () => {
     );
 };
 
-export default TikTokCaseStudy;
+export default MercuryCaseStudy;

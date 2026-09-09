@@ -140,6 +140,11 @@
     color: var(--grey);
     font-weight: var(--weight-regular);
     padding-top: var(--padding-xxxl);
+    transition: color 0.2s ease;
+}
+
+.sidebar-back-button:hover {
+    color: var(--black);
 }
 
 .sidebar-bottom {

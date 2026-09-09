@@ -10,7 +10,7 @@ import {
     LottieSection
 } from './components';
 
-import TikTokThumbnail from '../../assets/TikTok_color.png';
+import SpurThumbnail from '../../assets/Spur_cover.png';
 
 const imageUrls = ['/animations/tiktok_01.json'];
 
@@ -20,7 +20,7 @@ const sidebarLinks = [
     { id: 'challenge', label: 'WORKS' },
 ];
 
-export const TikTokCaseStudy: React.FC = () => {
+export const SpurCaseStudy: React.FC = () => {
     const [activeSection, setActiveSection] = useState('context');
 
     useEffect(() => {
@@ -47,13 +47,13 @@ export const TikTokCaseStudy: React.FC = () => {
     return (
         <div style={{ backgroundColor: '#fff' }}>
             <CaseStudyHero
-                image={TikTokThumbnail}
+                image={SpurThumbnail}
             />
 
             <div id="case-study-content-top" className="case-study-content-wrapper">
                 <CaseStudySidebar
-                    projectHeader="TikTok"
-                    projectType="Designing AI-human interactions for TikTok Effect House & TikTok Creation"
+                    projectHeader="Spur"
+                    projectType="Designing AI-human interactions for Spur Effect House & Spur Creation"
                     links={sidebarLinks}
                     activeSection={activeSection}
                     onSectionClick={setActiveSection}
@@ -74,11 +74,11 @@ export const TikTokCaseStudy: React.FC = () => {
                                 },
                                 {
                                     label: 'TEAM',
-                                    items: ['SELF'],
+                                    items: ['JUNA KIM', 'SABRINA TURNES', 'INARA KHAN', 'ARIANA CAO', 'HELEN NGUYEN'],
                                 },
                                 {
                                     label: 'TIMELINE',
-                                    items: ['FALL 2025', '6 MONTHS'],
+                                    items: ['WINTER 2025', '6 MONTHS'],
                                 },
                             ]}
                         />
@@ -105,4 +105,4 @@ export const TikTokCaseStudy: React.FC = () => {
     );
 };
 
-export default TikTokCaseStudy;
+export default SpurCaseStudy;

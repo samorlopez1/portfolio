@@ -20,19 +20,30 @@ import seatacAirportPreview from '@/src/assets/play_pictures/seatac_airport.webp
 const HOME_SCROLL_THRESHOLD_RATIO = 0.9;
 const DEFAULT_SCROLL_THRESHOLD = 64;
 const DESKTOP_MIN_WIDTH = 769;
+const BOTTOM_SCROLL_BUFFER_PX = 4;
 
-const resumePreviewEntries = [
+interface ResumeEntry {
+    organization: string;
+    title: string;
+    type: string;
+    timeframe: string;
+    route?: string;
+}
+
+const resumePreviewEntries: ResumeEntry[] = [
     {
         organization: 'MERCURY',
         title: 'Product Design',
         type: 'INTERNSHIP',
         timeframe: '→ Summer \'26',
+        route: '/case-study/mercury',
     },
     {
         organization: 'TIKTOK',
         title: 'Product Design',
         type: 'INTERNSHIP',
         timeframe: 'Sep \'25 – Apr \'26',
+        route: '/case-study/tiktok',
     },
     {
         organization: 'STEALTH AI STARTUP',
@@ -45,6 +56,7 @@ const resumePreviewEntries = [
         title: 'Product Design',
         type: 'CAPSTONE',
         timeframe: 'Jan \'26 – Present',
+        route: '/case-study/ea',
     },
     {
         organization: 'DESIGN FOR AMERICA UW',
@@ -57,14 +69,65 @@ const resumePreviewEntries = [
         title: 'Director of Design',
         type: 'CAMPUS',
         timeframe: 'Dec \'26 – Present',
+        route: '/play',
     },
     {
         organization: 'FITTED UW',
         title: 'Graphic Designer',
         type: 'CAMPUS',
         timeframe: 'Nov \'25 – Present',
+        route: '/play',
     },
-] as const;
+];
+
+function ResumePreviewPanel({
+    panelRef,
+    onMouseEnter,
+    onMouseLeave,
+    isActive,
+}: {
+    panelRef: React.RefObject<HTMLDivElement | null>;
+    onMouseEnter: () => void;
+    onMouseLeave: () => void;
+    isActive: boolean;
+}) {
+    return (
+        <div
+            ref={panelRef}
+            className="nav-resume-card"
+            aria-hidden={!isActive}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+        >
+            <div className="nav-resume-list-col">
+                {resumePreviewEntries.map((entry) => {
+                    const itemContent = (
+                        <div className="nav-resume-item">
+                            <div className="nav-resume-row">
+                                <p className="nav-resume-org-name">{entry.organization}</p>
+                                <p className="nav-resume-kicker">{entry.type}</p>
+                            </div>
+                        </div>
+                    );
+
+                    return entry.route ? (
+                        <Link
+                            key={`${entry.organization}-${entry.title}`}
+                            href={entry.route}
+                            className="nav-resume-item-link"
+                        >
+                            {itemContent}
+                        </Link>
+                    ) : (
+                        <div key={`${entry.organization}-${entry.title}`} className="nav-resume-item-link nav-resume-item-link-static">
+                            {itemContent}
+                        </div>
+                    );
+                })}
+            </div>
+        </div>
+    );
+}
 
 export function Navbar() {
     const pathname = usePathname();
@@ -72,18 +135,34 @@ export function Navbar() {
     const [activePreview, setActivePreview] = useState<'work' | 'play' | 'about' | 'resume' | null>(null);
     const [isPreviewEnabled, setIsPreviewEnabled] = useState(false);
     const resumePreviewRef = useRef<HTMLDivElement | null>(null);
+    const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const handlePreviewEnter = (preview: 'work' | 'play' | 'about' | 'resume') => {
         if (!isPreviewEnabled) {
             return;
         }
 
+        if (hideTimeoutRef.current) {
+            clearTimeout(hideTimeoutRef.current);
+            hideTimeoutRef.current = null;
+        }
+
         setActivePreview(preview);
     };
 
     const handlePreviewLeave = () => {
-        setActivePreview(null);
+        hideTimeoutRef.current = setTimeout(() => {
+            setActivePreview(null);
+        }, 250);
     };
+
+    useEffect(() => {
+        return () => {
+            if (hideTimeoutRef.current) {
+                clearTimeout(hideTimeoutRef.current);
+            }
+        };
+    }, []);
 
     useEffect(() => {
         setShowNavbar(true);
@@ -104,9 +183,11 @@ export function Navbar() {
             const threshold = pathname === '/' && window.innerWidth >= DESKTOP_MIN_WIDTH
                 ? window.innerHeight * HOME_SCROLL_THRESHOLD_RATIO
                 : DEFAULT_SCROLL_THRESHOLD;
+            const isAtBottom = currentScrollY + window.innerHeight
+                >= document.documentElement.scrollHeight - BOTTOM_SCROLL_BUFFER_PX;
 
-            // Always show navbar before threshold
-            if (currentScrollY < threshold) {
+            // Always show navbar before threshold or once the page bottom is reached
+            if (currentScrollY < threshold || isAtBottom) {
                 setShowNavbar(true);
             } else {
                 // Only apply scroll hide/show logic past 80vh
@@ -154,7 +235,7 @@ export function Navbar() {
             autoAlpha: 1,
             y: 0,
             duration: .75,
-            stagger: 0.05,
+            stagger: 0.075,
             ease: 'power4.out',
             overwrite: true,
         });
@@ -219,22 +300,12 @@ export function Navbar() {
     };
 
     const renderResumePreview = () => (
-        <div ref={resumePreviewRef} className="nav-resume-card" aria-hidden={activePreview !== 'resume'}>
-            {resumePreviewEntries.map((entry) => (
-                <article className="nav-resume-item" key={`${entry.organization}-${entry.title}`}>
-                    <div className="nav-resume-organization">
-                        <div className="nav-resume-copy">
-                            <p className="nav-resume-kicker">{entry.organization}</p>
-                            <p className="nav-resume-title">{entry.title}</p>
-                        </div>
-                    </div>
-                    <div className="nav-resume-meta">
-                        <p className="nav-resume-kicker">{entry.type}</p>
-                        <p className="nav-resume-title">{entry.timeframe}</p>
-                    </div>
-                </article>
-            ))}
-        </div>
+        <ResumePreviewPanel
+            panelRef={resumePreviewRef}
+            isActive={activePreview === 'resume'}
+            onMouseEnter={() => handlePreviewEnter('resume')}
+            onMouseLeave={handlePreviewLeave}
+        />
     );
 
     const renderPreviewGroup = (
@@ -321,6 +392,9 @@ export function Navbar() {
 
     return (
         <>
+            {isPreviewEnabled && (
+                <div className={`nav-resume-overlay${activePreview === 'resume' ? ' active' : ''}`} />
+            )}
             <nav className={`navbar ${!showNavbar ? 'navbar-hidden' : ''}`} data-node-id="854:323">
                 {renderNavbarContent(false)}
             </nav>
