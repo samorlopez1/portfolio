@@ -14,6 +14,7 @@
 import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { vertexShader, fragmentShader, trailFragmentShader } from './shaders'
+import './HalftoneBackground.css'
 
 const ATLAS_CELL = 128
 const TRAIL_RES = 500
@@ -267,35 +268,16 @@ export default function HalftoneBackground({ videoSrc, svgUrls, bgColor = '#ffff
         <div
             ref={wrapRef}
             aria-hidden="true"
+            className="halftone-background"
             style={{
-                position: 'fixed',
-                inset: 0,
-                zIndex: -1,
-                pointerEvents: 'none',
                 opacity: ready ? 1 : 0,
                 transition: 'opacity 1.2s ease-out',
             }}
         >
             {/* Top fade-to-white gradient */}
-            <div style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: 200,
-                background: 'linear-gradient(to bottom, #ffffff, transparent)',
-                zIndex: 1,
-            }} />
+            <div className="halftone-fade halftone-fade-top" />
             {/* Bottom fade-to-white gradient */}
-            <div style={{
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                width: '100%',
-                height: 200,
-                background: 'linear-gradient(to top, #ffffff, transparent)',
-                zIndex: 1,
-            }} />
+            <div className="halftone-fade halftone-fade-bottom" />
         </div>
     )
 }
