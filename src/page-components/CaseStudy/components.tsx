@@ -68,6 +68,113 @@ export const ImageSection: React.FC<ImageSectionProps> = ({ src, src2, alt = '',
     );
 };
 
+const BeforeAfterImage: React.FC<{ src: string | StaticImageData; alt: string }> = ({ src, alt }) => {
+    const isStaticImage = typeof src !== 'string';
+    return isStaticImage ? (
+        <Image
+            src={src as StaticImageData}
+            alt={alt}
+            fill
+            sizes="(max-width: 1080px) 100vw, 67vw"
+            style={{ objectFit: 'contain' }}
+        />
+    ) : (
+        <img src={src as string} alt={alt} loading="lazy" />
+    );
+};
+
+interface BeforeAfterSliderProps {
+    before: string | StaticImageData;
+    after: string | StaticImageData;
+    beforeLabel?: string;
+    afterLabel?: string;
+    alt?: string;
+    header?: string;
+    caption?: string;
+}
+
+export const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
+    before,
+    after,
+    beforeLabel = 'Before',
+    afterLabel = 'After',
+    alt = '',
+    header,
+    caption,
+}) => {
+    const [position, setPosition] = React.useState(50);
+    const containerRef = React.useRef<HTMLDivElement | null>(null);
+    const isDraggingRef = React.useRef(false);
+
+    const updatePosition = (clientX: number) => {
+        const container = containerRef.current;
+        if (!container) return;
+        const rect = container.getBoundingClientRect();
+        const ratio = ((clientX - rect.left) / rect.width) * 100;
+        setPosition(Math.min(100, Math.max(0, ratio)));
+    };
+
+    const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+        isDraggingRef.current = true;
+        e.currentTarget.setPointerCapture(e.pointerId);
+        updatePosition(e.clientX);
+    };
+
+    const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+        if (!isDraggingRef.current) return;
+        updatePosition(e.clientX);
+    };
+
+    const stopDragging = () => {
+        isDraggingRef.current = false;
+    };
+
+    return (
+        <div className="image-section">
+            <div
+                ref={containerRef}
+                className="before-after-slider"
+                onPointerDown={handlePointerDown}
+                onPointerMove={handlePointerMove}
+                onPointerUp={stopDragging}
+                onPointerLeave={stopDragging}
+            >
+                <div className="before-after-layer">
+                    <div className="before-after-image-inner">
+                        <BeforeAfterImage src={before} alt={alt} />
+                    </div>
+                </div>
+                <div className="before-after-layer before-after-layer-clipped" style={{ clipPath: `inset(0 0 0 ${position}%)` }}>
+                    <div className="before-after-image-inner">
+                        <BeforeAfterImage src={after} alt={alt} />
+                    </div>
+                </div>
+                <span className="before-after-tag before-after-tag-before">{beforeLabel}</span>
+                <span className="before-after-tag before-after-tag-after">{afterLabel}</span>
+                <div className="before-after-handle" style={{ left: `${position}%` }}>
+                    <div className="before-after-handle-line" />
+                    <div className="before-after-handle-grip" />
+                </div>
+                <input
+                    type="range"
+                    min={0}
+                    max={100}
+                    value={position}
+                    onChange={(e) => setPosition(Number(e.target.value))}
+                    className="before-after-range"
+                    aria-label="Drag to compare before and after"
+                />
+            </div>
+            {(header || caption) && (
+                <div className="text-content">
+                    {header && <p className="image-header">{header}</p>}
+                    {caption && <p className="caption">{caption}</p>}
+                </div>
+            )}
+        </div>
+    );
+};
+
 interface LottieSectionProps {
     src: any;
     src2?: any;
