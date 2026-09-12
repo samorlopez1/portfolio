@@ -198,7 +198,7 @@ export function Footer() {
             {/* Footer Bottom */}
             <div className="footer-bottom" data-node-id="854:317">
                 <div className="footer-bottom-background" data-node-id="854:317">
-                    {pathname === '/' && <ThreeJsHero />}
+                    <ThreeJsHero />
                 </div>
                 <div className="footer-bottom-content">
                     <div>
