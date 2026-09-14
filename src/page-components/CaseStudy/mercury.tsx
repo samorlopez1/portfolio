@@ -134,7 +134,6 @@ export const MercuryCaseStudy: React.FC = () => {
 
                         <ImageSection
                             src={reimbursementsEmptyState}
-                            src2={transactionsBefore}
                         />
                     </section>
 
